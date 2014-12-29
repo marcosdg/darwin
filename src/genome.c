@@ -1,4 +1,5 @@
 /*
+ * (Draft)
  * genome.c
  * Marcos Díez García
  * 26-12-14
@@ -7,7 +8,7 @@
  *
  * */
 
-#include<string.h>
+#include <string.h>
 #include "genome.h"
 #include "random.c"
 

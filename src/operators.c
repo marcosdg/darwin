@@ -1,4 +1,5 @@
 /*
+ * (Draft)
  * operators.c
  * Marcos Díez García
  * 26-12-14
@@ -38,9 +39,8 @@ missing:
 
 int single_point_mutation(struct individual *victim)
 {
-        int at,
-            mutation;
-        
+        int at;
+
         if (!victim) {
                 goto missing;
         }

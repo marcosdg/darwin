@@ -1,4 +1,5 @@
 /*
+ * (Draft)
  * random.c
  * Marcos Díez García
  * 26-12-14
@@ -7,10 +8,10 @@
  *
  * */
 
-#include<stdio.h>
-#include<stdlib.h>
-#include<math.h>
-#include<time.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <time.h>
 
 static sequence_started = 0;
 

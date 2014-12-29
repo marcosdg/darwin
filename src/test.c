@@ -6,7 +6,6 @@
  * Just to play around.
  *
  * */
-
 #include "operators.c"
 
 
@@ -14,10 +13,10 @@ void main(void)
 {
 	int i;
 
-	struct individual *dad = create_raw_individual();
-	struct individual *mom = create_raw_individual();
-	struct individual *son = create_raw_individual();
-	struct individual *daughter = create_raw_individual();
+	struct individual *dad = create_raw_individual(6);
+	struct individual *mom = create_raw_individual(6);
+	struct individual *son = create_raw_individual(6);
+	struct individual *daughter = create_raw_individual(6);
 
 	dad->genes[0] = 0;
 	dad->genes[1] = 1;

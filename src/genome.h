@@ -15,7 +15,7 @@
  * */
 #define GENE_BYTES sizeof(int)
 #define CHROMOSOME_LENGTH 6
-#define CHROMOSOME_BYTE_SIZE (CHROMOSOME_LENGTH * GENE_BYTE_SIZE)
+#define CHROMOSOME_BYTE_SIZE (CHROMOSOME_LENGTH * GENE_BYTES)
 /*
  * Nucleotides represent the vocabulary used to build the genes of an
  * individual. 

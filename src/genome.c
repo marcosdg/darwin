@@ -7,7 +7,6 @@
  * Basic routines to manipulate individuals and the population.
  *
  * */
-
 #include <string.h>
 #include "genome.h"
 #include "random.c"

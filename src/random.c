@@ -7,32 +7,29 @@
  * Routines to manipulate random numbers
  *
  * */
-
-#include <stdio.h>
-#include <stdlib.h>
 #include <math.h>
 #include <time.h>
+#include "utils.c"
 
 static sequence_started = 0;
 
+
 void initialise_random_sequence()
 {
-        srandom((unsigned int) time(NULL));
+        srand((unsigned int) time(NULL));
         sequence_started = 1;
 }
 
 long int random_in_range(long int lower, long int upper)
 {
-        if (!sequence_started) {
-                goto exit;
-        }
-	long int length = abs((upper + 1) - lower);
-	
-	return lower + ((random() * length) / RAND_MAX);
+        long int length;
 
-exit:
-        printf("ERROR random_in_range: Random sequence not started.\n");
-        return -1;
+        if (!sequence_started) {
+                error_verbose(__FILE__, "random_in_range",
+                              "Random sequence not started.");
+        }
+        length = abs((upper + 1) - lower);
+	return lower + ((rand() * length) / RAND_MAX);
 }
 
 long int random_excluding(long int lower, long int banned, long int upper)
@@ -42,10 +39,12 @@ long int random_excluding(long int lower, long int banned, long int upper)
                  the_one;
         
         if (!sequence_started) {
-                goto exit;
+                error_verbose(__FILE__, "random_in_range",
+                              "Random sequence not started");
         }
         if (banned < lower || upper < banned) {
-                goto out_of_range;
+                error_verbose(__FILE__, "random_in_range",
+                              "'banned' out of range.");
         }
 
         above = random_in_range(banned + 1, upper);
@@ -59,23 +58,18 @@ long int random_excluding(long int lower, long int banned, long int upper)
                 the_one = random_in_range(0, 1)? below : above;
         }
         return the_one;
-
-exit:
-        printf("ERROR random_in_range: Random sequence not started.\n");
-        return -1;
-
-out_of_range:
-        printf("ERROR random_in_range: 'banned' is out of range.\n");
-        return -1;
 }
 
-
-int randomize(int *integers, long int lower, long int upper)
+int randomize_ints(int *ints, long int lower, long int upper)
 {
         int i = 0;
 
-        while (integers[i] != '\0') {
-               integers[i] = random_in_range(lower, upper);
+        if (!ints) {
+                error_verbose(__FILE__, "random_in_range", "'ints' is NULL.");
+        }
+        while (ints[i] != '\0') {
+               ints[i] = random_in_range(lower, upper);
                i += 1;
         }
 }
+

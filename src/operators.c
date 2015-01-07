@@ -35,21 +35,20 @@ int single_point_crossover(struct individual *dad, struct individual *mom,
     int at,
         fst_half,
         snd_half;
-
-	if (!dad || !mom || !son || !daughter) {
+    if (!dad || !mom || !son || !daughter) {
         error_verbose(__FILE__, "single_point_crossover",
                       "One of the individuals is NULL.");
     }
-	at = random_in_range_exclusive(1, CHROMOSOME_LENGTH);
+    at = random_in_range_exclusive(1, CHROMOSOME_LENGTH);
     fst_half = at * GENE_BYTES;
-	snd_half = CHROMOSOME_BYTE_SIZE - fst_half;
+    snd_half = CHROMOSOME_BYTE_SIZE - fst_half;
 
     memcpy(son->genes, dad->genes, fst_half);
-	memcpy((son->genes + at), (mom->genes + at), snd_half); 	
-	memcpy(daughter->genes, mom->genes, fst_half);
-	memcpy((daughter->genes + at), (dad->genes + at), snd_half);
-
-	return 0;
+    memcpy((son->genes + at), (mom->genes + at), snd_half); 	
+    memcpy(daughter->genes, mom->genes, fst_half);
+    memcpy((daughter->genes + at), (dad->genes + at), snd_half);
+    
+    return 0;
 }
 
 int single_point_mutation(struct individual *victim)

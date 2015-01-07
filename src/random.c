@@ -47,7 +47,7 @@ long int random_in_range_exclusive(long int lower, long int upper)
                       "Random sequence not started.");
     }
     length = abs(upper - lower);
-	return lower + ((rand() * length) / RAND_MAX);
+    return lower + ((rand() * length) / RAND_MAX);
 }
 
 long int random_in_range_inclusive(long int lower, long int upper)
@@ -58,7 +58,7 @@ long int random_in_range_inclusive(long int lower, long int upper)
                       "Random sequence not started.");
     }
     length = abs((upper + 1) - lower);
-	return lower + ((rand() * length) / RAND_MAX);
+    return lower + ((rand() * length) / RAND_MAX);
 }
 long int random_excluding(long int lower, long int banned, long int upper)
 {

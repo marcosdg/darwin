@@ -46,7 +46,7 @@ struct individual * create_individual(int chromosome_length)
     memset(genes, 0, chromosome_length * GENE_BYTES);
     new->genes = genes;
     new->fitness = 0.0;
-	new->evolvability = 0.0;
+    new->evolvability = 0.0;
     
     return new;
 }

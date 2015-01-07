@@ -1,9 +1,9 @@
 /*
   darwin. A simple genetic algorithm implementation with a
   self-adaptative strategy.
- 
+
   Copyright (C) 2015 Marcos Díez García <marcos.diez.garcia@gmail.com>
- 
+
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
   the Free Software Foundation, either version 3 of the License, or
@@ -14,17 +14,17 @@
   GNU General Public License for more details.
   You should have received a copy of the GNU General Public License
   along with this program. If not, see <http://www.gnu.org/licenses/>.
- 
+
 */
 /*
   (Draft)
   operators.c
   Marcos Díez García
-  02-01-15 
- 
+  02-01-15
+
   Routines to implement the genetic operators: selection, crossover, mutation and
   replacement.
- 
+
 */
 #include "genome.c"
 
@@ -44,10 +44,10 @@ int single_point_crossover(struct individual *dad, struct individual *mom,
     snd_half = CHROMOSOME_BYTE_SIZE - fst_half;
 
     memcpy(son->genes, dad->genes, fst_half);
-    memcpy((son->genes + at), (mom->genes + at), snd_half); 	
+    memcpy((son->genes + at), (mom->genes + at), snd_half);
     memcpy(daughter->genes, mom->genes, fst_half);
     memcpy((daughter->genes + at), (dad->genes + at), snd_half);
-    
+
     return 0;
 }
 

@@ -1,7 +1,7 @@
 /*
   darwin. A simple genetic algorithm implementation with a
   self-adaptative strategy.
- 
+
   Copyright (C) 2015 Marcos Díez García <marcos.diez.garcia@gmail.com>
 
   This program is free software: you can redistribute it and/or modify
@@ -14,7 +14,7 @@
   GNU General Public License for more details.
   You should have received a copy of the GNU General Public License
   along with this program. If not, see <http://www.gnu.org/licenses/>.
- 
+
 */
 
 /*
@@ -22,39 +22,32 @@
   genome.c
   Marcos Díez García
   02-01-15
- 
+
   Basic routines to manipulate individuals and the population.
- 
+
 */
 #include <string.h>
 #include "genome.h"
 #include "random.c"
 
-/*
-struct genotype_encoding * create_genotype_encoding(int chromosome_length,
-                                                    int *nucleotides)
-{
-    if (chromosome_length < )
-}
-*/
 
 struct individual * create_individual(int chromosome_length)
 {
     struct individual *new = (struct individual *) malloc(sizeof(struct individual));
     int *genes = (int *) malloc(chromosome_length * GENE_BYTES);
-	
+
     memset(genes, 0, chromosome_length * GENE_BYTES);
     new->genes = genes;
     new->fitness = 0.0;
     new->evolvability = 0.0;
-    
+
     return new;
 }
 
 /*
 bytes_from_to(struct individual *who, int from, int to)
 {
-    return (from * GENES_BYTES) - to * GENES_BYTES 
+    return (from * GENES_BYTES) - to * GENES_BYTES
 }
 */
 

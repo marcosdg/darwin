@@ -1,9 +1,9 @@
 /*
   darwin. A simple genetic algorithm implementation with a
   self-adaptative strategy.
- 
+
   Copyright (C) 2015 Marcos Díez García <marcos.diez.garcia@gmail.com>
- 
+
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
   the Free Software Foundation, either version 3 of the License, or
@@ -14,15 +14,15 @@
   GNU General Public License for more details.
   You should have received a copy of the GNU General Public License
   along with this program. If not, see <http://www.gnu.org/licenses/>.
- 
+
 */
 /*
   utils.c
   29-12-14
   Marcos Díez García
- 
+
   Some miscellaneous functions.
- 
+
 */
 #include <stdlib.h>
 #include <stdio.h>

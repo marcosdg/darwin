@@ -1,9 +1,9 @@
 /*
   darwin. A simple genetic algorithm implementation with a
   self-adaptative strategy.
- 
+
   Copyright (C) 2015 Marcos Díez García <marcos.diez.garcia@gmail.com>
- 
+
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
   the Free Software Foundation, either version 3 of the License, or
@@ -19,14 +19,14 @@
   test.c
   Marcos Díez García
   26-12-14
- 
+
   Just to play around.
 
 */
 #include "operators.c"
 
 
-void main(void) 
+void main(void)
 {
 	int i;
 
@@ -52,7 +52,7 @@ void main(void)
     initialise_random_sequence();
 
     printf("======== TEST CROSSOVER ========\n");
-	
+
     single_point_crossover(dad, mom, son, daughter);
 
 	for (i = 0; i < CHROMOSOME_LENGTH; i += 1) {

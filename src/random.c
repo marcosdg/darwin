@@ -70,14 +70,15 @@ long int random_excluding(long int lower, long int banned, long int upper)
     return r;
 }
 
-int randomize_ints(long int *ints, long int lower, long int upper)
+int randomize_ints(long int *ints, int ints_length,
+                    long int lower, long int upper)
 {
     int i;
     if (!ints) {
         error_verbose(__FILE__, "random_in_range",
                       "'ints' is NULL.");
     }
-    for (i = 0; ints[i] != '\0'; i += 1) {
+    for (i = 0; i < ints_length; i += 1) {
         ints[i] = random_in_range_inclusive(lower, upper);
     }
     return 0;

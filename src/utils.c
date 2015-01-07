@@ -27,6 +27,15 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+/*
+    Arrays.
+*/
+
+#define LENGTH(a) (sizeof(a) / sizeof(a[0]))
+
+/*
+    Error reporting.
+*/
 
 void error(char *details)
 {

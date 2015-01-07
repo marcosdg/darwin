@@ -127,13 +127,10 @@ void main(void)
 
     printf("======== TEST RANDOMIZE_INTS ========\n");
 
-    printf("%d\n", 0 == '\0'? 1 : 0);
-/*
-    randomize_ints(ints, 0, 4);
+    randomize_ints(ints, 6, 0, 4);
 
     for (i = 0; i < 6; i += 1) {
         printf("%li \n", ints[i]);
     }
-*/
 }
 

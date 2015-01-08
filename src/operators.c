@@ -28,7 +28,7 @@
 */
 #include "genome.c"
 
-
+/*
 int single_point_crossover(struct individual *dad, struct individual *mom,
                            struct individual *son, struct individual *daughter)
 {
@@ -50,7 +50,8 @@ int single_point_crossover(struct individual *dad, struct individual *mom,
 
     return 0;
 }
-
+*/
+/*
 int single_point_mutation(struct individual *victim)
 {
     int at;
@@ -63,7 +64,7 @@ int single_point_mutation(struct individual *victim)
                                          NUCLEOTIDE_MAX);
     return 0;
 }
-
+*/
 /*
 int adaptative_mutation(struct population *pop,
                         double (*mutation_probability_function)(struct *individual))

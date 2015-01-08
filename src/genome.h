@@ -35,14 +35,14 @@
   genetic representation of individuals for the problem.
 
 */
-#define GENE_BYTES sizeof(int)
+#define GENE_BYTES sizeof(long int)
 /*
     To perform crossover individuals must have, at least, 2 genes.
 */
 #define CHROMOSOME_MIN_LENGTH 2
 
 struct individual {
-    int *genes;
+    long int *genes;
     double fitness;
     double evolvability;
 };
@@ -55,5 +55,5 @@ struct population {
     Individuals encoding.
 */
     int chromosome_length;  /* genes per individual */
-    int *nucleotides;       /* alleles' alphabet */
+    long int *nucleotides;  /* alleles' alphabet */
 };

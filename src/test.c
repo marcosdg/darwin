@@ -28,8 +28,31 @@
 
 void main(void)
 {
-	int i;
+	int i,
+        locus;
 
+    long int alphabet[] = {0, 1};
+    struct population *pop = create_empty_population(4, 6, alphabet);
+
+    printf("Population details:\n");
+    printf("\t current size: %i\n", pop->current_size);
+    printf("\t max size: %i\n", pop->max_size);
+    printf("\t chromosome length: %i\n", pop->chromosome_length);
+
+/*    
+    for (i = 0; i < 4; i += 1) {
+        printf("\t Individual %i info: \n", i);
+        printf("\t\t genes: ");
+        for (locus = 0; locus < 6; locus += 1) {
+            printf("%li--", (pop->people[i])->genes[locus]);
+        }
+        printf("\n");
+        printf("\t\t fitness: %lf \n", (pop->people[i])->fitness);
+        printf("\t\t evolvability: %lf \n", (pop->people[i])->evolvability);
+    }
+*/
+
+/*
 	struct individual *dad = create_raw_individual(6);
 	struct individual *mom = create_raw_individual(6);
 	struct individual *son = create_raw_individual(6);
@@ -69,4 +92,5 @@ void main(void)
 	for (i = 0; i < CHROMOSOME_LENGTH; i += 1) {
 		printf("SON GENE %d: %d\n", i, son->genes[i]);
 	}
+*/
 }

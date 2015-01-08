@@ -34,7 +34,7 @@
 struct individual * create_individual(int chromosome_length)
 {
     struct individual *new = (struct individual *) malloc(sizeof(struct individual));
-    int *genes = (int *) malloc(chromosome_length * GENE_BYTES);
+    long int *genes = (long int *) malloc(chromosome_length * GENE_BYTES);
 
     memset(genes, 0, chromosome_length * GENE_BYTES);
     new->genes = genes;
@@ -51,22 +51,33 @@ bytes_from_to(struct individual *who, int from, int to)
 }
 */
 
-/*
 struct population * create_empty_population(int max_size, int chromosome_length,
-                                            int bytes_gene, int *nucleotides)
+                                            long int *nucleotides)
 {
     struct population *population = (struct population *)
-                                        malloc(sizeof(struct population));
+                                    malloc(sizeof(struct population));
     struct individual **people = (struct individual **)
-                                     malloc(max_size * sizeof(struct individual));
+                                 malloc(max_size * sizeof(struct individual));
     population->people = people;
     population->current_size = 0;
     population->max_size = max_size;
     population->chromosome_length = chromosome_length;
-    population->bytes_gene = bytes_gene;
-    population->nuleotides = nucleotides;
+    population->nucleotides = nucleotides;
+
+    return population;
 }
-*/
+
+/*
+int add_individual(struct population *population, struct individual *new)
+{
+    if (!population || !new) {
+       error_verbose(__FILE__, "add_individual",
+                     "'population' or 'new' is NULL");
+    }
+    if (population->current_size < population->max_size) {
+        // find next slot in population->people to add it
+    }
+}*/
 
 /* struct population * create_random_population(...){}
 

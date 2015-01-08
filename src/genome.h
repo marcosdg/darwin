@@ -49,6 +49,7 @@ struct individual {
 
 struct population {
     struct individual **people;
+    int next_free_spot;     /* helpful to add individuals */
     int current_size;
     int max_size;
 /*

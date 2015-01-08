@@ -34,11 +34,25 @@ void main(void)
     long int alphabet[] = {0, 1};
     struct population *pop = create_empty_population(4, 6, alphabet);
 
+    struct individual *dad = create_individual(6);
+
     printf("Population details:\n");
     printf("\t current size: %i\n", pop->current_size);
     printf("\t max size: %i\n", pop->max_size);
     printf("\t chromosome length: %i\n", pop->chromosome_length);
 
+    int succeded = add_individual(pop, dad);
+
+    if (succeded) {
+        printf("\t Individual 0 info: \n");
+        printf("\t\t genes: ");
+        for (locus = 0; locus < 6; locus += 1) {
+            printf("%li--", (pop->people[0])->genes[locus]);
+        }
+        printf("\n");
+        printf("\t\t fitness: %lf \n", (pop->people[i])->fitness);
+        printf("\t\t evolvability: %lf \n", (pop->people[i])->evolvability);
+    } 
 /*    
     for (i = 0; i < 4; i += 1) {
         printf("\t Individual %i info: \n", i);

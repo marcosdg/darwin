@@ -59,6 +59,7 @@ struct population * create_empty_population(int max_size, int chromosome_length,
     struct individual **people = (struct individual **)
                                  malloc(max_size * sizeof(struct individual));
     population->people = people;
+    population->next_free_spot = 0;
     population->current_size = 0;
     population->max_size = max_size;
     population->chromosome_length = chromosome_length;
@@ -67,17 +68,23 @@ struct population * create_empty_population(int max_size, int chromosome_length,
     return population;
 }
 
-/*
+
 int add_individual(struct population *population, struct individual *new)
 {
+    int added = 0;
+
     if (!population || !new) {
        error_verbose(__FILE__, "add_individual",
-                     "'population' or 'new' is NULL");
+                     "'population' or 'new' is NULL.");
     }
     if (population->current_size < population->max_size) {
-        // find next slot in population->people to add it
+        population->people[population->next_free_spot] = new;
+        population->current_size += 1;
+        population->next_free_spot += 1;
+        added = 1;
     }
-}*/
+    return added ? 1 : 0;
+}
 
 /* struct population * create_random_population(...){}
 

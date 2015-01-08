@@ -60,12 +60,16 @@ long int random_in_range_inclusive(long int lower, long int upper)
     length = abs((upper + 1) - lower);
     return lower + ((rand() * length) / RAND_MAX);
 }
+
 long int random_excluding(long int lower, long int banned, long int upper)
 {
-    long int r = random_in_range_inclusive(lower, upper);
+   long int r = 0;
 
-    if (r == banned) {
-        return random_excluding(lower, banned, upper);
+    for (;;) {
+        r = random_in_range_inclusive(lower, upper);
+        if (r != banned) {
+            break;
+        }
     }
     return r;
 }

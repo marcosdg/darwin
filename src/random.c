@@ -52,19 +52,13 @@ long int random_in_range_exclusive(long int lower, long int upper)
 
 long int random_in_range_inclusive(long int lower, long int upper)
 {
-    long int length;
-    if (!sequence_started) {
-        error_verbose(__FILE__, "random_in_range_inclusive",
-                      "Random sequence not started.");
-    }
-    length = abs((upper + 1) - lower);
-    return lower + ((rand() * length) / RAND_MAX);
+    return random_in_range_exclusive(lower, upper + 1);
 }
 
 long int random_excluding(long int lower, long int banned, long int upper)
 {
-   long int r = 0;
-
+    long int r = 0;
+    
     for (;;) {
         r = random_in_range_inclusive(lower, upper);
         if (r != banned) {
@@ -78,9 +72,9 @@ int randomize_ints(long int *ints, int ints_length,
                     long int lower, long int upper)
 {
     int i;
+
     if (!ints) {
-        error_verbose(__FILE__, "random_in_range",
-                      "'ints' is NULL.");
+        error_verbose(__FILE__, "random_in_range", "'ints' is NULL.");
     }
     for (i = 0; i < ints_length; i += 1) {
         ints[i] = random_in_range_inclusive(lower, upper);

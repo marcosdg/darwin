@@ -28,12 +28,6 @@
 #include <stdio.h>
 
 /*
-    Arrays.
-*/
-
-#define LENGTH(a) (sizeof(a) / sizeof(a[0]))
-
-/*
     Error reporting.
 */
 

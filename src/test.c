@@ -52,8 +52,8 @@ void main(void)
         printf("\n");
         printf("\t\t fitness: %lf \n", (pop->people[i])->fitness);
         printf("\t\t evolvability: %lf \n", (pop->people[i])->evolvability);
-    } 
-/*    
+    }
+/*
     for (i = 0; i < 4; i += 1) {
         printf("\t Individual %i info: \n", i);
         printf("\t\t genes: ");

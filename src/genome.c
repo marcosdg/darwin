@@ -33,7 +33,8 @@
 
 struct individual * create_individual(int chromosome_length)
 {
-    struct individual *new = (struct individual *) malloc(sizeof(struct individual));
+    struct individual *new = (struct individual *)
+                                malloc(sizeof(struct individual));
     long int *genes = (long int *) malloc(chromosome_length * GENE_BYTES);
 
     memset(genes, 0, chromosome_length * GENE_BYTES);
@@ -83,7 +84,7 @@ int add_individual(struct population *population, struct individual *new)
         population->next_free_spot += 1;
         added = 1;
     }
-    return added ? 1 : 0;
+    return added;
 }
 
 /* struct population * create_random_population(...){}

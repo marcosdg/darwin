@@ -41,6 +41,10 @@
 */
 #define CHROMOSOME_MIN_LENGTH 2
 
+/*
+    Data types.
+*/
+
 struct individual {
     long int *genes;
     double fitness;
@@ -52,9 +56,30 @@ struct population {
     int next_free_spot;     /* helpful to add individuals */
     int current_size;
     int max_size;
-/*
-    Individuals encoding.
-*/
+
+    /* Individuals encoding */
+
     int chromosome_length;  /* genes per individual */
+    int nucleotides_length;
     long int *nucleotides;  /* alleles' alphabet */
 };
+
+/* 
+    Individual functions.
+*/
+
+struct individual * create_individual(int chromosome_length);
+void randomize_individual(struct individual *individual,
+                          struct population *population);
+
+/* 
+    Population functions.
+*/
+
+struct population * create_empty_population(int max_size, int chromosome_length,
+                                            long int *nucleotides,
+                                            int nucleotides_length);
+int add_individual(struct population *population, struct individual *new);
+long int min_nucleotide_value(struct population *population);
+long int max_nucleotide_value(struct population *population);
+

@@ -30,6 +30,9 @@
 #include "genome.h"
 #include "random.c"
 
+/*
+    Individual.
+*/
 
 struct individual * create_individual(int chromosome_length)
 {
@@ -45,15 +48,25 @@ struct individual * create_individual(int chromosome_length)
     return new;
 }
 
-/*
-bytes_from_to(struct individual *who, int from, int to)
+void randomize_individual(struct individual *individual,
+                          struct population *population)
 {
-    return (from * GENES_BYTES) - to * GENES_BYTES
+    if (!individual || !population) {
+        error_verbose(__FILE__, "randomize_individual",
+                      "'individual' or 'population is NULL'");
+    }
+    randomize_ints(individual->genes, population->chromosome_length,
+                            min_nucleotide_value(population),
+                            max_nucleotide_value(population));
 }
+
+/*
+    Population.
 */
 
 struct population * create_empty_population(int max_size, int chromosome_length,
-                                            long int *nucleotides)
+                                            long int *nucleotides,
+                                            int nucleotides_length)
 {
     struct population *population = (struct population *)
                                     malloc(sizeof(struct population));
@@ -63,12 +76,13 @@ struct population * create_empty_population(int max_size, int chromosome_length,
     population->next_free_spot = 0;
     population->current_size = 0;
     population->max_size = max_size;
+
     population->chromosome_length = chromosome_length;
     population->nucleotides = nucleotides;
+    population->nucleotides_length = nucleotides_length;
 
     return population;
 }
-
 
 int add_individual(struct population *population, struct individual *new)
 {
@@ -86,8 +100,21 @@ int add_individual(struct population *population, struct individual *new)
     }
     return added;
 }
-
-/* struct population * create_random_population(...){}
-
+/* 
+    Encoding.
 */
+long int min_nucleotide_value(struct population *population)
+{
+    if (!population) {
+        error_verbose(__FILE__, "min_nucleotide_value", "'population is NULL'");
+    }
+    return population->nucleotides[0];
+}
+long int max_nucleotide_value(struct population *population)
+{
+    if (!population) {
+        error_verbose(__FILE__, "min_nucleotide_value", "'population is NULL'");
+    }
+    return population->nucleotides[population->nucleotides_length - 1];
+}
 

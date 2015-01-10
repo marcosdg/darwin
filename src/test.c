@@ -32,7 +32,7 @@ void main(void)
         locus;
 
     long int alphabet[] = {0, 1};
-    struct population *pop = create_empty_population(4, 6, alphabet);
+    struct population *pop = create_empty_population(4, 6, alphabet, 2);
 
     struct individual *dad = create_individual(6);
 
@@ -53,6 +53,18 @@ void main(void)
         printf("\t\t fitness: %lf \n", (pop->people[i])->fitness);
         printf("\t\t evolvability: %lf \n", (pop->people[i])->evolvability);
     }
+
+    printf(" --- Randomize individual ---\n");
+    
+    initialise_random_sequence();
+    randomize_individual(dad, pop);
+    
+    printf("\t\t genes: ");
+    for (locus = 0; locus < 6; locus += 1) {
+        printf("%li--", (pop->people[0])->genes[locus]);
+    }
+    printf("\n");
+
 /*
     for (i = 0; i < 4; i += 1) {
         printf("\t Individual %i info: \n", i);

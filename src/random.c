@@ -32,14 +32,16 @@
 static sequence_started = 0;
 
 
-void initialise_random_sequence()
+void initialize_random_sequence()
 {
     srand((unsigned int) time(NULL));
     sequence_started = 1;
 }
 
-long int random_in_range_exclusive(long int lower, long int upper)
-{
+long int random_in_range_exclusive(
+    long int lower, 
+    long int upper
+) {
     long int length;
 
     if (!sequence_started) {
@@ -49,14 +51,18 @@ long int random_in_range_exclusive(long int lower, long int upper)
     length = abs(upper - lower);
     return lower + ((rand() * length) / RAND_MAX);
 }
-
-long int random_in_range_inclusive(long int lower, long int upper)
-{
+long int random_in_range_inclusive(
+    long int lower,
+    long int upper
+) {
     return random_in_range_exclusive(lower, upper + 1);
 }
 
-long int random_excluding(long int lower, long int banned, long int upper)
-{
+long int random_excluding(
+    long int lower,
+    long int banned,
+    long int upper
+) {
     long int r = 0;
     
     for (;;) {
@@ -68,15 +74,18 @@ long int random_excluding(long int lower, long int banned, long int upper)
     return r;
 }
 
-int randomize_ints(long int *ints, int ints_length,
-                    long int lower, long int upper)
-{
+int randomize_ints(
+    long int *ints,
+    int length,
+    long int lower,
+    long int upper
+) {
     int i;
 
     if (!ints) {
         error_verbose(__FILE__, "random_in_range", "'ints' is NULL.");
     }
-    for (i = 0; i < ints_length; i += 1) {
+    for (i = 0; i < length; i += 1) {
         ints[i] = random_in_range_inclusive(lower, upper);
     }
     return 0;

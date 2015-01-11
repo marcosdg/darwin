@@ -47,27 +47,30 @@ struct individual * create_individual(int chromosome_length)
 
     return new;
 }
-
-void randomize_individual(struct individual *individual,
-                          struct population *population)
+struct individual * create_random_individual(struct population *population)
 {
-    if (!individual || !population) {
-        error_verbose(__FILE__, "randomize_individual",
-                      "'individual' or 'population is NULL'");
+    struct individual *new;
+
+    if (!population) {
+        error_verbose(__FILE__,"create_random_individual", "'population is NULL'");
     }
-    randomize_ints(individual->genes, population->chromosome_length,
-                            min_nucleotide_value(population),
-                            max_nucleotide_value(population));
+    new = create_individual(population->chromosome_length);
+    randomize_ints(new->genes, population->chromosome_length,
+                    min_nucleotide_value(population),
+                    max_nucleotide_value(population));
+    return new;
 }
 
 /*
     Population.
 */
 
-struct population * create_empty_population(int max_size, int chromosome_length,
-                                            long int *nucleotides,
-                                            int nucleotides_length)
-{
+struct population * create_empty_population(
+    int max_size,
+    int chromosome_length,
+    int nucleotides_length,
+    long int *nucleotides
+) {
     struct population *population = (struct population *)
                                     malloc(sizeof(struct population));
     struct individual **people = (struct individual **)
@@ -78,14 +81,35 @@ struct population * create_empty_population(int max_size, int chromosome_length,
     population->max_size = max_size;
 
     population->chromosome_length = chromosome_length;
-    population->nucleotides = nucleotides;
     population->nucleotides_length = nucleotides_length;
+    population->nucleotides = nucleotides;
 
     return population;
 }
+struct population * create_random_population(
+    int initial_size,
+    int max_size,
+    int chromosome_length,
+    int nucleotides_length,
+    long int *nucleotides
+) {
+    struct population *population = create_empty_population(max_size,
+                                                            chromosome_length,
+                                                            nucleotides_length,
+                                                            nucleotides);
+    struct individual *new;
+    int i;
+    for (i = 0; i < initial_size; i += 1) {
+        new = create_random_individual(population);
+        add_individual(population, new);
+    }
+    return population;
+}
 
-int add_individual(struct population *population, struct individual *new)
-{
+int add_individual(
+    struct population *population,
+    struct individual *new
+) {
     int added = 0;
 
     if (!population || !new) {

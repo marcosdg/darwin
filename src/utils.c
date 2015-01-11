@@ -31,16 +31,18 @@
     Error reporting.
 */
 
-void error(char *details)
-{
+void error(char *details) {
     fputs("darwin Error: ", stderr);
     fputs(details, stderr);
     fputc('\n', stderr);
     exit(1);
 }
 
-void error_verbose(char *file_name, char *function_name, char *details)
-{
+void error_verbose(
+    char *file_name, 
+    char *function_name, 
+    char *details
+) {
     fputs("darwin Error: ", stderr);
     fprintf(stderr, "[FILE %s]", file_name);
     fprintf(stderr, "(FUNCTION %s) ", function_name);

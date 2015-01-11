@@ -69,17 +69,29 @@ struct population {
 */
 
 struct individual * create_individual(int chromosome_length);
-void randomize_individual(struct individual *individual,
-                          struct population *population);
+struct individual * create_random_individual(struct population *population);
 
 /* 
     Population functions.
 */
 
-struct population * create_empty_population(int max_size, int chromosome_length,
-                                            long int *nucleotides,
-                                            int nucleotides_length);
-int add_individual(struct population *population, struct individual *new);
+struct population * create_empty_population(
+    int max_size, 
+    int chromosome_length,
+    int nucleotides_length,
+    long int *nucleotides
+);
+struct population * create_random_population(
+    int initial_size, 
+    int max_size,
+    int chromosome_length,
+    int nucleotides_length,
+    long int *nucleotides
+);
+int add_individual(
+    struct population *population,
+    struct individual *new
+);
 long int min_nucleotide_value(struct population *population);
 long int max_nucleotide_value(struct population *population);
 

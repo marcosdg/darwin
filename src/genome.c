@@ -31,16 +31,48 @@
 #include "random.c"
 
 /*
+    Encoding.
+*/
+
+struct encoding * create_encoding(
+    int genes_length,
+    int nucleotides_length,
+    long int *nucleotides
+) {
+    struct encoding *e = (struct encoding *) malloc(sizeof(struct encoding));
+    e->genes_length = genes_length;
+    e->nucleotides_length = nucleotides_length;
+    e->nucleotides = nucleotides;
+
+    return e;
+}
+
+long int min_nucleotide_value(struct encoding *encoding)
+{
+    if (!encoding) {
+        error_verbose(__FILE__, "min_nucleotide_value", "'encoding' is NULL");
+    }
+    return encoding->nucleotides[0];
+}
+long int max_nucleotide_value(struct encoding *encoding)
+{
+    if (!encoding) {
+        error_verbose(__FILE__, "max_nucleotide_value", "'encoding' is NULL");
+    }
+    return encoding->nucleotides[encoding->nucleotides_length - 1];
+}
+
+/*
     Individual.
 */
 
-struct individual * create_individual(int chromosome_length)
+struct individual * create_individual(struct encoding *encoding)
 {
     struct individual *new = (struct individual *)
                                 malloc(sizeof(struct individual));
-    long int *genes = (long int *) malloc(chromosome_length * GENE_BYTES);
+    long int *genes = (long int *) malloc(encoding->genes_length * GENE_BYTES);
 
-    memset(genes, 0, chromosome_length * GENE_BYTES);
+    memset(genes, 0, encoding->genes_length * GENE_BYTES);
     new->genes = genes;
     new->fitness = 0.0;
     new->evolvability = 0.0;
@@ -54,10 +86,11 @@ struct individual * create_random_individual(struct population *population)
     if (!population) {
         error_verbose(__FILE__,"create_random_individual", "'population is NULL'");
     }
-    new = create_individual(population->chromosome_length);
-    randomize_ints(new->genes, population->chromosome_length,
-                    min_nucleotide_value(population),
-                    max_nucleotide_value(population));
+    new = create_individual(population->encoding);
+    randomize_ints(new->genes,
+                   population->encoding->genes_length,
+                   min_nucleotide_value(population->encoding),
+                   max_nucleotide_value(population->encoding));
     return new;
 }
 
@@ -67,38 +100,35 @@ struct individual * create_random_individual(struct population *population)
 
 struct population * create_empty_population(
     int max_size,
-    int chromosome_length,
-    int nucleotides_length,
-    long int *nucleotides
+    struct encoding *encoding
 ) {
-    struct population *population = (struct population *)
-                                    malloc(sizeof(struct population));
-    struct individual **people = (struct individual **)
-                                 malloc(max_size * sizeof(struct individual));
+    struct population *population;
+    struct individual **people;
+
+    if (!encoding) {
+        error_verbose(__FILE__, "create_empty_population", "'encoding' is NULL");
+    }
+    population = (struct population *) malloc(sizeof(struct population));
+    people = (struct individual **) malloc(max_size * sizeof(struct individual));
+
     population->people = people;
+    population->encoding = encoding;
     population->next_free_spot = 0;
+    population->generation = 0;
     population->current_size = 0;
     population->max_size = max_size;
-
-    population->chromosome_length = chromosome_length;
-    population->nucleotides_length = nucleotides_length;
-    population->nucleotides = nucleotides;
 
     return population;
 }
 struct population * create_random_population(
     int initial_size,
     int max_size,
-    int chromosome_length,
-    int nucleotides_length,
-    long int *nucleotides
+    struct encoding *encoding
 ) {
-    struct population *population = create_empty_population(max_size,
-                                                            chromosome_length,
-                                                            nucleotides_length,
-                                                            nucleotides);
+    struct population *population = create_empty_population(max_size, encoding);
     struct individual *new;
     int i;
+
     for (i = 0; i < initial_size; i += 1) {
         new = create_random_individual(population);
         add_individual(population, new);
@@ -123,22 +153,5 @@ int add_individual(
         added = 1;
     }
     return added;
-}
-/* 
-    Encoding.
-*/
-long int min_nucleotide_value(struct population *population)
-{
-    if (!population) {
-        error_verbose(__FILE__, "min_nucleotide_value", "'population is NULL'");
-    }
-    return population->nucleotides[0];
-}
-long int max_nucleotide_value(struct population *population)
-{
-    if (!population) {
-        error_verbose(__FILE__, "min_nucleotide_value", "'population is NULL'");
-    }
-    return population->nucleotides[population->nucleotides_length - 1];
 }
 

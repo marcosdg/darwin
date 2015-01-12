@@ -45,6 +45,12 @@
     Data types.
 */
 
+struct encoding {
+    int genes_length;
+    int nucleotides_length;
+    long int *nucleotides;  /* possible gene values */
+};
+
 struct individual {
     long int *genes;
     double fitness;
@@ -53,45 +59,53 @@ struct individual {
 
 struct population {
     struct individual **people;
+    struct encoding *encoding;
     int next_free_spot;     /* helpful to add individuals */
+    int generation;
     int current_size;
     int max_size;
-
-    /* Individuals encoding */
-
-    int chromosome_length;  /* genes per individual */
-    int nucleotides_length;
-    long int *nucleotides;  /* alleles' alphabet */
 };
 
-/* 
-    Individual functions.
+
+/*
+    Encoding functions.
 */
 
-struct individual * create_individual(int chromosome_length);
-struct individual * create_random_individual(struct population *population);
 
-/* 
-    Population functions.
-*/
-
-struct population * create_empty_population(
-    int max_size, 
-    int chromosome_length,
+struct encoding * create_encoding(
+    int genes_length,
     int nucleotides_length,
     long int *nucleotides
 );
-struct population * create_random_population(
-    int initial_size, 
+long int min_nucleotide_value(struct encoding *encoding);
+long int max_nucleotide_value(struct encoding *encoding);
+
+
+/*
+    Individual functions.
+*/
+
+
+struct individual * create_individual(struct encoding *encoding);
+struct individual * create_random_individual(struct population *population);
+
+
+/*
+    Population functions.
+*/
+
+
+struct population * create_empty_population(
     int max_size,
-    int chromosome_length,
-    int nucleotides_length,
-    long int *nucleotides
+    struct encoding *encoding
+);
+struct population * create_random_population(
+    int initial_size,
+    int max_size,
+    struct encoding *encoding
 );
 int add_individual(
     struct population *population,
     struct individual *new
 );
-long int min_nucleotide_value(struct population *population);
-long int max_nucleotide_value(struct population *population);
 

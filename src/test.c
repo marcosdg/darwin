@@ -32,8 +32,30 @@ void main(void)
 
     int i,
         locus;
+    struct encoding *encoding = create_encoding(
+            6                               /* genes length */,
+            5                               /* nucleotides length */,
+            (long int []){1, 2, 3, 4, 5}    /* nucleotides */
+    );
+    struct population *pop = create_random_population(
+            3                               /* initial size */,
+            10                              /* max size */,
+            encoding
+    );
 
-    long int alphabet[] = {0, 1};
+    for (i = 0; i < pop->current_size; i += 1) {
+        printf("\t Individual %i info: \n", i);
+        printf("\t\t genes: ");
+        for (locus = 0; locus < 6; locus += 1) {
+            printf("%li--", (pop->people[i])->genes[locus]);
+        }
+        printf("\n");
+        printf("\t\t fitness: %lf \n", (pop->people[i])->fitness);
+        printf("\t\t evolvability: %lf \n", (pop->people[i])->evolvability);
+    }
+    /*
+
+    //long int alphabet[] = {0, 1};
     struct population *pop = create_random_population(10, 10, 6, 2, alphabet);
     //struct population *pop = create_empty_population(4, 6, 2, alphabet);
 
@@ -55,7 +77,7 @@ void main(void)
         printf("\t\t fitness: %lf \n", (pop->people[i])->fitness);
         printf("\t\t evolvability: %lf \n", (pop->people[i])->evolvability);
     }
-
+*/
     /*
     int succeded = add_individual(pop, dad);
 
@@ -72,10 +94,10 @@ void main(void)
     */
     /*
     printf(" --- Randomize individual ---\n");
-    
+
     initialize_random_sequence();
     randomize_individual(dad, pop);
-    
+
     printf("\t\t genes: ");
     for (locus = 0; locus < 6; locus += 1) {
         printf("%li--", (pop->people[0])->genes[locus]);

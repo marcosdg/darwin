@@ -34,27 +34,29 @@
     Encoding.
 */
 
-struct encoding * create_encoding(
-    int genes_length,
-    int nucleotides_length,
-    long int *nucleotides
-) {
-    struct encoding *e = (struct encoding *) malloc(sizeof(struct encoding));
-    e->genes_length = genes_length;
-    e->nucleotides_length = nucleotides_length;
+struct Encoding * 
+create_encoding(long int *nucleotides,
+                int nucleotides_length,
+                int genes_length)
+{
+    struct Encoding *e = (struct Encoding *) malloc(sizeof(struct Encoding));
     e->nucleotides = nucleotides;
+    e->nucleotides_length = nucleotides_length;
+    e->genes_length = genes_length;
 
     return e;
 }
 
-long int min_nucleotide_value(struct encoding *encoding)
+long int
+min_nucleotide_value(struct Encoding *encoding)
 {
     if (!encoding) {
         error_verbose(__FILE__, "min_nucleotide_value", "'encoding' is NULL");
     }
     return encoding->nucleotides[0];
 }
-long int max_nucleotide_value(struct encoding *encoding)
+long int 
+max_nucleotide_value(struct Encoding *encoding)
 {
     if (!encoding) {
         error_verbose(__FILE__, "max_nucleotide_value", "'encoding' is NULL");
@@ -66,10 +68,11 @@ long int max_nucleotide_value(struct encoding *encoding)
     Individual.
 */
 
-struct individual * create_individual(struct encoding *encoding)
+struct Individual *
+create_individual(struct Encoding *encoding)
 {
-    struct individual *new = (struct individual *)
-                                malloc(sizeof(struct individual));
+    struct Individual *new = (struct Individual *)
+                                malloc(sizeof(struct Individual));
     long int *genes = (long int *) malloc(encoding->genes_length * GENE_BYTES);
 
     memset(genes, 0, encoding->genes_length * GENE_BYTES);
@@ -79,9 +82,10 @@ struct individual * create_individual(struct encoding *encoding)
 
     return new;
 }
-struct individual * create_random_individual(struct population *population)
+struct Individual *
+create_random_individual(struct Population *population)
 {
-    struct individual *new;
+    struct Individual *new;
 
     if (!population) {
         error_verbose(__FILE__,"create_random_individual", "'population is NULL'");
@@ -98,21 +102,21 @@ struct individual * create_random_individual(struct population *population)
     Population.
 */
 
-struct population * create_empty_population(
-    int max_size,
-    struct encoding *encoding
-) {
-    struct population *population;
-    struct individual **people;
+struct Population *
+create_empty_population(struct Encoding *encoding,
+                        int max_size)
+{
+    struct Population *population;
+    struct Individual **people;
 
     if (!encoding) {
         error_verbose(__FILE__, "create_empty_population", "'encoding' is NULL");
     }
-    population = (struct population *) malloc(sizeof(struct population));
-    people = (struct individual **) malloc(max_size * sizeof(struct individual));
+    population = (struct Population *) malloc(sizeof(struct Population));
+    people = (struct Individual **) malloc(max_size * sizeof(struct Individual));
 
-    population->people = people;
     population->encoding = encoding;
+    population->people = people;
     population->next_free_spot = 0;
     population->generation = 0;
     population->current_size = 0;
@@ -120,13 +124,13 @@ struct population * create_empty_population(
 
     return population;
 }
-struct population * create_random_population(
-    int initial_size,
-    int max_size,
-    struct encoding *encoding
-) {
-    struct population *population = create_empty_population(max_size, encoding);
-    struct individual *new;
+struct Population *
+create_random_population(struct Encoding *encoding,
+                            int initial_size,
+                            int max_size)  
+{
+    struct Population *population = create_empty_population(encoding, max_size);
+    struct Individual *new;
     int i;
 
     for (i = 0; i < initial_size; i += 1) {
@@ -136,10 +140,10 @@ struct population * create_random_population(
     return population;
 }
 
-int add_individual(
-    struct population *population,
-    struct individual *new
-) {
+int 
+add_individual(struct Population *population,
+                struct Individual *new)
+{
     int added = 0;
 
     if (!population || !new) {

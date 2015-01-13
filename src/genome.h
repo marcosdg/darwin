@@ -42,70 +42,71 @@
 #define CHROMOSOME_MIN_LENGTH 2
 
 /*
-    Data types.
+    Data structures.
 */
 
-struct encoding {
-    int genes_length;
-    int nucleotides_length;
+struct Encoding {
     long int *nucleotides;  /* possible gene values */
+    int nucleotides_length;
+    int genes_length;
 };
 
-struct individual {
-    long int *genes;
+struct Individual {
     double fitness;
     double evolvability;
+    long int *genes;
 };
 
-struct population {
-    struct individual **people;
-    struct encoding *encoding;
+struct Population {
+    struct Encoding *encoding;
+    struct Individual **people;
     int next_free_spot;     /* helpful to add individuals */
     int generation;
     int current_size;
     int max_size;
 };
 
-
 /*
-    Encoding functions.
+    Prototypes. 
 */
 
-
-struct encoding * create_encoding(
-    int genes_length,
-    int nucleotides_length,
-    long int *nucleotides
-);
-long int min_nucleotide_value(struct encoding *encoding);
-long int max_nucleotide_value(struct encoding *encoding);
+/* encoding */
 
 
-/*
-    Individual functions.
-*/
+extern struct Encoding *
+create_encoding(long int *nucleotides,
+                int nucleotides_length,
+                int genes_length);
+
+extern long int
+min_nucleotide_value(struct Encoding *encoding);
+
+extern long int
+max_nucleotide_value(struct Encoding *encoding);
 
 
-struct individual * create_individual(struct encoding *encoding);
-struct individual * create_random_individual(struct population *population);
+/* individual */
 
 
-/*
-    Population functions.
-*/
+extern struct Individual *
+create_individual(struct Encoding *encoding);
+
+extern struct Individual *
+create_random_individual(struct Population *population);
 
 
-struct population * create_empty_population(
-    int max_size,
-    struct encoding *encoding
-);
-struct population * create_random_population(
-    int initial_size,
-    int max_size,
-    struct encoding *encoding
-);
-int add_individual(
-    struct population *population,
-    struct individual *new
-);
+/* population */
+
+
+extern struct Population *
+create_empty_population(struct Encoding *encoding,
+                        int max_size);
+
+extern struct Population *
+create_random_population(struct Encoding *encoding,
+                            int initial_size,
+                            int max_size);
+int
+add_individual(struct Population *population,
+                struct Individual *new);
 

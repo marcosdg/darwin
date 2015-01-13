@@ -30,24 +30,25 @@ void main(void)
 {
     initialize_random_sequence();
 
-    int i,
-        locus;
-    struct encoding *encoding = create_encoding(
-            6                               /* genes length */,
-            5                               /* nucleotides length */,
-            (long int []){1, 2, 3, 4, 5}    /* nucleotides */
+    int i;
+    int locus;
+    struct Encoding *encoding = create_encoding(
+            (long int []){0, 1}             /* nucleotides */,
+            2                               /* nucleotides length */,
+            6                               /* genes length */
     );
-    struct population *pop = create_random_population(
+    
+    struct Population *pop = create_random_population(
+            encoding,
             3                               /* initial size */,
-            10                              /* max size */,
-            encoding
+            10                              /* max size */
     );
 
     for (i = 0; i < pop->current_size; i += 1) {
         printf("\t Individual %i info: \n", i);
         printf("\t\t genes: ");
         for (locus = 0; locus < 6; locus += 1) {
-            printf("%li--", (pop->people[i])->genes[locus]);
+            printf("%li -- ", (pop->people[i])->genes[locus]);
         }
         printf("\n");
         printf("\t\t fitness: %lf \n", (pop->people[i])->fitness);

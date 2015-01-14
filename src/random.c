@@ -29,7 +29,7 @@
 #include <time.h>
 #include "utils.c"
 
-static sequence_started = 0;
+static int sequence_started = 0;
 
 
 void 

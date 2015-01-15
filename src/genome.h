@@ -35,18 +35,19 @@
   genetic representation of individuals for the problem.
 
 */
-#define GENE_BYTES sizeof(long int)
+#define GENE_BYTES sizeof(unsigned int)
 /*
     To perform crossover individuals must have, at least, 2 genes.
-*/
+
 #define CHROMOSOME_MIN_LENGTH 2
+*/
 
 /*
     Data structures.
 */
 
 struct Encoding {
-    long int *nucleotides;  /* possible gene values */
+    unsigned int *nucleotides;  /* possible gene values */
     int nucleotides_length;
     int genes_length;
 };
@@ -54,7 +55,7 @@ struct Encoding {
 struct Individual {
     double fitness;
     double evolvability;
-    long int *genes;
+    unsigned int *genes;
 };
 
 struct Population {
@@ -67,21 +68,21 @@ struct Population {
 };
 
 /*
-    Prototypes. 
+    Prototypes.
 */
 
 /* encoding */
 
 
 extern struct Encoding *
-create_encoding(long int *nucleotides,
+create_encoding(unsigned int *nucleotides,
                 int nucleotides_length,
                 int genes_length);
 
-extern long int
+extern unsigned int
 min_nucleotide_value(struct Encoding *encoding);
 
-extern long int
+extern unsigned int
 max_nucleotide_value(struct Encoding *encoding);
 
 

@@ -32,18 +32,18 @@
 static int sequence_started = 0;
 
 
-void
+void 
 initialize_random_sequence(void)
 {
     srand((unsigned int) time(NULL));
     sequence_started = 1;
 }
 
-unsigned int
-random_in_range_exclusive(unsigned int lower,
-                            unsigned int upper)
+long int
+random_in_range_exclusive(long int lower,
+                            long int upper)
 {
-    unsigned int length;
+    long int length;
 
     if (!sequence_started) {
         error_verbose(__FILE__, "random_in_range_exclusive",
@@ -53,19 +53,19 @@ random_in_range_exclusive(unsigned int lower,
     return lower + ((rand() * length) / RAND_MAX);
 }
 
-unsigned int
-random_in_range_inclusive(unsigned int lower,
-                            unsigned int upper)
+long int
+random_in_range_inclusive(long int lower,
+                            long int upper)
 {
     return random_in_range_exclusive(lower, upper + 1);
 }
 
-unsigned int random_excluding(unsigned int lower,
-                            unsigned int banned,
-                            unsigned int upper)
+long int random_excluding(long int lower,
+                            long int banned,
+                            long int upper)
 {
-    unsigned int r = 0;
-
+    long int r = 0;
+    
     for (;;) {
         r = random_in_range_inclusive(lower, upper);
         if (r != banned) {
@@ -75,10 +75,10 @@ unsigned int random_excluding(unsigned int lower,
     return r;
 }
 
-int randomize_ints(unsigned int *ints,
+int randomize_ints(long int *ints,
                     int length,
-                    unsigned int lower,
-                    unsigned int upper)
+                    long int lower,
+                    long int upper)
 {
     int i;
 

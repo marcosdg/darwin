@@ -34,8 +34,8 @@
     Encoding.
 */
 
-struct Encoding *
-create_encoding(unsigned int *nucleotides,
+struct Encoding * 
+create_encoding(long int *nucleotides,
                 int nucleotides_length,
                 int genes_length)
 {
@@ -47,7 +47,7 @@ create_encoding(unsigned int *nucleotides,
     return e;
 }
 
-unsigned int
+long int
 min_nucleotide_value(struct Encoding *encoding)
 {
     if (!encoding) {
@@ -55,7 +55,7 @@ min_nucleotide_value(struct Encoding *encoding)
     }
     return encoding->nucleotides[0];
 }
-unsigned int
+long int 
 max_nucleotide_value(struct Encoding *encoding)
 {
     if (!encoding) {
@@ -73,7 +73,7 @@ create_individual(struct Encoding *encoding)
 {
     struct Individual *new = (struct Individual *)
                                 malloc(sizeof(struct Individual));
-    unsigned int *genes = (unsigned int *) malloc(encoding->genes_length * GENE_BYTES);
+    long int *genes = (long int *) malloc(encoding->genes_length * GENE_BYTES);
 
     memset(genes, 0, encoding->genes_length * GENE_BYTES);
     new->genes = genes;
@@ -127,7 +127,7 @@ create_empty_population(struct Encoding *encoding,
 struct Population *
 create_random_population(struct Encoding *encoding,
                             int initial_size,
-                            int max_size)
+                            int max_size)  
 {
     struct Population *population = create_empty_population(encoding, max_size);
     struct Individual *new;
@@ -140,7 +140,7 @@ create_random_population(struct Encoding *encoding,
     return population;
 }
 
-int
+int 
 add_individual(struct Population *population,
                 struct Individual *new)
 {

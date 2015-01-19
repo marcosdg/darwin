@@ -69,7 +69,7 @@ void main(void)
     printf("Twos: %f \n", twos / NUM_RUNS);
     printf("Threes: %f \n", threes / NUM_RUNS);
     printf("Fours: %f \n", fours / NUM_RUNS);
-
+/*
     printf("======== TEST RANDOM_IN_RANGE_INCLUSIVE ========\n");
 
     zeroes = 0.0;
@@ -132,5 +132,6 @@ void main(void)
     for (i = 0; i < 6; i += 1) {
         printf("%li \n", ints[i]);
     }
+*/
 }
 

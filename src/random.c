@@ -25,8 +25,10 @@
   Routines to manipulate random numbers
 
 */
+#include <assert.h>
 #include <math.h>
-#include <time.h>
+#include <sys/time.h>
+//#include <time.h>
 #include "utils.c"
 
 static int sequence_started = 0;
@@ -35,7 +37,16 @@ static int sequence_started = 0;
 void 
 initialize_random_sequence(void)
 {
-    srand((unsigned int) time(NULL));
+    struct timeval now;
+    unsigned int seed;
+    int failed;
+
+    failed = gettimeofday(&now, 0);
+    assert(failed == 0);
+
+    seed = (unsigned int) (now.tv_sec * now.tv_usec);
+    srand(seed);
+
     sequence_started = 1;
 }
 

@@ -28,7 +28,6 @@
 #include <assert.h>
 #include <math.h>
 #include <sys/time.h>
-//#include <time.h>
 #include "utils.c"
 
 static int sequence_started = 0;
@@ -75,14 +74,12 @@ long int random_excluding(long int lower,
                             long int banned,
                             long int upper)
 {
-    long int r = 0;
-    
-    for (;;) {
+    long int r;
+
+    do {
         r = random_in_range_inclusive(lower, upper);
-        if (r != banned) {
-            break;
-        }
-    }
+    } while (r == banned);
+
     return r;
 }
 

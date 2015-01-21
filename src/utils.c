@@ -36,7 +36,8 @@ error(char *details) {
     fputs("darwin Error: ", stderr);
     fputs(details, stderr);
     fputc('\n', stderr);
-    exit(1);
+
+    exit(EXIT_FAILURE);
 }
 
 void
@@ -49,6 +50,7 @@ error_verbose(char *file_name,
     fprintf(stderr, "(FUNCTION %s) ", function_name);
     fputs(details, stderr);
     fputc('\n', stderr);
-    exit(1);
+
+    exit(EXIT_FAILURE);
 }
 

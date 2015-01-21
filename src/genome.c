@@ -26,9 +26,7 @@
   Basic routines to manipulate individuals and the population.
 
 */
-#include <string.h>
 #include "genome.h"
-#include "random.c"
 
 /*
     Encoding.
@@ -55,6 +53,7 @@ min_nucleotide_value(struct Encoding *encoding)
     }
     return encoding->nucleotides[0];
 }
+
 long int
 max_nucleotide_value(struct Encoding *encoding)
 {
@@ -82,6 +81,7 @@ create_individual(struct Encoding *encoding)
 
     return new;
 }
+
 struct Individual *
 create_random_individual(struct Population *population)
 {
@@ -124,6 +124,7 @@ create_empty_population(struct Encoding *encoding,
 
     return population;
 }
+
 struct Population *
 create_random_population(struct Encoding *encoding,
                             int initial_size,
@@ -158,4 +159,3 @@ add_individual(struct Population *population,
     }
     return added;
 }
-

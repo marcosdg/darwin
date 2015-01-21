@@ -25,7 +25,6 @@
   Routines to manipulate random numbers.
 
 */
-
 #include "random.h"
 
 static int sequence_started = 0;

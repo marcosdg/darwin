@@ -24,7 +24,6 @@
   Error reporting functions definition.
 
 */
-
 #include "report.h"
 
 void

@@ -35,11 +35,18 @@
   genetic representation of individuals for the problem.
 
 */
+#ifndef GENOME_H_INCLUDED
+#define GENOME_H_INCLUDED
+
+#include <string.h>
+#include "random.h" 
+
 #define GENE_BYTES sizeof(long int)
+
 /*
     To perform crossover individuals must have, at least, 2 genes.
 */
-#define CHROMOSOME_MIN_LENGTH 2
+// #define CHROMOSOME_MIN_LENGTH 2
 
 /*
     Data structures.
@@ -110,3 +117,4 @@ extern int
 add_individual(struct Population *population,
                 struct Individual *new);
 
+#endif /* GENOME_H_INCLUDED */

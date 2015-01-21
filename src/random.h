@@ -31,9 +31,7 @@
 #include <assert.h>
 #include <math.h>
 #include <sys/time.h>
-
 #include "report.h"
-
 
 extern void
 initialize_random_sequence(void);

@@ -20,8 +20,8 @@
   report.h
   29-12-14
   Marcos Díez García
-  
-  Error reporting functions. 
+
+  Error reporting functions.
 
 */
 #ifndef REPORT_H_INCLUDED
@@ -31,7 +31,7 @@
 #include <stdio.h>
 
 extern void
-error(char *details); 
+error(char *details);
 
 extern void
 error_verbose(char *file_name,

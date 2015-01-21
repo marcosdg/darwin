@@ -21,7 +21,7 @@
   29-12-14
   Marcos Díez García
 
-  Error reporting functions definition. 
+  Error reporting functions definition.
 
 */
 

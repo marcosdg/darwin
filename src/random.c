@@ -31,7 +31,7 @@
 static int sequence_started = 0;
 
 
-void 
+void
 initialize_random_sequence(void)
 {
     struct timeval now;
@@ -82,7 +82,7 @@ random_excluding(long int lower,
     return r;
 }
 
-int 
+int
 randomize_ints(long int *ints,
                 int length,
                 long int lower,

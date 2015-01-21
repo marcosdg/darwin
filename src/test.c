@@ -37,7 +37,7 @@ void main(void)
             2                               /* nucleotides length */,
             6                               /* genes length */
     );
-    
+
     struct Population *pop = create_random_population(
             encoding,
             3                               /* initial size */,

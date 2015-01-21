@@ -67,7 +67,7 @@ struct Population {
 };
 
 /*
-    Prototypes. 
+    Prototypes.
 */
 
 /* encoding */

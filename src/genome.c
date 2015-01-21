@@ -34,7 +34,7 @@
     Encoding.
 */
 
-struct Encoding * 
+struct Encoding *
 create_encoding(long int *nucleotides,
                 int nucleotides_length,
                 int genes_length)
@@ -55,7 +55,7 @@ min_nucleotide_value(struct Encoding *encoding)
     }
     return encoding->nucleotides[0];
 }
-long int 
+long int
 max_nucleotide_value(struct Encoding *encoding)
 {
     if (!encoding) {
@@ -127,7 +127,7 @@ create_empty_population(struct Encoding *encoding,
 struct Population *
 create_random_population(struct Encoding *encoding,
                             int initial_size,
-                            int max_size)  
+                            int max_size)
 {
     struct Population *population = create_empty_population(encoding, max_size);
     struct Individual *new;
@@ -140,7 +140,7 @@ create_random_population(struct Encoding *encoding,
     return population;
 }
 
-int 
+int
 add_individual(struct Population *population,
                 struct Individual *new)
 {

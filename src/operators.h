@@ -26,7 +26,10 @@
   replacement.
 
 */
-#include "operators.h"
+#ifndef OPERATORS_H_INCLUDED
+#define OPERATORS_H_INCLUDED
+
+#include "genome.h"
 
 /*
 int single_point_crossover(struct individual *dad, struct individual *mom,
@@ -80,3 +83,4 @@ int adaptative_mutation(struct population *pop,
 }
 */
 
+#endif /* OPERATORS_H_INCLUDED */

@@ -22,13 +22,11 @@
   Marcos Díez García
   02-01-15
 
-  Routines to manipulate random numbers
+  Routines to manipulate random numbers.
 
 */
-#include <assert.h>
-#include <math.h>
-#include <sys/time.h>
-#include "utils.c"
+
+#include "random.h"
 
 static int sequence_started = 0;
 
@@ -70,9 +68,10 @@ random_in_range_inclusive(long int lower,
     return random_in_range_exclusive(lower, upper + 1);
 }
 
-long int random_excluding(long int lower,
-                            long int banned,
-                            long int upper)
+long int
+random_excluding(long int lower,
+                    long int banned,
+                    long int upper)
 {
     long int r;
 
@@ -83,10 +82,11 @@ long int random_excluding(long int lower,
     return r;
 }
 
-int randomize_ints(long int *ints,
-                    int length,
-                    long int lower,
-                    long int upper)
+int 
+randomize_ints(long int *ints,
+                int length,
+                long int lower,
+                long int upper)
 {
     int i;
 

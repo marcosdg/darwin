@@ -23,7 +23,7 @@
   Just to play around.
 
 */
-#include "random.c"
+#include "random.h"
 
 
 static double NUM_RUNS = 1000;

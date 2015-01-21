@@ -17,19 +17,15 @@
 
 */
 /*
-  utils.c
+  report.c
   29-12-14
   Marcos Díez García
 
-  Some miscellaneous functions.
+  Error reporting functions definition. 
 
 */
-#include <stdlib.h>
-#include <stdio.h>
 
-/*
-    Error reporting.
-*/
+#include "report.h"
 
 void
 error(char *details) {

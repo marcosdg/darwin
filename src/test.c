@@ -23,7 +23,7 @@
   Just to play around.
 
 */
-#include "operators.c"
+#include "operators.h"
 
 
 void main(void)

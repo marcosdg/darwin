@@ -39,7 +39,7 @@
 #define GENOME_H_INCLUDED
 
 #include <string.h>
-#include "random.h" 
+#include "random.h"
 
 #define GENE_BYTES sizeof(long int)
 

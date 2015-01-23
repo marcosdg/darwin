@@ -30,12 +30,30 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-extern void
-error(char *details);
+/*
+    For compatibility with older versions of GCC.
+    (__FUNCTION__ is not standardized)
+*/
 
-extern void
-error_verbose(char *file_name,
-                char *function_name,
-                char *details);
+#if __STDC_VERSION__ < 199901L
+#   if __GNUC__ >= 2
+#       define __func__ __FUNCTION__
+#   else
+#       define __func__ "<unknown>"
+#   endif
+#endif
+
+#define ERROR(details)                                      \
+    do {                                                    \
+        fprintf(stderr, "darwin error: %s\n", (details));   \
+        exit(EXIT_FAILURE);                                 \
+    } while(0)
+
+#define ERROR_VERBOSE(details)                                              \
+    do {                                                                    \
+        fprintf(stderr, "darwin error: [%s:%s] %s\n", __FILE__, __func__,   \
+                (details));                                                 \
+        exit(EXIT_FAILURE);                                                 \
+    } while(0)
 
 #endif /* REPORT_H_INCLUDED */

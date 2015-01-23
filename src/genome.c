@@ -49,7 +49,7 @@ long int
 min_nucleotide_value(struct Encoding *encoding)
 {
     if (!encoding) {
-        error_verbose(__FILE__, "min_nucleotide_value", "'encoding' is NULL");
+        ERROR_VERBOSE("'encoding' is null");
     }
     return encoding->nucleotides[0];
 }
@@ -58,7 +58,7 @@ long int
 max_nucleotide_value(struct Encoding *encoding)
 {
     if (!encoding) {
-        error_verbose(__FILE__, "max_nucleotide_value", "'encoding' is NULL");
+        ERROR_VERBOSE("'encoding' is null");
     }
     return encoding->nucleotides[encoding->nucleotides_length - 1];
 }
@@ -88,7 +88,7 @@ create_random_individual(struct Population *population)
     struct Individual *new;
 
     if (!population) {
-        error_verbose(__FILE__,"create_random_individual", "'population is NULL'");
+        ERROR_VERBOSE("'population' is null");
     }
     new = create_individual(population->encoding);
     randomize_ints(new->genes,
@@ -110,7 +110,7 @@ create_empty_population(struct Encoding *encoding,
     struct Individual **people;
 
     if (!encoding) {
-        error_verbose(__FILE__, "create_empty_population", "'encoding' is NULL");
+        ERROR_VERBOSE("'encoding' is null");
     }
     population = (struct Population *) malloc(sizeof(struct Population));
     people = (struct Individual **) malloc(max_size * sizeof(struct Individual));
@@ -148,8 +148,7 @@ add_individual(struct Population *population,
     int added = 0;
 
     if (!population || !new) {
-       error_verbose(__FILE__, "add_individual",
-                     "'population' or 'new' is NULL.");
+        ERROR_VERBOSE("'population' or 'new' is null");
     }
     if (population->current_size < population->max_size) {
         population->people[population->next_free_spot] = new;

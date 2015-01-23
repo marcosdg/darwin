@@ -37,8 +37,7 @@ initialize_random_sequence(void)
     unsigned int seed;
 
     if (clock_gettime(CLOCK_REALTIME, &now) == -1) {
-        error_verbose(__FILE__, "initialize_random_sequence",
-                        "Could not generate seed correctly.");
+        ERROR_VERBOSE("Could not generate seed correctly");
     }
     seed = (unsigned int) (now.tv_sec * now.tv_nsec);
     srand(seed);
@@ -52,8 +51,7 @@ random_in_range_exclusive(long int lower,
     long int length;
 
     if (!sequence_started) {
-        error_verbose(__FILE__, "random_in_range_exclusive",
-                      "Random sequence not started.");
+        ERROR_VERBOSE("Random sequence not started");
     }
     length = abs(upper - lower);
     return lower + ((rand() * length) / RAND_MAX);
@@ -89,11 +87,10 @@ randomize_ints(long int *ints,
     int i;
 
     if (!ints) {
-        error_verbose(__FILE__, "random_in_range", "'ints' is NULL.");
+        ERROR_VERBOSE("'ints' is NULL");
     }
     for (i = 0; i < length; i += 1) {
         ints[i] = random_in_range_inclusive(lower, upper);
     }
     return 0;
 }
-

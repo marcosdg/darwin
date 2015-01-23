@@ -30,7 +30,7 @@
 
 #include <assert.h>
 #include <math.h>
-#include <sys/time.h>
+#include <time.h>
 #include "report.h"
 
 extern void

@@ -33,16 +33,15 @@ static int sequence_started = 0;
 void
 initialize_random_sequence(void)
 {
-    struct timeval now;
+    struct timespec now;
     unsigned int seed;
-    int failed;
 
-    failed = gettimeofday(&now, 0);
-    assert(failed == 0);
-
-    seed = (unsigned int) (now.tv_sec * now.tv_usec);
+    if (clock_gettime(CLOCK_REALTIME, &now) == -1) {
+        error_verbose(__FILE__, "initialize_random_sequence",
+                        "Could not generate seed correctly.");
+    }
+    seed = (unsigned int) (now.tv_sec * now.tv_nsec);
     srand(seed);
-
     sequence_started = 1;
 }
 

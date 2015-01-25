@@ -48,7 +48,7 @@ random_excluding(long int lower,
                     long int banned,
                     long int upper);
 
-extern int
+extern void
 randomize_ints(long int *ints,
                 int length,
                 long int lower,

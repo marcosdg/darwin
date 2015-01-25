@@ -78,7 +78,7 @@ random_excluding(long int lower,
     return r;
 }
 
-int
+void
 randomize_ints(long int *ints,
                 int length,
                 long int lower,
@@ -90,5 +90,4 @@ randomize_ints(long int *ints,
     for (i = 0; i < length; i += 1) {
         ints[i] = random_in_range_inclusive(lower, upper);
     }
-    return 0;
 }

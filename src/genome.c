@@ -148,19 +148,15 @@ create_random_population(struct Encoding *encoding,
     return population;
 }
 
-int
+void
 add_individual(struct Population *population,
                 struct Individual *new)
 {
     assert((population != NULL) && (new != NULL));
 
-    int added = 0;
-
     if (population->current_size < population->max_size) {
         population->people[population->next_free_spot] = new;
         population->current_size += 1;
         population->next_free_spot += 1;
-        added = 1;
     }
-    return added;
 }

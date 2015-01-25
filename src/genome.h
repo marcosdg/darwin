@@ -109,7 +109,7 @@ extern struct Population *
 create_random_population(struct Encoding *encoding,
                             int initial_size,
                             int max_size);
-extern int
+extern void
 add_individual(struct Population *population,
                 struct Individual *new);
 

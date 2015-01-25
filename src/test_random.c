@@ -39,7 +39,7 @@ void main(void)
            threes = 0.0,
            fours = 0.0;
 
-//    initialize_random_sequence();
+    initialize_random_sequence();
 /*
     printf("======== TEST RANDOM_IN_RANGE_EXCLUSIVE ========\n");
 

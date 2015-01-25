@@ -27,6 +27,7 @@
 */
 #include "random.h"
 
+
 static int sequence_started = 0;
 
 
@@ -48,13 +49,11 @@ long int
 random_in_range_exclusive(long int lower,
                             long int upper)
 {
-    long int length;
+    assert((lower <= upper) && (sequence_started == 1));
 
-    if (!sequence_started) {
-        ERROR_VERBOSE("Random sequence not started");
-    }
-    length = abs(upper - lower);
-    return lower + ((rand() * length) / RAND_MAX);
+    long int width = abs(upper - lower);
+    
+    return lower + ((rand() * width) / RAND_MAX);
 }
 
 long int
@@ -69,8 +68,9 @@ random_excluding(long int lower,
                     long int banned,
                     long int upper)
 {
-    long int r;
+    assert((lower <= banned) && (banned <= upper));
 
+    long int r;
     do {
         r = random_in_range_inclusive(lower, upper);
     } while (r == banned);
@@ -84,11 +84,9 @@ randomize_ints(long int *ints,
                 long int lower,
                 long int upper)
 {
-    int i;
+    assert((ints != NULL) && (length > 0));
 
-    if (!ints) {
-        ERROR_VERBOSE("'ints' is NULL");
-    }
+    int i;
     for (i = 0; i < length; i += 1) {
         ints[i] = random_in_range_inclusive(lower, upper);
     }

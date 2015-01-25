@@ -28,7 +28,6 @@
 #ifndef RANDOM_H_INCLUDED
 #define RANDOM_H_INCLUDED
 
-#include <assert.h>
 #include <math.h>
 #include <time.h>
 #include "report.h"

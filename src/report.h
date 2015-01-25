@@ -27,14 +27,14 @@
 #ifndef REPORT_H_INCLUDED
 #define REPORT_H_INCLUDED
 
-#include <stdlib.h>
+#include <assert.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 /*
     For compatibility with older versions of GCC.
     (__FUNCTION__ is not standardized)
 */
-
 #if __STDC_VERSION__ < 199901L
 #   if __GNUC__ >= 2
 #       define __func__ __FUNCTION__
@@ -42,6 +42,7 @@
 #       define __func__ "<unknown>"
 #   endif
 #endif
+
 
 #define ERROR(details)                                      \
     do {                                                    \

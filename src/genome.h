@@ -46,7 +46,7 @@
 /*
     To perform crossover individuals must have, at least, 2 genes.
 */
-// #define CHROMOSOME_MIN_LENGTH 2
+#define MIN_CHROMOSOME_LENGTH 2
 
 /*
     Data structures.

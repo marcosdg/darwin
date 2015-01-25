@@ -28,6 +28,7 @@
 */
 #include "genome.h"
 
+
 /*
     Encoding.
 */
@@ -37,7 +38,13 @@ create_encoding(long int *nucleotides,
                 int nucleotides_length,
                 int genes_length)
 {
+    assert((nucleotides != NULL) && (nucleotides_length > 0)
+            && (genes_length >= MIN_CHROMOSOME_LENGTH));
+
     struct Encoding *e = (struct Encoding *) malloc(sizeof(struct Encoding));
+    if (!e) {
+        ERROR_VERBOSE("Could not create encoding");
+    }
     e->nucleotides = nucleotides;
     e->nucleotides_length = nucleotides_length;
     e->genes_length = genes_length;
@@ -48,18 +55,14 @@ create_encoding(long int *nucleotides,
 long int
 min_nucleotide_value(struct Encoding *encoding)
 {
-    if (!encoding) {
-        ERROR_VERBOSE("'encoding' is null");
-    }
+    assert(encoding != NULL);
     return encoding->nucleotides[0];
 }
 
 long int
 max_nucleotide_value(struct Encoding *encoding)
 {
-    if (!encoding) {
-        ERROR_VERBOSE("'encoding' is null");
-    }
+    assert(encoding != NULL);
     return encoding->nucleotides[encoding->nucleotides_length - 1];
 }
 
@@ -70,10 +73,14 @@ max_nucleotide_value(struct Encoding *encoding)
 struct Individual *
 create_individual(struct Encoding *encoding)
 {
+    assert(encoding != NULL);
+
     struct Individual *new = (struct Individual *)
                                 malloc(sizeof(struct Individual));
     long int *genes = (long int *) malloc(encoding->genes_length * GENE_BYTES);
-
+    if (!new || !genes) {
+        ERROR_VERBOSE("Could not create individual");
+    }
     memset(genes, 0, encoding->genes_length * GENE_BYTES);
     new->genes = genes;
     new->fitness = 0.0;
@@ -85,16 +92,13 @@ create_individual(struct Encoding *encoding)
 struct Individual *
 create_random_individual(struct Population *population)
 {
-    struct Individual *new;
+    assert(population != NULL);
 
-    if (!population) {
-        ERROR_VERBOSE("'population' is null");
-    }
-    new = create_individual(population->encoding);
+    struct Individual *new = create_individual(population->encoding);
     randomize_ints(new->genes,
-                   population->encoding->genes_length,
-                   min_nucleotide_value(population->encoding),
-                   max_nucleotide_value(population->encoding));
+                    population->encoding->genes_length,
+                    min_nucleotide_value(population->encoding),
+                    max_nucleotide_value(population->encoding));
     return new;
 }
 
@@ -106,15 +110,15 @@ struct Population *
 create_empty_population(struct Encoding *encoding,
                         int max_size)
 {
-    struct Population *population;
-    struct Individual **people;
+    assert((encoding != NULL) && (max_size > 0));
 
-    if (!encoding) {
-        ERROR_VERBOSE("'encoding' is null");
+    struct Population *population = (struct Population *)
+                                        malloc(sizeof(struct Population));
+    struct Individual **people = (struct Individual **)
+                                    malloc(max_size * sizeof(struct Individual));
+    if (!population || !people) {
+        ERROR_VERBOSE("Could not create empty population");
     }
-    population = (struct Population *) malloc(sizeof(struct Population));
-    people = (struct Individual **) malloc(max_size * sizeof(struct Individual));
-
     population->encoding = encoding;
     population->people = people;
     population->next_free_spot = 0;
@@ -130,6 +134,9 @@ create_random_population(struct Encoding *encoding,
                             int initial_size,
                             int max_size)
 {
+    assert((encoding != NULL) && (initial_size > 0) && (max_size > 0)
+            && (initial_size <= max_size));
+
     struct Population *population = create_empty_population(encoding, max_size);
     struct Individual *new;
     int i;
@@ -145,11 +152,10 @@ int
 add_individual(struct Population *population,
                 struct Individual *new)
 {
+    assert((population != NULL) && (new != NULL));
+
     int added = 0;
 
-    if (!population || !new) {
-        ERROR_VERBOSE("'population' or 'new' is null");
-    }
     if (population->current_size < population->max_size) {
         population->people[population->next_free_spot] = new;
         population->current_size += 1;

@@ -54,7 +54,7 @@
 */
 
 struct Encoding {
-    long int *nucleotides;  /* possible gene values */
+    long int *nucleotides;  /* alphabet of symbols of which genes are made */
     int nucleotides_length;
     int genes_length;
 };

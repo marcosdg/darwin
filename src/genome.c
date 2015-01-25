@@ -90,15 +90,15 @@ create_individual(struct Encoding *encoding)
 }
 
 struct Individual *
-create_random_individual(struct Population *population)
+create_random_individual(struct Encoding *encoding)
 {
-    assert(population != NULL);
+    assert(encoding != NULL);
 
-    struct Individual *new = create_individual(population->encoding);
+    struct Individual *new = create_individual(encoding);
     randomize_ints(new->genes,
-                    population->encoding->genes_length,
-                    min_nucleotide_value(population->encoding),
-                    max_nucleotide_value(population->encoding));
+                    encoding->genes_length,
+                    min_nucleotide_value(encoding),
+                    max_nucleotide_value(encoding));
     return new;
 }
 
@@ -142,7 +142,7 @@ create_random_population(struct Encoding *encoding,
     int i;
 
     for (i = 0; i < initial_size; i += 1) {
-        new = create_random_individual(population);
+        new = create_random_individual(encoding);
         add_individual(population, new);
     }
     return population;

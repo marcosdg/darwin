@@ -41,12 +41,13 @@
 #include <string.h>
 #include "random.h"
 
-#define GENE_BYTES sizeof(long int)
 
+#define GENE_BYTES sizeof(long int)
 /*
     To perform crossover individuals must have, at least, 2 genes.
 */
 #define MIN_CHROMOSOME_LENGTH 2
+
 
 /*
     Data structures.
@@ -79,7 +80,6 @@ struct Population {
 
 /* encoding */
 
-
 extern struct Encoding *
 create_encoding(long int *nucleotides,
                 int nucleotides_length,
@@ -91,19 +91,15 @@ min_nucleotide_value(struct Encoding *encoding);
 extern long int
 max_nucleotide_value(struct Encoding *encoding);
 
-
 /* individual */
-
 
 extern struct Individual *
 create_individual(struct Encoding *encoding);
 
 extern struct Individual *
-create_random_individual(struct Population *population);
-
+create_random_individual(struct Encoding *encoding);
 
 /* population */
-
 
 extern struct Population *
 create_empty_population(struct Encoding *encoding,

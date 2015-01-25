@@ -52,7 +52,7 @@ random_in_range_exclusive(long int lower,
     assert((lower <= upper) && (sequence_started == 1));
 
     long int width = abs(upper - lower);
-    
+
     return lower + ((rand() * width) / RAND_MAX);
 }
 

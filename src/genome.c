@@ -34,36 +34,17 @@
 */
 
 struct Encoding *
-create_encoding(long int *nucleotides,
-                int nucleotides_length,
-                int genes_length)
+create_encoding(int genes_length)
 {
-    assert((nucleotides != NULL) && (nucleotides_length > 0)
-            && (genes_length >= MIN_CHROMOSOME_LENGTH));
+    assert(genes_length >= MIN_CHROMOSOME_LENGTH);
 
     struct Encoding *e = (struct Encoding *) malloc(sizeof(struct Encoding));
     if (!e) {
         ERROR_VERBOSE("Could not create encoding");
     }
-    e->nucleotides = nucleotides;
-    e->nucleotides_length = nucleotides_length;
     e->genes_length = genes_length;
 
     return e;
-}
-
-long int
-min_nucleotide_value(struct Encoding *encoding)
-{
-    assert(encoding != NULL);
-    return encoding->nucleotides[0];
-}
-
-long int
-max_nucleotide_value(struct Encoding *encoding)
-{
-    assert(encoding != NULL);
-    return encoding->nucleotides[encoding->nucleotides_length - 1];
 }
 
 /*
@@ -95,10 +76,8 @@ create_random_individual(struct Encoding *encoding)
     assert(encoding != NULL);
 
     struct Individual *new = create_individual(encoding);
-    randomize_ints(new->genes,
-                    encoding->genes_length,
-                    min_nucleotide_value(encoding),
-                    max_nucleotide_value(encoding));
+    randomize_bins(new->genes, encoding->genes_length);
+
     return new;
 }
 

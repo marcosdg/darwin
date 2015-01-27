@@ -54,8 +54,6 @@
 */
 
 struct Encoding {
-    long int *nucleotides;  /* alphabet of symbols of which genes are made */
-    int nucleotides_length;
     int genes_length;
 };
 
@@ -81,15 +79,7 @@ struct Population {
 /* encoding */
 
 extern struct Encoding *
-create_encoding(long int *nucleotides,
-                int nucleotides_length,
-                int genes_length);
-
-extern long int
-min_nucleotide_value(struct Encoding *encoding);
-
-extern long int
-max_nucleotide_value(struct Encoding *encoding);
+create_encoding(int genes_length);
 
 /* individual */
 

@@ -30,7 +30,6 @@
 
 static int sequence_started = 0;
 
-
 void
 initialize_random_sequence(void)
 {
@@ -45,6 +44,7 @@ initialize_random_sequence(void)
     sequence_started = 1;
 }
 
+
 long int
 random_in_range_exclusive(long int lower,
                             long int upper)
@@ -55,14 +55,12 @@ random_in_range_exclusive(long int lower,
 
     return lower + ((rand() * width) / RAND_MAX);
 }
-
 long int
 random_in_range_inclusive(long int lower,
                             long int upper)
 {
     return random_in_range_exclusive(lower, upper + 1);
 }
-
 long int
 random_excluding(long int lower,
                     long int banned,
@@ -91,3 +89,10 @@ randomize_ints(long int *ints,
         ints[i] = random_in_range_inclusive(lower, upper);
     }
 }
+void
+randomize_bins(long int *bins,
+                int length)
+{
+    randomize_ints(bins, length, 0, 1);
+}
+

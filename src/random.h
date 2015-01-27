@@ -54,4 +54,8 @@ randomize_ints(long int *ints,
                 long int lower,
                 long int upper);
 
+extern void
+randomize_bins(long int *bins,
+                int length);
+
 #endif /* RANDOM_H_INCLUDED */

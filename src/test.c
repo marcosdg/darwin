@@ -34,8 +34,6 @@ void main(void)
     int i;
     int locus;
     struct Encoding *encoding = create_encoding(
-            (long int []){0, 1}             /* nucleotides */,
-            2                               /* nucleotides length */,
             6                               /* genes length */
     );
 

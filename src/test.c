@@ -34,7 +34,8 @@ void main(void)
     int i;
     int locus;
     struct Encoding *encoding = create_encoding(
-            6                               /* genes length */
+            1                               /* units per gene */,
+            6                               /* dna length */
     );
 
     struct Population *pop = create_random_population(
@@ -48,7 +49,7 @@ void main(void)
         printf("\t Individual %i info: \n", i);
         printf("\t\t genes: ");
         for (locus = 0; locus < 6; locus += 1) {
-            printf("%li -- ", (pop->people[i])->genes[locus]);
+            printf("%li -- ", (pop->people[i])->dna[locus]);
         }
         printf("\n");
         printf("\t\t fitness: %lf \n", (pop->people[i])->fitness);

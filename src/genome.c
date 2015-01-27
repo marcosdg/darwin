@@ -34,17 +34,27 @@
 */
 
 struct Encoding *
-create_encoding(int genes_length)
+create_encoding(int units_per_gene,
+                int dna_length)
 {
-    assert(genes_length >= MIN_CHROMOSOME_LENGTH);
+    assert((units_per_gene >= MIN_UNITS_PER_GENE)
+            && (dna_length >= MIN_DNA_LENGTH));
 
     struct Encoding *e = (struct Encoding *) malloc(sizeof(struct Encoding));
     if (!e) {
         ERROR_VERBOSE("Could not create encoding");
     }
-    e->genes_length = genes_length;
+    e->units_per_gene = units_per_gene;
+    e->dna_length = dna_length;
 
     return e;
+}
+
+int
+dna_byte_size(struct Encoding *e)
+{
+    assert(e != NULL);
+    return (UNIT_SIZE * (e->units_per_gene) * (e->dna_length));
 }
 
 /*
@@ -52,33 +62,33 @@ create_encoding(int genes_length)
 */
 
 struct Individual *
-create_individual(struct Encoding *encoding)
+create_individual(struct Encoding *e)
 {
-    assert(encoding != NULL);
+    assert(e != NULL);
 
-    struct Individual *new = (struct Individual *)
+    struct Individual *one = (struct Individual *)
                                 malloc(sizeof(struct Individual));
-    long int *genes = (long int *) malloc(encoding->genes_length * GENE_BYTES);
-    if (!new || !genes) {
+    long int *dna = (long int *) malloc(dna_byte_size(e));
+    if (!one || !dna) {
         ERROR_VERBOSE("Could not create individual");
     }
-    memset(genes, 0, encoding->genes_length * GENE_BYTES);
-    new->genes = genes;
-    new->fitness = 0.0;
-    new->evolvability = 0.0;
+    memset(dna, 0, dna_byte_size(e));
+    one->dna = dna;
+    one->fitness = 0.0;
+    one->evolvability = 0.0;
 
-    return new;
+    return one;
 }
 
 struct Individual *
-create_random_individual(struct Encoding *encoding)
+create_random_individual(struct Encoding *e)
 {
-    assert(encoding != NULL);
+    assert(e != NULL);
 
-    struct Individual *new = create_individual(encoding);
-    randomize_bins(new->genes, encoding->genes_length);
+    struct Individual *one = create_individual(e);
+    randomize_bins(one->dna, e->dna_length);
 
-    return new;
+    return one;
 }
 
 /*
@@ -86,10 +96,10 @@ create_random_individual(struct Encoding *encoding)
 */
 
 struct Population *
-create_empty_population(struct Encoding *encoding,
+create_empty_population(struct Encoding *e,
                         int max_size)
 {
-    assert((encoding != NULL) && (max_size > 0));
+    assert((e != NULL) && (max_size > 0));
 
     struct Population *population = (struct Population *)
                                         malloc(sizeof(struct Population));
@@ -98,7 +108,7 @@ create_empty_population(struct Encoding *encoding,
     if (!population || !people) {
         ERROR_VERBOSE("Could not create empty population");
     }
-    population->encoding = encoding;
+    population->encoding = e;
     population->people = people;
     population->next_free_spot = 0;
     population->generation = 0;
@@ -109,20 +119,20 @@ create_empty_population(struct Encoding *encoding,
 }
 
 struct Population *
-create_random_population(struct Encoding *encoding,
+create_random_population(struct Encoding *e,
                             int initial_size,
                             int max_size)
 {
-    assert((encoding != NULL) && (initial_size > 0) && (max_size > 0)
+    assert((e != NULL) && (initial_size > 0) && (max_size > 0)
             && (initial_size <= max_size));
 
-    struct Population *population = create_empty_population(encoding, max_size);
-    struct Individual *new;
+    struct Population *population = create_empty_population(e, max_size);
+    struct Individual *one;
     int i;
 
     for (i = 0; i < initial_size; i += 1) {
-        new = create_random_individual(encoding);
-        add_individual(population, new);
+        one = create_random_individual(e);
+        add_individual(population, one);
     }
     return population;
 }

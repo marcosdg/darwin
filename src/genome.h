@@ -42,11 +42,12 @@
 #include "random.h"
 
 
-#define GENE_BYTES sizeof(long int)
+#define UNIT_SIZE sizeof(long int)
+#define MIN_UNITS_PER_GENE 1
 /*
     To perform crossover individuals must have, at least, 2 genes.
 */
-#define MIN_CHROMOSOME_LENGTH 2
+#define MIN_DNA_LENGTH 2
 
 
 /*
@@ -54,13 +55,14 @@
 */
 
 struct Encoding {
-    int genes_length;
+    int units_per_gene;
+    int dna_length;
 };
 
 struct Individual {
     double fitness;
     double evolvability;
-    long int *genes;
+    long int *dna;
 };
 
 struct Population {
@@ -79,24 +81,28 @@ struct Population {
 /* encoding */
 
 extern struct Encoding *
-create_encoding(int genes_length);
+create_encoding(int units_per_gene,
+                int dna_length);
+
+extern int
+dna_byte_size(struct Encoding *e);
 
 /* individual */
 
 extern struct Individual *
-create_individual(struct Encoding *encoding);
+create_individual(struct Encoding *e);
 
 extern struct Individual *
-create_random_individual(struct Encoding *encoding);
+create_random_individual(struct Encoding *e);
 
 /* population */
 
 extern struct Population *
-create_empty_population(struct Encoding *encoding,
+create_empty_population(struct Encoding *e,
                         int max_size);
 
 extern struct Population *
-create_random_population(struct Encoding *encoding,
+create_random_population(struct Encoding *e,
                             int initial_size,
                             int max_size);
 extern void

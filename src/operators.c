@@ -28,43 +28,43 @@
 */
 #include "operators.h"
 
-/*
-int single_point_crossover(struct individual *dad, struct individual *mom,
-                           struct individual *son, struct individual *daughter)
+
+long int
+single_point_crossover(struct Individual *dad,
+                        struct Individual *mom,
+                        struct Individual *son,
+                        struct Individual *daughter,
+                        struct Encoding *e)
 {
-    int at,
-        fst_half,
-        snd_half;
-    if (!dad || !mom || !son || !daughter) {
-        error_verbose(__FILE__, "single_point_crossover",
-                      "One of the individuals is NULL.");
-    }
-    at = random_in_range_exclusive(1, CHROMOSOME_LENGTH);
-    fst_half = at * GENE_BYTES;
-    snd_half = CHROMOSOME_BYTE_SIZE - fst_half;
+    assert((dad != NULL) && (mom != NULL) && (son != NULL) && (daughter != NULL)
+            && (e != NULL));
 
-    memcpy(son->genes, dad->genes, fst_half);
-    memcpy((son->genes + at), (mom->genes + at), snd_half);
-    memcpy(daughter->genes, mom->genes, fst_half);
-    memcpy((daughter->genes + at), (dad->genes + at), snd_half);
+    long int locus = random_in_range_inclusive(1, (e->dna_length - 1));
+    int fst_half = locus * UNIT_SIZE;
+    int snd_half = e->dna_byte_size - fst_half;
 
-    return 0;
+    printf("### locus: %li\n", locus);
+
+    memcpy(son->dna, dad->dna, fst_half);
+    memcpy((son->dna + locus), (mom->dna + locus), snd_half);
+    memcpy(daughter->dna, mom->dna, fst_half);
+    memcpy((daughter->dna + locus), (dad->dna + locus), snd_half);
+
+    return locus;
 }
-*/
-/*
-int single_point_mutation(struct individual *victim)
+
+long int
+single_point_mutation(struct Individual *victim,
+                        struct Encoding *e)
 {
-    int at;
+    assert ((victim != NULL) && (e != NULL));
 
-    if (!victim) {
-        error_verbose(__FILE__, "single_point_mutation", "The victim is NULL.");
-    }
-    at = random_in_range_inclusive(0, CHROMOSOME_LENGTH);
-    victim->genes[at] = random_excluding(NUCLEOTIDE_MIN, victim->genes[at],
-                                         NUCLEOTIDE_MAX);
-    return 0;
+    long int locus = random_in_range_exclusive(0, e->dna_length);
+    invert(victim, locus, e);
+
+    return locus;
 }
-*/
+
 /*
 int adaptative_mutation(struct population *pop,
                         double (*mutation_probability_function)(struct *individual))

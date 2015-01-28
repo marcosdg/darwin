@@ -47,7 +47,7 @@
 /*
     To perform crossover individuals must have, at least, 2 genes.
 */
-#define MIN_DNA_LENGTH 2
+#define MIN_NUM_GENES 2
 
 
 /*
@@ -56,6 +56,8 @@
 
 struct Encoding {
     int units_per_gene;
+    int num_genes;
+    int dna_byte_size;
     int dna_length;
 };
 
@@ -82,10 +84,7 @@ struct Population {
 
 extern struct Encoding *
 create_encoding(int units_per_gene,
-                int dna_length);
-
-extern int
-dna_byte_size(struct Encoding *e);
+                int num_genes);
 
 /* individual */
 
@@ -94,6 +93,11 @@ create_individual(struct Encoding *e);
 
 extern struct Individual *
 create_random_individual(struct Encoding *e);
+
+void
+invert(struct Individual *one,
+        long int locus,
+        struct Encoding *e);
 
 /* population */
 

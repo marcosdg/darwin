@@ -35,26 +35,21 @@
 
 struct Encoding *
 create_encoding(int units_per_gene,
-                int dna_length)
+                int num_genes)
 {
     assert((units_per_gene >= MIN_UNITS_PER_GENE)
-            && (dna_length >= MIN_DNA_LENGTH));
+            && (num_genes >= MIN_NUM_GENES));
 
     struct Encoding *e = (struct Encoding *) malloc(sizeof(struct Encoding));
     if (!e) {
         ERROR_VERBOSE("Could not create encoding");
     }
     e->units_per_gene = units_per_gene;
-    e->dna_length = dna_length;
+    e->num_genes = num_genes;
+    e->dna_byte_size = UNIT_SIZE * (e->units_per_gene) * (e->num_genes);
+    e->dna_length = (e->units_per_gene) * (e->num_genes);
 
     return e;
-}
-
-int
-dna_byte_size(struct Encoding *e)
-{
-    assert(e != NULL);
-    return (UNIT_SIZE * (e->units_per_gene) * (e->dna_length));
 }
 
 /*
@@ -68,11 +63,11 @@ create_individual(struct Encoding *e)
 
     struct Individual *one = (struct Individual *)
                                 malloc(sizeof(struct Individual));
-    long int *dna = (long int *) malloc(dna_byte_size(e));
+    long int *dna = (long int *) malloc(e->dna_byte_size);
     if (!one || !dna) {
         ERROR_VERBOSE("Could not create individual");
     }
-    memset(dna, 0, dna_byte_size(e));
+    memset(dna, 0, e->dna_byte_size);
     one->dna = dna;
     one->fitness = 0.0;
     one->evolvability = 0.0;
@@ -89,6 +84,17 @@ create_random_individual(struct Encoding *e)
     randomize_bins(one->dna, e->dna_length);
 
     return one;
+}
+
+void
+invert(struct Individual *one,
+        long int locus,
+        struct Encoding *e)
+{
+    assert((one != NULL) && (e != NULL));
+    assert((locus >= 0) && (locus < e->dna_length));
+
+    one->dna[locus] = abs(1 - (one->dna[locus]));
 }
 
 /*

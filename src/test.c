@@ -23,7 +23,7 @@
   Just to play around.
 
 */
-#include "genome.h"
+#include "operators.h"
 
 
 void main(void)
@@ -33,14 +33,14 @@ void main(void)
 
     int i;
     int locus;
-    struct Encoding *encoding = create_encoding(
+    struct Encoding *e = create_encoding(
             1                               /* units per gene */,
-            6                               /* dna length */
+            6                               /* number of genes */
     );
 
     struct Population *pop = create_random_population(
-            encoding,
-            3                               /* initial size */,
+            e,
+            4                               /* initial size */,
             10                              /* max size */
    );
 
@@ -48,7 +48,7 @@ void main(void)
     for (i = 0; i < pop->current_size; i += 1) {
         printf("\t Individual %i info: \n", i);
         printf("\t\t genes: ");
-        for (locus = 0; locus < 6; locus += 1) {
+        for (locus = 0; locus < (e->dna_length); locus += 1) {
             printf("%li -- ", (pop->people[i])->dna[locus]);
         }
         printf("\n");
@@ -142,24 +142,52 @@ void main(void)
 	mom->genes[5] = 0;
 
     initialise_random_sequence();
+*/
+
+    struct Individual *dad = pop->people[0];
+	struct Individual *mom = pop->people[1];
+	struct Individual *son = pop->people[2];
+	struct Individual *daughter = pop->people[3];
+
+
 
     printf("======== TEST CROSSOVER ========\n");
 
-    single_point_crossover(dad, mom, son, daughter);
+    single_point_crossover(dad, mom, son, daughter, e);
 
-	for (i = 0; i < CHROMOSOME_LENGTH; i += 1) {
-		printf("SON GENE %d: %d\n", i, son->genes[i]);
-	}
-	for (i = 0; i < CHROMOSOME_LENGTH; i += 1) {
-		printf("DAUGHTER GENE %d: %d\n", i, daughter->genes[i]);
-	}
 
+    printf("DAD DNA:\n");
+    for (i = 0; i < (e->dna_length); i += 1) {
+		printf("%li -- ", dad->dna[i]);
+	}
+    printf("\n");
+
+    printf("MOM DNA:\n");
+    for (i = 0; i < (e->dna_length); i += 1) {
+		printf("%li -- ", mom->dna[i]);
+	}
+    printf("\n");
+
+    printf("SON DNA:\n");
+    for (i = 0; i < (e->dna_length); i += 1) {
+		printf("%li -- ", son->dna[i]);
+	}
+    printf("\n");
+
+    printf("DAUGHTER DNA:\n");
+    for (i = 0; i < (e->dna_length); i += 1) {
+		printf("%li -- ", daughter->dna[i]);
+	}
+    printf("\n");
+
+/*
     printf("======== TEST MUTATION ========\n");
 
-    single_point_mutation(son);
+    single_point_mutation(pop->people[0], encoding);
 
-	for (i = 0; i < CHROMOSOME_LENGTH; i += 1) {
-		printf("SON GENE %d: %d\n", i, son->genes[i]);
+	for (i = 0; i < dna_length(encoding); i += 1) {
+		printf("%li -- ", (pop->people[0])->dna[i]);
 	}
+    printf("\n");
 */
 }

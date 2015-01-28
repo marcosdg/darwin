@@ -129,7 +129,7 @@ create_random_population(struct Encoding *e,
                             int initial_size,
                             int max_size)
 {
-    assert((e != NULL) && (initial_size > 0) && (max_size > 0)
+    assert((e != NULL) && (max_size > 0) && (initial_size > 0)
             && (initial_size <= max_size));
 
     struct Population *population = create_empty_population(e, max_size);

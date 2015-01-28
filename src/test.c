@@ -42,12 +42,13 @@ void main(void)
             e,
             4                               /* initial size */,
             10                              /* max size */
-   );
+    );
 
 
     for (i = 0; i < pop->current_size; i += 1) {
         printf("\t Individual %i info: \n", i);
         printf("\t\t genes: ");
+    
         for (locus = 0; locus < (e->dna_length); locus += 1) {
             printf("%li -- ", (pop->people[i])->dna[locus]);
         }
@@ -56,105 +57,9 @@ void main(void)
         printf("\t\t evolvability: %lf \n", (pop->people[i])->evolvability);
     }
 
-    /*
-
-    //long int alphabet[] = {0, 1};
-    struct population *pop = create_random_population(10, 10, 6, 2, alphabet);
-    //struct population *pop = create_empty_population(4, 6, 2, alphabet);
-
-    //struct individual *dad = create_individual(6);
-    //struct individual *dad = create_random_individual(pop);
-
-    printf("Population details:\n");
-    printf("\t current size: %i\n", pop->current_size);
-    printf("\t max size: %i\n", pop->max_size);
-    printf("\t chromosome length: %i\n", pop->chromosome_length);
-
-    for (i = 0; i < pop->current_size; i += 1) {
-        printf("\t Individual %i info: \n", i);
-        printf("\t\t genes: ");
-        for (locus = 0; locus < 6; locus += 1) {
-            printf("%li--", (pop->people[i])->genes[locus]);
-        }
-        printf("\n");
-        printf("\t\t fitness: %lf \n", (pop->people[i])->fitness);
-        printf("\t\t evolvability: %lf \n", (pop->people[i])->evolvability);
-    }
-*/
-    /*
-    int succeded = add_individual(pop, dad);
-
-    if (succeded) {
-        printf("\t Individual 0 info: \n");
-        printf("\t\t genes: ");
-        for (locus = 0; locus < 6; locus += 1) {
-            printf("%li--", (pop->people[0])->genes[locus]);
-        }
-        printf("\n");
-        printf("\t\t fitness: %lf \n", (pop->people[i])->fitness);
-        printf("\t\t evolvability: %lf \n", (pop->people[i])->evolvability);
-    }
-    */
-    /*
-    printf(" --- Randomize individual ---\n");
-
-    initialize_random_sequence();
-    randomize_individual(dad, pop);
-
-    printf("\t\t genes: ");
-    for (locus = 0; locus < 6; locus += 1) {
-        printf("%li--", (pop->people[0])->genes[locus]);
-    }
-    printf("\n");
-
-    */
-/*
-    for (i = 0; i < 4; i += 1) {
-        printf("\t Individual %i info: \n", i);
-        printf("\t\t genes: ");
-        for (locus = 0; locus < 6; locus += 1) {
-            printf("%li--", (pop->people[i])->genes[locus]);
-        }
-        printf("\n");
-        printf("\t\t fitness: %lf \n", (pop->people[i])->fitness);
-        printf("\t\t evolvability: %lf \n", (pop->people[i])->evolvability);
-    }
-*/
-
-/*
-	struct individual *dad = create_raw_individual(6);
-	struct individual *mom = create_raw_individual(6);
-	struct individual *son = create_raw_individual(6);
-	struct individual *daughter = create_raw_individual(6);
-
-	dad->genes[0] = 0;
-	dad->genes[1] = 1;
-	dad->genes[2] = 0;
-	dad->genes[3] = 1;
-	dad->genes[4] = 0;
-	dad->genes[5] = 0;
-
-	mom->genes[0] = 0;
-	mom->genes[1] = 0;
-	mom->genes[2] = 1;
-	mom->genes[3] = 0;
-	mom->genes[4] = 1;
-	mom->genes[5] = 0;
-
-    initialise_random_sequence();
-*/
-
-    struct Individual *dad = pop->people[0];
-	struct Individual *mom = pop->people[1];
-	struct Individual *son = pop->people[2];
-	struct Individual *daughter = pop->people[3];
-
-
-
     printf("======== TEST CROSSOVER ========\n");
 
     single_point_crossover(dad, mom, son, daughter, e);
-
 
     printf("DAD DNA:\n");
     for (i = 0; i < (e->dna_length); i += 1) {
@@ -180,14 +85,14 @@ void main(void)
 	}
     printf("\n");
 
-/*
     printf("======== TEST MUTATION ========\n");
 
-    single_point_mutation(pop->people[0], encoding);
+    single_point_mutation(son, encoding);
 
+    printf("SON DNA: \n");
 	for (i = 0; i < dna_length(encoding); i += 1) {
 		printf("%li -- ", (pop->people[0])->dna[i]);
 	}
     printf("\n");
-*/
+
 }

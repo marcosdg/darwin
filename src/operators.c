@@ -43,8 +43,6 @@ single_point_crossover(struct Individual *dad,
     int fst_half = locus * UNIT_SIZE;
     int snd_half = e->dna_byte_size - fst_half;
 
-    printf("### locus: %li\n", locus);
-
     memcpy(son->dna, dad->dna, fst_half);
     memcpy((son->dna + locus), (mom->dna + locus), snd_half);
     memcpy(daughter->dna, mom->dna, fst_half);

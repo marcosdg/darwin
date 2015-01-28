@@ -48,7 +48,7 @@ void main(void)
     for (i = 0; i < pop->current_size; i += 1) {
         printf("\t Individual %i info: \n", i);
         printf("\t\t genes: ");
-    
+
         for (locus = 0; locus < (e->dna_length); locus += 1) {
             printf("%li -- ", (pop->people[i])->dna[locus]);
         }

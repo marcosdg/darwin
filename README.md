@@ -10,3 +10,4 @@ Given the complexity of the role that play [Evolution Strategies](https://en.wik
     considering an adaptative mutation operator?
 
 
+(Project status: development)

@@ -26,7 +26,7 @@
 #include "operators.h"
 
 
-void main(void)
+int main(int argc, char **argv)
 {
 
     initialize_random_sequence();
@@ -100,4 +100,5 @@ void main(void)
 	}
     printf("\n");
 
+    return 0;
 }

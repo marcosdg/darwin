@@ -28,7 +28,7 @@
 
 static double NUM_RUNS = 1000;
 
-void main(void)
+int main(int argc, char **argv)
 {
 	int i;
     long int r;
@@ -134,5 +134,6 @@ void main(void)
     for (i = 0; i < 6; i += 1) {
         printf("%li \n", ints[i]);
     }
+    return 0;
 }
 

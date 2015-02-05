@@ -59,6 +59,11 @@ void main(void)
 
     printf("======== TEST CROSSOVER ========\n");
 
+    struct Individual *dad = pop->people[0];
+    struct Individual *mom = pop->people[1];
+    struct Individual *son = pop->people[2];
+    struct Individual *daughter = pop->people[3];
+
     single_point_crossover(dad, mom, son, daughter, e);
 
     printf("DAD DNA:\n");
@@ -87,11 +92,11 @@ void main(void)
 
     printf("======== TEST MUTATION ========\n");
 
-    single_point_mutation(son, encoding);
+    single_point_mutation(son, e);
 
     printf("SON DNA: \n");
-	for (i = 0; i < dna_length(encoding); i += 1) {
-		printf("%li -- ", (pop->people[0])->dna[i]);
+	for (i = 0; i < (e->dna_length); i += 1) {
+		printf("%li -- ", son->dna[i]);
 	}
     printf("\n");
 

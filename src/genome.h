@@ -42,7 +42,7 @@
 #include "random.h"
 
 
-#define UNIT_SIZE sizeof(long int)
+#define UNIT_BYTE_SIZE sizeof(long int)
 #define MIN_UNITS_PER_GENE 1
 /*
     To perform crossover individuals must have, at least, 2 genes.

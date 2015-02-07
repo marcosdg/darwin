@@ -34,7 +34,7 @@
 #include "report.h"
 
 extern void
-initialize_random_sequence(void);
+start_random_generator(void);
 
 extern long int
 random_in_range_exclusive(long int lower,

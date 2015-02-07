@@ -29,7 +29,7 @@
 int main(int argc, char **argv)
 {
 
-    initialize_random_sequence();
+    start_random_generator();
 
     int i;
     int locus;

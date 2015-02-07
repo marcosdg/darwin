@@ -31,7 +31,7 @@
 static int sequence_started = 0;
 
 void
-initialize_random_sequence(void)
+start_random_generator(void)
 {
     struct timespec now;
     unsigned int seed;

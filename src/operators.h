@@ -32,14 +32,14 @@
 #include "genome.h"
 
 
-long int
+extern long int
 single_point_crossover(struct Individual *dad,
                         struct Individual *mom,
                         struct Individual *son,
                         struct Individual *daughter,
                         struct Encoding *e);
 
-long int
+extern long int
 single_point_mutation(struct Individual *victim,
                         struct Encoding *e );
 

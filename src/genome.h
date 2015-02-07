@@ -94,7 +94,7 @@ create_individual(struct Encoding *e);
 extern struct Individual *
 create_random_individual(struct Encoding *e);
 
-void
+extern void
 invert(struct Individual *one,
         long int locus,
         struct Encoding *e);

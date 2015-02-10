@@ -29,6 +29,7 @@
 #define RANDOM_H_INCLUDED
 
 #include <assert.h>
+#include <float.h> /* DBL_MIN = 1e-37 or smaller */
 #include <math.h>
 #include <time.h>
 #include "report.h"
@@ -39,10 +40,17 @@ start_random_generator(void);
 extern long int
 random_in_range_exclusive(long int lower,
                             long int upper);
+extern double
+random_double_exclusive(double lower,
+                        double upper);
 
 extern long int
 random_in_range_inclusive(long int lower,
                             long int upper);
+
+extern double
+random_double_inclusive(double lower,
+                        double upper);
 
 extern long int
 random_excluding(long int lower,

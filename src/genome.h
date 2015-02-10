@@ -99,6 +99,11 @@ invert(struct Individual *one,
         long int locus,
         struct Encoding *e);
 
+extern double
+fitness_proportion(struct Individual *whom,
+                    struct Individual *other);
+
+
 /* population */
 
 extern struct Population *
@@ -112,5 +117,8 @@ create_random_population(struct Encoding *e,
 extern void
 add_individual(struct Population *population,
                 struct Individual *new);
+
+extern struct Individual *
+pick_random_individual(struct Population *population);
 
 #endif /* GENOME_H_INCLUDED */

@@ -97,6 +97,28 @@ invert(struct Individual *one,
     one->dna[locus] = abs(1 - (one->dna[locus]));
 }
 
+/* fitness_proportion:
+ * Computes how much better is 'whom' than 'other'.
+ *
+ * If one has zero or negative fitness is disregarded to avoid possible
+ * divisions by zero or misleading results. In consequence, tournament
+ * selection will behave 'determinalistically', as this function decides
+ * who is likely to be selected.
+ */
+double
+fitness_proportion(struct Individual *whom,
+                    struct Individual *other)
+{
+    assert((whom != NULL) && (other != NULL));
+
+    if (whom->fitness <= 0.0) { /* other is the best */
+        return 0.0;
+    } else if (other->fitness <= 0.0) { /* whom is the best */
+        return 1.0;
+    }
+    return whom->fitness / (whom->fitness + other->fitness);
+}
+
 /*
     Population.
 */
@@ -155,3 +177,14 @@ add_individual(struct Population *population,
         population->next_free_spot += 1;
     }
 }
+
+struct Individual *
+pick_random_individual(struct Population *population)
+{
+    assert(population != NULL);
+
+    int at = random_in_range_exclusive(0, population->current_size);
+
+    return population->people[at];
+}
+

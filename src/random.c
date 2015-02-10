@@ -55,12 +55,31 @@ random_in_range_exclusive(long int lower,
 
     return lower + ((rand() * width) / RAND_MAX);
 }
+double
+random_double_exclusive(double lower,
+                        double upper)
+{
+    assert((lower <= upper) && (sequence_started == 1));
+
+    double width = upper - lower;
+
+    return lower + ((rand() * width) / RAND_MAX);
+}
 long int
 random_in_range_inclusive(long int lower,
                             long int upper)
 {
     return random_in_range_exclusive(lower, upper + 1);
 }
+double
+random_double_inclusive(double lower,
+                        double upper)
+{
+    assert((lower <= upper) && (sequence_started == 1));
+
+    return random_double_exclusive(lower, upper + DBL_MIN);
+}
+
 long int
 random_excluding(long int lower,
                     long int banned,

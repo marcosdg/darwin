@@ -32,6 +32,13 @@
 #include "genome.h"
 
 
+extern struct Individual *
+tournament_selection(struct Population *population,
+                        int num_rounds);
+static int
+fight(struct Individual *aspirant,
+        struct Individual *rival);
+
 extern long int
 single_point_crossover(struct Individual *dad,
                         struct Individual *mom,

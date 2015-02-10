@@ -40,7 +40,7 @@ int main(int argc, char **argv)
            fours = 0.0;
 
     start_random_generator();
-/*
+
     printf("======== TEST RANDOM_IN_RANGE_EXCLUSIVE ========\n");
 
     for (i = 0; i < NUM_RUNS; i += 1) {
@@ -69,8 +69,7 @@ int main(int argc, char **argv)
     printf("Twos: %f \n", twos / NUM_RUNS);
     printf("Threes: %f \n", threes / NUM_RUNS);
     printf("Fours: %f \n", fours / NUM_RUNS);
-*/
-/*
+
     printf("======== TEST RANDOM_IN_RANGE_INCLUSIVE ========\n");
 
     zeroes = 0.0;
@@ -90,8 +89,7 @@ int main(int argc, char **argv)
     printf("\t\t Distribution \n");
     printf("Zeroes: %f \n", zeroes / NUM_RUNS);
     printf("Ones: %f \n", ones / NUM_RUNS);
-*/
-/*
+
     printf("======== TEST RANDOM_EXCLUDING ========\n");
 
     zeroes = 0.0,
@@ -126,14 +124,18 @@ int main(int argc, char **argv)
     printf("Twos: %f \n", twos / NUM_RUNS);
     printf("Threes: %f \n", threes / NUM_RUNS);
     printf("Fours: %f \n", fours / NUM_RUNS);
-*/
+
     printf("======== TEST RANDOMIZE_INTS ========\n");
 
     randomize_ints(ints, 6, 0, 4);
-
     for (i = 0; i < 6; i += 1) {
         printf("%li \n", ints[i]);
     }
+
+    printf("======== TEST RANDOM_DOUBLE_INCLUSIVE ========\n");
+
+    printf("Random double: %.8f\n", random_double_inclusive(0.0, 1.0));
+
     return 0;
 }
 

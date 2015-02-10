@@ -28,6 +28,40 @@
 */
 #include "operators.h"
 
+struct Individual *
+tournament_selection(struct Population *population,
+                        int num_rounds)
+{
+    assert(population != NULL);
+    assert(num_rounds >= 1); /* zero rounds means zero rivals */
+
+    struct Individual *best = pick_random_individual(population);
+    struct Individual *rival;
+    int rival_wins;
+    int round;
+
+    for (round = 1; round <= num_rounds; round += 1) {
+        rival = pick_random_individual(population);
+
+        /* rival wins ? */
+        if(fight(best, rival)) {
+            best = rival;
+        }
+    }
+    return best;
+}
+int
+fight(struct Individual *aspirant,
+        struct Individual *rival)
+{
+    assert((aspirant != NULL) && (rival != NULL));
+
+    double goodness = fitness_proportion(aspirant, rival);
+    double bad_luck = random_double_inclusive(0.0, 1.0);
+
+    return bad_luck > goodness? 1 : 0;
+}
+
 
 long int
 single_point_crossover(struct Individual *dad,

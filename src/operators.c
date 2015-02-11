@@ -28,6 +28,14 @@
 */
 #include "operators.h"
 
+
+/*
+ * Selection operator.
+ */
+
+static int fight(struct Individual *aspirant,
+                    struct Individual *rival);
+
 struct Individual *
 tournament_selection(struct Population *population,
                         int num_rounds)
@@ -37,7 +45,6 @@ tournament_selection(struct Population *population,
 
     struct Individual *best = pick_random_individual(population);
     struct Individual *rival;
-    int rival_wins;
     int round;
 
     for (round = 1; round <= num_rounds; round += 1) {
@@ -50,7 +57,14 @@ tournament_selection(struct Population *population,
     }
     return best;
 }
-int
+/* fight:
+ * Returns 'one' if rival wins, 'zero' if aspirant wins.
+ *
+ * It is represented by a Bernoulli probability distribution, being 'goodness'
+ * the aspirant's probability of winning and (1 - goodness) the probability of
+ * loosing. The higher the goodness, the harder to loose.
+ */
+static int
 fight(struct Individual *aspirant,
         struct Individual *rival)
 {
@@ -62,6 +76,9 @@ fight(struct Individual *aspirant,
     return bad_luck > goodness? 1 : 0;
 }
 
+/*
+ * Crossver operator.
+ */
 
 long int
 single_point_crossover(struct Individual *dad,
@@ -85,6 +102,10 @@ single_point_crossover(struct Individual *dad,
     return locus;
 }
 
+/*
+ * Mutation operator.
+ */
+
 long int
 single_point_mutation(struct Individual *victim,
                         struct Encoding *e)
@@ -96,7 +117,6 @@ single_point_mutation(struct Individual *victim,
 
     return locus;
 }
-
 /*
 int adaptative_mutation(struct population *pop,
                         double (*mutation_probability_function)(struct *individual))

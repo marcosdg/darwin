@@ -42,7 +42,6 @@
 #   endif
 #endif
 
-
 #define ERROR(details)                                      \
     do {                                                    \
         fprintf(stderr, "darwin error: %s\n", (details));   \

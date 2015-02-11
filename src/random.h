@@ -34,37 +34,50 @@
 #include <time.h>
 #include "report.h"
 
+
 extern void
-start_random_generator(void);
+start_random_generator(
+        void
+);
 
 extern long int
-random_in_range_exclusive(long int lower,
-                            long int upper);
+random_in_range_exclusive(
+        long int lower,
+        long int upper
+);
 extern double
-random_double_exclusive(double lower,
-                        double upper);
-
+random_double_exclusive(
+        double lower,
+        double upper
+);
 extern long int
-random_in_range_inclusive(long int lower,
-                            long int upper);
-
+random_in_range_inclusive(
+        long int lower,
+        long int upper
+);
 extern double
-random_double_inclusive(double lower,
-                        double upper);
-
+random_double_inclusive(
+        double lower,
+        double upper
+);
 extern long int
-random_excluding(long int lower,
-                    long int banned,
-                    long int upper);
+random_excluding(
+        long int lower,
+        long int banned,
+        long int upper
+);
 
 extern void
-randomize_ints(long int *ints,
-                int length,
-                long int lower,
-                long int upper);
-
+randomize_ints(
+        long int *ints,
+        int length,
+        long int lower,
+        long int upper
+);
 extern void
-randomize_bins(long int *bins,
-                int length);
+randomize_bins(
+        long int *bins,
+        int length
+);
 
 #endif /* RANDOM_H_INCLUDED */

@@ -31,8 +31,9 @@
 static int sequence_started = 0;
 
 void
-start_random_generator(void)
-{
+start_random_generator(
+        void
+) {
     struct timespec now;
     unsigned int seed;
 
@@ -46,9 +47,10 @@ start_random_generator(void)
 
 
 long int
-random_in_range_exclusive(long int lower,
-                            long int upper)
-{
+random_in_range_exclusive(
+        long int lower,
+        long int upper
+) {
     assert((lower <= upper) && (sequence_started == 1));
 
     long int width = abs(upper - lower);
@@ -56,9 +58,10 @@ random_in_range_exclusive(long int lower,
     return lower + ((rand() * width) / RAND_MAX);
 }
 double
-random_double_exclusive(double lower,
-                        double upper)
-{
+random_double_exclusive(
+        double lower,
+        double upper
+) {
     assert((lower <= upper) && (sequence_started == 1));
 
     double width = upper - lower;
@@ -66,25 +69,28 @@ random_double_exclusive(double lower,
     return lower + ((rand() * width) / RAND_MAX);
 }
 long int
-random_in_range_inclusive(long int lower,
-                            long int upper)
-{
+random_in_range_inclusive(
+        long int lower,
+        long int upper
+) {
     return random_in_range_exclusive(lower, upper + 1);
 }
 double
-random_double_inclusive(double lower,
-                        double upper)
-{
+random_double_inclusive(
+        double lower,
+        double upper
+) {
     assert((lower <= upper) && (sequence_started == 1));
 
     return random_double_exclusive(lower, upper + DBL_MIN);
 }
 
 long int
-random_excluding(long int lower,
-                    long int banned,
-                    long int upper)
-{
+random_excluding(
+        long int lower,
+        long int banned,
+        long int upper
+) {
     assert((lower <= banned) && (banned <= upper));
 
     long int r;
@@ -96,11 +102,12 @@ random_excluding(long int lower,
 }
 
 void
-randomize_ints(long int *ints,
-                int length,
-                long int lower,
-                long int upper)
-{
+randomize_ints(
+        long int *ints,
+        int length,
+        long int lower,
+        long int upper
+) {
     assert((ints != NULL) && (length > 0));
 
     int i;
@@ -109,9 +116,10 @@ randomize_ints(long int *ints,
     }
 }
 void
-randomize_bins(long int *bins,
-                int length)
-{
+randomize_bins(
+        long int *bins,
+        int length
+) {
     randomize_ints(bins, length, 0, 1);
 }
 

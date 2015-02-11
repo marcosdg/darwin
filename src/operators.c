@@ -30,16 +30,19 @@
 
 
 /*
- * Selection operator.
+ * Selection.
  */
 
-static int fight(struct Individual *aspirant,
-                    struct Individual *rival);
-
+static int
+fight(
+        struct Individual *aspirant,
+        struct Individual *rival
+);
 struct Individual *
-tournament_selection(struct Population *population,
-                        int num_rounds)
-{
+tournament_selection(
+        struct Population *population,
+        int num_rounds
+) {
     assert(population != NULL);
     assert(num_rounds >= 1); /* zero rounds means zero rivals */
 
@@ -65,9 +68,10 @@ tournament_selection(struct Population *population,
  * loosing. The higher the goodness, the harder to loose.
  */
 static int
-fight(struct Individual *aspirant,
-        struct Individual *rival)
-{
+fight(
+        struct Individual *aspirant,
+        struct Individual *rival
+) {
     assert((aspirant != NULL) && (rival != NULL));
 
     double goodness = fitness_proportion(aspirant, rival);
@@ -77,16 +81,17 @@ fight(struct Individual *aspirant,
 }
 
 /*
- * Crossver operator.
+ * Crossver.
  */
 
 long int
-single_point_crossover(struct Individual *dad,
-                        struct Individual *mom,
-                        struct Individual *son,
-                        struct Individual *daughter,
-                        struct Encoding *e)
-{
+single_point_crossover(
+        struct Individual *dad,
+        struct Individual *mom,
+        struct Individual *son,
+        struct Individual *daughter,
+        struct Encoding *e
+) {
     assert((dad != NULL) && (mom != NULL) && (son != NULL) && (daughter != NULL)
             && (e != NULL));
 
@@ -103,13 +108,14 @@ single_point_crossover(struct Individual *dad,
 }
 
 /*
- * Mutation operator.
+ * Mutation.
  */
 
 long int
-single_point_mutation(struct Individual *victim,
-                        struct Encoding *e)
-{
+single_point_mutation(
+        struct Individual *victim,
+        struct Encoding *e
+) {
     assert ((victim != NULL) && (e != NULL));
 
     long int locus = random_in_range_exclusive(0, e->dna_length);
@@ -118,9 +124,11 @@ single_point_mutation(struct Individual *victim,
     return locus;
 }
 /*
-int adaptative_mutation(struct population *pop,
-                        double (*mutation_probability_function)(struct *individual))
-{
+int
+adaptative_mutation(
+        struct population *pop,
+        double (*mutation_probability_function)(struct *individual)
+) {
     int i, r;
 
     for (i = 0; i < pop->current_size; i += 1) {

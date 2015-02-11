@@ -42,17 +42,13 @@
 #include "random.h"
 
 
+/*
+ * Encoding.
+ */
+
 #define UNIT_BYTE_SIZE sizeof(long int)
 #define MIN_UNITS_PER_GENE 1
-/*
-    To perform crossover individuals must have, at least, 2 genes.
-*/
-#define MIN_NUM_GENES 2
-
-
-/*
-    Data structures.
-*/
+#define MIN_NUM_GENES 2 /* at least, to perform crossover */
 
 struct Encoding {
     int units_per_gene;
@@ -61,11 +57,47 @@ struct Encoding {
     int dna_length;
 };
 
+extern struct Encoding *
+create_encoding(
+        int units_per_gene,
+        int num_genes
+);
+
+/*
+ * Individual.
+ */
+
 struct Individual {
     double fitness;
     double evolvability;
     long int *dna;
 };
+
+extern struct Individual *
+create_individual(
+        struct Encoding *e
+);
+extern struct Individual *
+create_random_individual(
+        struct Encoding *e
+);
+
+extern void
+invert(
+        struct Individual *one,
+        long int locus,
+        struct Encoding *e
+);
+
+extern double
+fitness_proportion(
+        struct Individual *whom,
+        struct Individual *other
+);
+
+/*
+ * Population.
+ */
 
 struct Population {
     struct Encoding *encoding;
@@ -76,49 +108,25 @@ struct Population {
     int max_size;
 };
 
-/*
-    Prototypes.
-*/
-
-/* encoding */
-
-extern struct Encoding *
-create_encoding(int units_per_gene,
-                int num_genes);
-
-/* individual */
-
-extern struct Individual *
-create_individual(struct Encoding *e);
-
-extern struct Individual *
-create_random_individual(struct Encoding *e);
-
-extern void
-invert(struct Individual *one,
-        long int locus,
-        struct Encoding *e);
-
-extern double
-fitness_proportion(struct Individual *whom,
-                    struct Individual *other);
-
-
-/* population */
-
 extern struct Population *
-create_empty_population(struct Encoding *e,
-                        int max_size);
-
+create_empty_population(
+        struct Encoding *e,
+        int max_size
+);
 extern struct Population *
-create_random_population(struct Encoding *e,
-                            int initial_size,
-                            int max_size);
+create_random_population(
+        struct Encoding *e,
+        int initial_size,
+        int max_size
+);
 extern void
-add_individual(struct Population *population,
-                struct Individual *new);
+add_individual(
+        struct Population *population,
+        struct Individual *new
+);
 
 extern struct Individual *
-pick_random_individual(struct Population *population);
-
+pick_random_individual(
+        struct Population *population
+);
 #endif /* GENOME_H_INCLUDED */

@@ -33,23 +33,25 @@
 
 
 extern struct Individual *
-tournament_selection(struct Population *population,
-                        int num_rounds);
-
+tournament_selection(
+        struct Population *population,
+        int num_rounds
+);
 extern long int
-single_point_crossover(struct Individual *dad,
-                        struct Individual *mom,
-                        struct Individual *son,
-                        struct Individual *daughter,
-                        struct Encoding *e);
-
+single_point_crossover(
+        struct Individual *dad,
+        struct Individual *mom,
+        struct Individual *son,
+        struct Individual *daughter,
+        struct Encoding *e
+);
 extern long int
-single_point_mutation(struct Individual *victim,
-                        struct Encoding *e );
-
+single_point_mutation(
+        struct Individual *victim,
+        struct Encoding *e
+);
 /*
 int adaptative_mutation(struct population *pop,
                         double (*mutation_probability_function)(struct *individual))
 */
-
 #endif /* OPERATORS_H_INCLUDED */

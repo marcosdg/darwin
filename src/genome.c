@@ -34,9 +34,10 @@
 */
 
 struct Encoding *
-create_encoding(int units_per_gene,
-                int num_genes)
-{
+create_encoding(
+        int units_per_gene,
+        int num_genes
+) {
     assert((units_per_gene >= MIN_UNITS_PER_GENE)
             && (num_genes >= MIN_NUM_GENES));
 
@@ -57,8 +58,9 @@ create_encoding(int units_per_gene,
 */
 
 struct Individual *
-create_individual(struct Encoding *e)
-{
+create_individual(
+        struct Encoding *e
+) {
     assert(e != NULL);
 
     struct Individual *one = (struct Individual *)
@@ -76,8 +78,9 @@ create_individual(struct Encoding *e)
 }
 
 struct Individual *
-create_random_individual(struct Encoding *e)
-{
+create_random_individual(
+        struct Encoding *e
+) {
     assert(e != NULL);
 
     struct Individual *one = create_individual(e);
@@ -87,10 +90,11 @@ create_random_individual(struct Encoding *e)
 }
 
 void
-invert(struct Individual *one,
+invert(
+        struct Individual *one,
         long int locus,
-        struct Encoding *e)
-{
+        struct Encoding *e
+) {
     assert((one != NULL) && (e != NULL));
     assert((locus >= 0) && (locus < e->dna_length));
 
@@ -98,7 +102,7 @@ invert(struct Individual *one,
 }
 
 /* fitness_proportion:
- * Computes how much better is 'whom' than 'other'.
+ * How much better is 'whom' than 'other'?
  *
  * If one has zero or negative fitness is disregarded to avoid possible
  * divisions by zero or misleading results. In consequence, tournament
@@ -106,9 +110,10 @@ invert(struct Individual *one,
  * who is likely to be selected.
  */
 double
-fitness_proportion(struct Individual *whom,
-                    struct Individual *other)
-{
+fitness_proportion(
+        struct Individual *whom,
+        struct Individual *other
+) {
     assert((whom != NULL) && (other != NULL));
 
     if (whom->fitness <= 0.0) { /* other is the best */
@@ -124,9 +129,10 @@ fitness_proportion(struct Individual *whom,
 */
 
 struct Population *
-create_empty_population(struct Encoding *e,
-                        int max_size)
-{
+create_empty_population(
+        struct Encoding *e,
+        int max_size
+) {
     assert((e != NULL) && (max_size > 0));
 
     struct Population *population = (struct Population *)
@@ -147,10 +153,11 @@ create_empty_population(struct Encoding *e,
 }
 
 struct Population *
-create_random_population(struct Encoding *e,
-                            int initial_size,
-                            int max_size)
-{
+create_random_population(
+        struct Encoding *e,
+        int initial_size,
+        int max_size
+) {
     assert((e != NULL) && (max_size > 0) && (initial_size > 0)
             && (initial_size <= max_size));
 
@@ -166,9 +173,10 @@ create_random_population(struct Encoding *e,
 }
 
 void
-add_individual(struct Population *population,
-                struct Individual *new)
-{
+add_individual(
+        struct Population *population,
+        struct Individual *new
+) {
     assert((population != NULL) && (new != NULL));
 
     if (population->current_size < population->max_size) {
@@ -179,8 +187,9 @@ add_individual(struct Population *population,
 }
 
 struct Individual *
-pick_random_individual(struct Population *population)
-{
+pick_random_individual(
+        struct Population *population
+) {
     assert(population != NULL);
 
     int at = random_in_range_exclusive(0, population->current_size);

@@ -40,10 +40,8 @@ int main(int argc, char **argv)
 
     struct Population *pop = create_random_population(
             e,
-            4                               /* initial size */,
-            10                              /* max size */
+            4                               /* size */
     );
-
     struct Individual *dad = pop->people[0];
     struct Individual *mom = pop->people[1];
     struct Individual *son = pop->people[2];

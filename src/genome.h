@@ -116,8 +116,7 @@ create_empty_population(
 extern struct Population *
 create_random_population(
         struct Encoding *e,
-        int initial_size,
-        int max_size
+        int size
 );
 extern void
 add_individual(

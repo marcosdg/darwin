@@ -155,17 +155,15 @@ create_empty_population(
 struct Population *
 create_random_population(
         struct Encoding *e,
-        int initial_size,
-        int max_size
+        int size
 ) {
-    assert((e != NULL) && (max_size > 0) && (initial_size > 0)
-            && (initial_size <= max_size));
+    assert((e != NULL) && (size > 0));
 
-    struct Population *population = create_empty_population(e, max_size);
+    struct Population *population = create_empty_population(e, size);
     struct Individual *one;
-    int i;
+    int much;
 
-    for (i = 0; i < initial_size; i += 1) {
+    for (much = 1; much <= size; much += 1) {
         one = create_random_individual(e);
         add_individual(population, one);
     }
@@ -192,7 +190,7 @@ pick_random_individual(
 ) {
     assert(population != NULL);
 
-    int at = random_in_range_exclusive(0, population->current_size);
+    int at = random_in_range_exclusive(0, population->max_size);
 
     return population->people[at];
 }

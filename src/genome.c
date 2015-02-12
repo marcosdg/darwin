@@ -102,26 +102,26 @@ invert(
 }
 
 /* fitness_proportion:
- * How much better is 'whom' than 'other'?
+ * How much better is 'one' than 'reference'?
  *
  * If one has zero or negative fitness is disregarded to avoid possible
- * divisions by zero or misleading results. In consequence, tournament
+ * divisions by zero or misleading results. In which case, tournament
  * selection will behave 'determinalistically', as this function decides
  * who is likely to be selected.
  */
 double
 fitness_proportion(
-        struct Individual *whom,
-        struct Individual *other
+        struct Individual *one,
+        struct Individual *reference
 ) {
-    assert((whom != NULL) && (other != NULL));
+    assert((one != NULL) && (reference != NULL));
 
-    if (whom->fitness <= 0.0) { /* other is the best */
+    if (one->fitness <= 0.0) { /* reference is the best */
         return 0.0;
-    } else if (other->fitness <= 0.0) { /* whom is the best */
+    } else if (reference->fitness <= 0.0) { /* one is the best */
         return 1.0;
     }
-    return whom->fitness / (whom->fitness + other->fitness);
+    return one->fitness / (one->fitness + reference->fitness);
 }
 
 /*

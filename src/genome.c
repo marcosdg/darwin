@@ -161,12 +161,12 @@ create_random_population(
 
     struct Population *population = create_empty_population(e, size);
     struct Individual *one;
-    int much;
 
-    for (much = 1; much <= size; much += 1) {
+    do {
         one = create_random_individual(e);
         add_individual(population, one);
-    }
+     } while(population->current_size != size);
+
     return population;
 }
 

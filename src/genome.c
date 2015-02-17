@@ -47,8 +47,8 @@ create_encoding(
     }
     e->units_per_gene = units_per_gene;
     e->num_genes = num_genes;
-    e->dna_byte_size = UNIT_BYTE_SIZE * (e->units_per_gene) * (e->num_genes);
-    e->dna_length = (e->units_per_gene) * (e->num_genes);
+    e->dna_byte_size = UNIT_BYTE_SIZE * units_per_gene * num_genes;
+    e->dna_length = units_per_gene * num_genes;
 
     return e;
 }

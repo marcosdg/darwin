@@ -37,12 +37,10 @@ tournament_selection(
         struct Population *population,
         int num_rounds
 );
-extern long int
+extern struct Individual **
 single_point_crossover(
         struct Individual *dad,
         struct Individual *mom,
-        struct Individual *son,
-        struct Individual *daughter,
         struct Encoding *e
 );
 extern long int

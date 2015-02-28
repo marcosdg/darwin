@@ -84,16 +84,21 @@ fight(
  * Crossver.
  */
 
-long int
+struct Individual **
 single_point_crossover(
         struct Individual *dad,
         struct Individual *mom,
-        struct Individual *son,
-        struct Individual *daughter,
         struct Encoding *e
 ) {
-    assert((dad != NULL) && (mom != NULL) && (son != NULL) && (daughter != NULL)
-            && (e != NULL));
+    assert((dad != NULL) && (mom != NULL) && (e != NULL));
+
+    struct Individual **offspring = (struct Individual **)
+                                    malloc(2 * sizeof(struct Individual *));
+    struct Individual *son = create_individual(e);
+    struct Individual *daughter = create_individual(e);
+    if (!offspring || !son || !daughter) {
+        ERROR_VERBOSE("Could not create offspring");
+    }
 
     long int locus = random_in_range_inclusive(1, (e->dna_length - 1));
     int fst_half = locus * UNIT_BYTE_SIZE;
@@ -104,7 +109,9 @@ single_point_crossover(
     memcpy(daughter->dna, mom->dna, fst_half);
     memcpy((daughter->dna + locus), (dad->dna + locus), snd_half);
 
-    return locus;
+    offspring[0] = son;
+    offspring[1] = daughter;
+    return offspring;
 }
 
 /*

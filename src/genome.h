@@ -1,46 +1,43 @@
-/*
-  darwin. A simple genetic algorithm implementation with a
-  self-adaptative strategy.
+/*  genome.h
 
-  Copyright (C) 2015 Marcos Díez García <marcos.diez.garcia@gmail.com>
+    This is part of the darwin program.
 
-  This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-  GNU General Public License for more details.
-  You should have received a copy of the GNU General Public License
-  along with this program. If not, see <http://www.gnu.org/licenses/>.
+    darwin. A simple genetic algorithm implementation with a self-adaptative
+    strategy.
 
+    Copyright (C) 2015 Marcos Díez García <marcos.diez.garcia@gmail.com>
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    GNU General Public License for more details.
+    You should have received a copy of the GNU General Public License
+    along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 /*
-  (Draft)
-  genome.h
-  Marcos Díez García
-  02-01-2015
+    genome.h constitutes the lowest abstraction level of DARWIN in which the
+    fundamentals of the genetic algorithm to be implemented are specified.
 
-  This document constitutes the lowest abstraction level of DARWIN, defining
-  how candidate solutions (also called individuals) to a particular problem are
-  encoded. Such encoding corresponds to the "Search Space" (Genotype); its
-  equivalent representation in the "Solution Space" (Phenotype) is obtained by
-  means of a decoding function, which will be different for each problem.
+    It defines how candidate solutions (also called individuals) to a particular
+    problem are encoded. All solutions can be represented in 2 different,
+    but related, ways: in the "Search Space" or in the "Solution space". The
+    former is also known as the "Genotype" and the latter as the "Phenotype".
+    For different problems they will be different, as well as the mapping
+    function (decoding function) which translates Genotype to Phenotype.
 
-  DARWIN assumes an integer-based genotipic representation. Thus, any problem
-  involving a real-based (or any other) phenotipic representation needs to be
-  mapped to an equivalent integer-based genotipic representation. This mapping
-  can be achieved by means of a decoding function and choosing the right
-  genetic representation of individuals for the problem.
-
+    Darwin forces an integer-based (limited to 0 and 1) genotypic representation.
+    Thus, every problem must be encoded in a binary fashion, independently of
+    the phenotypic representation chosen.
 */
 #ifndef GENOME_H_INCLUDED
 #define GENOME_H_INCLUDED
 
 #include <string.h>
 #include "random.h"
-
 
 /*
  * Encoding.

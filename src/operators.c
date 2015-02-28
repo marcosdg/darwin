@@ -99,7 +99,7 @@ single_point_crossover(
     if (!offspring || !son || !daughter) {
         ERROR_VERBOSE("Could not create offspring");
     }
-
+    /* locus must be != 0, so that offspring != parents */
     long int locus = random_in_range_inclusive(1, (e->dna_length - 1));
     int fst_half = locus * UNIT_BYTE_SIZE;
     int snd_half = e->dna_byte_size - fst_half;

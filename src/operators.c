@@ -34,8 +34,8 @@
 
 
 /*
- * Selection.
- */
+    Selection.
+*/
 
 static int
 fight(
@@ -64,13 +64,13 @@ tournament_selection(
     }
     return best;
 }
-/* fight:
- * Returns 'one' if rival wins, 'zero' if aspirant wins.
- *
- * It is represented by a Bernoulli probability distribution, being 'goodness'
- * the aspirant's probability of winning and (1 - goodness) the probability of
- * loosing. The higher the goodness, the harder to loose.
- */
+/*  fight:
+    Returns 'one' if rival wins, 'zero' if aspirant wins.
+
+    It is represented by a Bernoulli probability distribution, being 'goodness'
+    the aspirant's probability of winning and (1 - goodness) the probability of
+    loosing. The higher the goodness, the harder to loose.
+*/
 static int
 fight(
         struct Individual *aspirant,
@@ -85,8 +85,8 @@ fight(
 }
 
 /*
- * Crossver.
- */
+    Crossver.
+*/
 
 struct Individual **
 single_point_crossover(
@@ -119,8 +119,8 @@ single_point_crossover(
 }
 
 /*
- * Mutation.
- */
+    Mutation.
+*/
 
 long int
 single_point_mutation(

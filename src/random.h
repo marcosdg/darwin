@@ -25,7 +25,7 @@
 #define RANDOM_H_INCLUDED
 
 #include <assert.h>
-#include <float.h> /* DBL_MIN = 1e-37 or smaller */
+#include <float.h>
 #include <math.h>
 #include <time.h>
 #include "report.h"

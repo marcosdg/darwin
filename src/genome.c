@@ -97,14 +97,14 @@ invert(
     one->dna[locus] = abs(1 - (one->dna[locus]));
 }
 
-/* fitness_proportion:
- * How much better is 'one' than 'reference'?
- *
- * If one has zero or negative fitness is disregarded to avoid possible
- * divisions by zero or misleading results. In which case, tournament
- * selection will behave 'determinalistically', as this function decides
- * who is likely to be selected.
- */
+/*  fitness_proportion:
+    How much better is 'one' than 'reference'?
+
+    If one has zero or negative fitness is disregarded to avoid possible
+    divisions by zero or misleading results. In which case, tournament
+    selection will behave 'determinalistically', as this function decides
+    who is likely to be selected.
+*/
 double
 fitness_proportion(
         struct Individual *one,

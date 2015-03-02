@@ -61,8 +61,8 @@ create_encoding(
 );
 
 /*
- * Individual.
- */
+    Individual.
+*/
 
 struct Individual {
     double fitness;
@@ -93,8 +93,8 @@ fitness_proportion(
 );
 
 /*
- * Population.
- */
+    Population.
+*/
 
 struct Population {
     struct Encoding *encoding;

@@ -46,6 +46,10 @@ int main(int argc, char **argv)
     struct Individual *mom = pop->people[1];
     struct Individual *ind3 = pop->people[2];
     struct Individual *ind4 = pop->people[3];
+    dad->fitness = 0.57;
+    mom->fitness = 0.30;
+    ind3->fitness = 0.75;
+    ind4->fitness = 0.70;
 
     for (i = 0; i < pop->current_size; i += 1) {
         printf("\t Individual %i info: \n", i);
@@ -58,7 +62,7 @@ int main(int argc, char **argv)
         printf("\t\t fitness: %lf \n", (pop->people[i])->fitness);
         printf("\t\t evolvability: %lf \n", (pop->people[i])->evolvability);
     }
-
+/*
     printf("======== TEST TOURNAMENT SELECTION ========\n");
 
     dad->fitness = 0.50;
@@ -98,6 +102,33 @@ int main(int argc, char **argv)
 		printf("%li -- ", son->dna[i]);
 	}
     printf("\n");
+*/
+    printf("======== TEST REPLACEMENT  ========\n");
+    
+    printf("DIVERSITY CONTRIBUTION\n");
 
+    int dadd = diversity_contribution(dad, pop, e);
+    int momd = diversity_contribution(mom, pop, e);
+    printf(" diversity contribution DAD: %d\n", dadd);
+    printf(" diversity contribution MOM: %d\n", momd);
+     
+    printf("REPLACE WORST\n");
+
+    struct Individual *new = create_random_individual(e);
+    new->fitness = 0.55;
+
+    replace_worst(new, pop);
+
+    for (i = 0; i < pop->current_size; i += 1) {
+        printf("\t Individual %i info: \n", i);
+        printf("\t\t genes: ");
+
+        for (locus = 0; locus < (e->dna_length); locus += 1) {
+            printf("%li -- ", (pop->people[i])->dna[locus]);
+        }
+        printf("\n");
+        printf("\t\t fitness: %lf \n", (pop->people[i])->fitness);
+        printf("\t\t evolvability: %lf \n", (pop->people[i])->evolvability);
+    }
     return 0;
 }

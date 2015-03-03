@@ -79,6 +79,13 @@ create_random_individual(
         struct Encoding *e
 );
 
+extern int
+are_equal_individuals(
+        struct Individual *one,
+        struct Individual *other,
+        struct Encoding *e
+);
+
 extern void
 invert(
         struct Individual *one,
@@ -115,6 +122,7 @@ create_random_population(
         struct Encoding *e,
         int size
 );
+
 extern void
 add_individual(
         struct Population *population,

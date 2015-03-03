@@ -103,11 +103,16 @@ single_point_crossover(
     if (!offspring || !son || !daughter) {
         ERROR_VERBOSE("Could not create offspring");
     }
-    /* locus must be != 0, so that offspring != parents */
+    /*
+        Chiasma.
+        (locus should not be 0, since offspring and parents would be equal)
+    */
     long int locus = random_in_range_inclusive(1, (e->dna_length - 1));
     int fst_half = locus * UNIT_BYTE_SIZE;
     int snd_half = e->dna_byte_size - fst_half;
-
+    /*
+        Transfer genetic material.
+    */
     memcpy(son->dna, dad->dna, fst_half);
     memcpy((son->dna + locus), (mom->dna + locus), snd_half);
     memcpy(daughter->dna, mom->dna, fst_half);
@@ -150,4 +155,56 @@ adaptative_mutation(
     }
 }
 */
+
+/*
+    Replacement.
+
+    Contribution to Diversity(CD)/Replace the Worst(RW) strategy.
+*/
+
+int
+diversity_contribution(
+        struct Individual *one,
+        struct Population *population,
+        struct Encoding *e
+) {
+    assert((one != NULL) && (population != NULL) && (e != NULL));
+    assert(population->current_size > 0);
+    /* 0 <= hamming_distance <= number of bits in the string */
+
+    int min_distance = e->dna_length; /* the worst case */
+    int d = 0;
+    int at;
+
+    for (at = 0; at < population->current_size; at += 1) {
+        if (!are_equal_individuals(one, population->people[at], e)) {
+            d = hamming_distance(one->dna, population->people[at]->dna,
+                                    e->dna_length);
+            if (d < min_distance) {
+                min_distance = d;
+            }
+        }
+    }
+    return min_distance;
+}
+void
+replace_worst(
+        struct Individual *incomer,
+        struct Population *population
+) {
+    assert((incomer != NULL) && (population != NULL));
+    assert(population->current_size > 0);
+
+    int worst = 0;
+    int next;
+
+    for (next = 1; next < (population->current_size - 1); next += 1) {
+
+        if (population->people[next]->fitness
+            < population->people[worst]->fitness) {
+            worst = next;
+        }
+    }
+    population->people[worst] = incomer;
+}
 

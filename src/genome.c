@@ -85,6 +85,26 @@ create_random_individual(
     return one;
 }
 
+int
+are_equal_individuals(
+        struct Individual *one,
+        struct Individual *other,
+        struct Encoding *e
+) {
+    assert((one != NULL) && (other != NULL) && (e != NULL));
+
+    int are = 1;
+    int locus;
+
+    for (locus = 0; locus < e->dna_length; locus += 1) {
+        if (one->dna[locus] != other->dna[locus]) {
+            are = 0;
+            break;
+        }
+    }
+    return are;
+}
+
 void
 invert(
         struct Individual *one,
@@ -97,7 +117,12 @@ invert(
     one->dna[locus] = abs(1 - (one->dna[locus]));
 }
 
-/*  fitness_proportion:
+/*
+    TODO:
+    Move fitness_proportion to operators.c.Related methods must be together.
+*/
+/*
+    fitness_proportion:
     How much better is 'one' than 'reference'?
 
     If one has zero or negative fitness is disregarded to avoid possible

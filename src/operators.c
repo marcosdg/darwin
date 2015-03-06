@@ -21,14 +21,14 @@
 /*
     operators.{h,c} implement the 4 basic evolutional operations of Genetic
     Algorithms:
-        1. Selection:
-            which individuals will produce new individuals?
-        2. Crossover:
-            maiting between selected individuals.
-        3. Mutation:
-            individuals' DNA alterations.
-        4. Replacement:
-            which individuals will persist from one generation to the next one?
+        1. Selection: which individuals will produce new individuals?
+            (Fitness-proportioned Tournament Selection)
+        2. Crossover: maiting between selected individuals.
+            (Single Point Crossover)
+        3. Mutation: individuals' DNA alterations.
+            (Single Point Mutation)
+        4. Replacement: which individuals persist between generations.
+            (Replace Worst Individual)
 */
 #include "operators.h"
 
@@ -37,32 +37,27 @@
     Selection.
 */
 
-static int
-fight(
-        struct Individual *aspirant,
-        struct Individual *rival
-);
-struct Individual *
-tournament_selection(
-        struct Population *population,
-        int num_rounds
+/*  fitness_proportion:
+    How much better is 'one' than 'reference'?
+
+    If one has zero or negative fitness is disregarded to avoid possible
+    divisions by zero or misleading results. In which case, tournament
+    selection will behave 'determinalistically', as this function decides
+    who is likely to be selected.
+*/
+static double
+fitness_proportion(
+        struct Individual *one,
+        struct Individual *reference
 ) {
-    assert(population != NULL);
-    assert(num_rounds >= 1); /* zero rounds means zero rivals */
+    assert((one != NULL) && (reference != NULL));
 
-    struct Individual *best = pick_random_individual(population);
-    struct Individual *rival;
-    int round;
-
-    for (round = 1; round <= num_rounds; round += 1) {
-        rival = pick_random_individual(population);
-
-        /* rival wins ? */
-        if(fight(best, rival)) {
-            best = rival;
-        }
+    if (one->fitness <= 0.0) { /* reference is the best */
+        return 0.0;
+    } else if (reference->fitness <= 0.0) { /* one is the best */
+        return 1.0;
     }
-    return best;
+    return one->fitness / (one->fitness + reference->fitness);
 }
 /*  fight:
     Returns 'one' if rival wins, 'zero' if aspirant wins.
@@ -84,6 +79,29 @@ fight(
     return bad_luck > goodness? 1 : 0;
 }
 
+struct Individual *
+tournament_selection(
+        struct Population *city,
+        int num_rounds
+) {
+    assert(city != NULL);
+    assert(num_rounds >= 1); /* zero rounds means zero rivals */
+
+    struct Individual *best = pick_random_individual(city);
+    struct Individual *rival;
+    int round;
+
+    for (round = 1; round <= num_rounds; round += 1) {
+        rival = pick_random_individual(city);
+
+        /* rival wins ? */
+        if(fight(best, rival)) {
+            best = rival;
+        }
+    }
+    return best;
+}
+
 /*
     Crossver.
 */
@@ -103,10 +121,13 @@ single_point_crossover(
     if (!offspring || !son || !daughter) {
         ERROR_VERBOSE("Could not create offspring");
     }
-    /* locus must be != 0, so that offspring != parents */
+    /* X point: to avoid (offspring == parents), then (locus != 0) */
+
     long int locus = random_in_range_inclusive(1, (e->dna_length - 1));
     int fst_half = locus * UNIT_BYTE_SIZE;
     int snd_half = e->dna_byte_size - fst_half;
+
+    /* Transfer genetic material. */
 
     memcpy(son->dna, dad->dna, fst_half);
     memcpy((son->dna + locus), (mom->dna + locus), snd_half);
@@ -150,4 +171,33 @@ adaptative_mutation(
     }
 }
 */
+
+/*
+    Replacement.
+*/
+
+int
+replace_worst(
+        struct Individual *incomer,
+        struct Population *city
+) {
+    assert((incomer != NULL) && (city != NULL));
+    assert(city->current_size > 0);
+
+    int replaced = 0;
+    int worst = 0;
+    int next;
+
+    for (next = 1; next <= (city->current_size - 1); next += 1) {
+        if (city->people[next]->fitness
+            < city->people[worst]->fitness) {
+            worst = next;
+        }
+    }
+    if (incomer->fitness > city->people[worst]->fitness) {
+        city->people[worst] = incomer;
+        replaced = 1;
+    }
+    return replaced;
+}
 

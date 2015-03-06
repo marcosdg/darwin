@@ -97,97 +97,72 @@ invert(
     one->dna[locus] = abs(1 - (one->dna[locus]));
 }
 
-/*  fitness_proportion:
-    How much better is 'one' than 'reference'?
-
-    If one has zero or negative fitness is disregarded to avoid possible
-    divisions by zero or misleading results. In which case, tournament
-    selection will behave 'determinalistically', as this function decides
-    who is likely to be selected.
-*/
-double
-fitness_proportion(
-        struct Individual *one,
-        struct Individual *reference
-) {
-    assert((one != NULL) && (reference != NULL));
-
-    if (one->fitness <= 0.0) { /* reference is the best */
-        return 0.0;
-    } else if (reference->fitness <= 0.0) { /* one is the best */
-        return 1.0;
-    }
-    return one->fitness / (one->fitness + reference->fitness);
-}
-
 /*
     Population.
 */
 
 struct Population *
 create_empty_population(
-        struct Encoding *e,
-        int max_size
+        int max_size,
+        struct Encoding *e
 ) {
     assert((e != NULL) && (max_size > 0));
 
-    struct Population *population = (struct Population *)
-                                        malloc(sizeof(struct Population));
+    struct Population *city = (struct Population *)
+                                malloc(sizeof(struct Population));
     struct Individual **people = (struct Individual **)
                                     malloc(max_size * sizeof(struct Individual));
-    if (!population || !people) {
+    if (!city || !people) {
         ERROR_VERBOSE("Could not create empty population");
     }
-    population->encoding = e;
-    population->people = people;
-    population->next_free_spot = 0;
-    population->generation = 0;
-    population->current_size = 0;
-    population->max_size = max_size;
+    city->encoding = e;
+    city->people = people;
+    city->next_free_spot = 0;
+    city->generation = 0;
+    city->current_size = 0;
+    city->max_size = max_size;
 
-    return population;
+    return city;
 }
-
 struct Population *
 create_random_population(
-        struct Encoding *e,
-        int size
+        int size,
+        struct Encoding *e
 ) {
     assert((e != NULL) && (size > 0));
 
-    struct Population *population = create_empty_population(e, size);
+    struct Population *city = create_empty_population(size, e);
     struct Individual *one;
 
     do {
         one = create_random_individual(e);
-        add_individual(population, one);
-     } while(population->current_size != size);
+        add_individual(city, one);
+     } while(city->current_size != size);
 
-    return population;
+    return city;
 }
 
 void
 add_individual(
-        struct Population *population,
+        struct Population *city,
         struct Individual *new
 ) {
-    assert((population != NULL) && (new != NULL));
+    assert((city != NULL) && (new != NULL));
 
-    if (population->current_size < population->max_size) {
-        population->people[population->next_free_spot] = new;
-        population->current_size += 1;
-        population->next_free_spot += 1;
+    if (city->current_size < city->max_size) {
+        city->people[city->next_free_spot] = new;
+        city->current_size += 1;
+        city->next_free_spot += 1;
     }
 }
 
 struct Individual *
 pick_random_individual(
-        struct Population *population
+        struct Population *city
 ) {
-    assert(population != NULL);
+    assert(city != NULL);
 
-    int at = random_in_range_exclusive(0, population->max_size);
+    int at = random_in_range_exclusive(0, city->max_size);
 
-    return population->people[at];
+    return city->people[at];
 }
-

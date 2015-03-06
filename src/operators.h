@@ -35,25 +35,35 @@
 
 #include "genome.h"
 
-
 extern struct Individual *
 tournament_selection(
-        struct Population *population,
+        struct Population *city,
         int num_rounds
 );
+
 extern struct Individual **
 single_point_crossover(
         struct Individual *dad,
         struct Individual *mom,
         struct Encoding *e
 );
+
 extern long int
 single_point_mutation(
         struct Individual *victim,
         struct Encoding *e
 );
 /*
-int adaptative_mutation(struct population *pop,
-                        double (*mutation_probability_function)(struct *individual))
+extern int
+adaptative_mutation(
+        struct population *pop,
+        double (*mutation_probability_function)(struct *individual)
+);
 */
+
+extern int
+replace_worst(
+        struct Individual *incomer,
+        struct Population *city
+);
 #endif /* OPERATORS_H_INCLUDED */

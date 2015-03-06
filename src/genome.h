@@ -86,11 +86,6 @@ invert(
         struct Encoding *e
 );
 
-extern double
-fitness_proportion(
-        struct Individual *whom,
-        struct Individual *other
-);
 
 /*
     Population.
@@ -107,22 +102,21 @@ struct Population {
 
 extern struct Population *
 create_empty_population(
-        struct Encoding *e,
-        int max_size
+        int max_size,
+        struct Encoding *e
 );
 extern struct Population *
 create_random_population(
-        struct Encoding *e,
-        int size
+        int size,
+        struct Encoding *e
 );
 extern void
 add_individual(
-        struct Population *population,
+        struct Population *city,
         struct Individual *new
 );
-
 extern struct Individual *
 pick_random_individual(
-        struct Population *population
+        struct Population *city
 );
 #endif /* GENOME_H_INCLUDED */

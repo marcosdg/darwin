@@ -96,14 +96,14 @@ int main(int argc, char **argv)
 
     double mutations;
     int mutated;
-    for (i = 0; i < 10000; i += 1) {
+    for (i = 0; i < 100000; i += 1) {
         mutated = mutagen(adaptative_mutation_risk, ind1, e);
         if (mutated) {
             mutations += 1.0;
         }
     }
     printf("%% mutations =  %lf (should be close to the risk factor)\n",
-            mutations / 10000.0);
+            mutations / 100000.0);
 /*
     printf("======== TEST REPLACEMENT  ========\n");
 

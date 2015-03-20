@@ -26,7 +26,6 @@
 
 int main(int argc, char **argv)
 {
-
     start_random_generator();
 
     int i;
@@ -61,12 +60,13 @@ int main(int argc, char **argv)
         printf("\t\t fitness: %lf \n", (city->people[i])->fitness);
         printf("\t\t evolvability: %lf \n", (city->people[i])->evolvability);
     }
-
+/*
     printf("======== TEST TOURNAMENT SELECTION ========\n");
 
     struct Individual *best = tournament_selection(city, 1);
     printf("Best individual fitness: %lf \n", best->fitness);
-
+*/
+/*
     printf("======== TEST CROSSOVER ========\n");
 
     struct Individual **offspring = single_point_crossover(ind1, ind2, e);
@@ -83,15 +83,28 @@ int main(int argc, char **argv)
 		printf("%li -- ", daughter->dna[i]);
 	}
     printf("\n");
+*/
     printf("======== TEST MUTATION ========\n");
 
-    single_point_mutation(son, e);
+    ind1->evolvability = ind1->fitness
+                            / ((ind2->fitness + ind3->fitness) * 0.5);
 
-    printf("SON DNA:\n");
-	for (i = 0; i < (e->dna_length); i += 1) {
-		printf("%li -- ", son->dna[i]);
-	}
-    printf("\n");
+    double risk1 = adaptative_mutation_risk(ind1);
+
+    printf("evolvability ind1 = %lf \n", ind1->evolvability);
+    printf("risk ind1 = %lf \n", risk1);
+
+    double mutations;
+    int mutated;
+    for (i = 0; i < 10000; i += 1) {
+        mutated = mutagen(adaptative_mutation_risk, ind1, e);
+        if (mutated) {
+            mutations += 1.0;
+        }
+    }
+    printf("%% mutations =  %lf (should be close to the risk factor)\n",
+            mutations / 10000.0);
+/*
     printf("======== TEST REPLACEMENT  ========\n");
 
     struct Individual *new = create_random_individual(e);
@@ -111,5 +124,6 @@ int main(int argc, char **argv)
             printf("\t\t evolvability: %lf \n", (city->people[i])->evolvability);
         }
     }
+*/
     return 0;
 }

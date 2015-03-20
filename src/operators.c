@@ -32,15 +32,20 @@
 */
 #include "operators.h"
 
+/*
+    Default mutation probability of an individual. It may be later redefined by
+    the user via the Genetic Algorithm configuration file.
+*/
+static double default_mutation_risk = 0.1;
 
 /*
-    Selection.
+    SELECTION.
 */
-
-/*  fitness_proportion:
+/*
+    fitness_proportion:
     How much better is 'one' than 'reference'?
 
-    If one has zero or negative fitness is disregarded to avoid possible
+    If some has zero or negative fitness is disregarded to avoid possible
     divisions by zero or misleading results. In which case, tournament
     selection will behave 'determinalistically', as this function decides
     who is likely to be selected.
@@ -59,7 +64,8 @@ fitness_proportion(
     }
     return one->fitness / (one->fitness + reference->fitness);
 }
-/*  fight:
+/*
+    fight:
     Returns 'one' if rival wins, 'zero' if aspirant wins.
 
     It is represented by a Bernoulli probability distribution, being 'goodness'
@@ -103,7 +109,7 @@ tournament_selection(
 }
 
 /*
-    Crossver.
+    CROSSOVER.
 */
 
 struct Individual **
@@ -140,7 +146,10 @@ single_point_crossover(
 }
 
 /*
-    Mutation.
+    MUTATION.
+
+    A mutagen will cause mutations in an individual's DNA depending on the risk
+    factor (mutation probability function).
 */
 
 long int
@@ -148,32 +157,76 @@ single_point_mutation(
         struct Individual *victim,
         struct Encoding *e
 ) {
-    assert ((victim != NULL) && (e != NULL));
+    assert((victim != NULL) && (e != NULL));
 
     long int locus = random_in_range_exclusive(0, e->dna_length);
     invert(victim, locus, e);
 
     return locus;
 }
-/*
-int
-adaptative_mutation(
-        struct population *pop,
-        double (*mutation_probability_function)(struct *individual)
+
+double
+constant_mutation_risk(
+        struct Individual *victim /* not used but expected by mutagen function */
 ) {
-    int i, r;
-
-    for (i = 0; i < pop->current_size; i += 1) {
-        r = random_in_range(0, 10);
-        if (r < (*mutation_probability_function)(pop->individuals[i]) * 10) {
-            single_point_mutation(pop->individuals[i]);
-        }
-    }
+    return default_mutation_risk;
 }
+/*
+    adaptative_mutation_risk:
+
+    The mutation probability vary according to victim's fitness and evolvability
+    (parents' average fitness):
+        · Better fitness or evolvability, decreases risk.
+        · Worse fitness or evolvability, increases risk.
 */
+double
+adaptative_mutation_risk(
+        struct Individual *victim
+) {
+    assert(victim != NULL);
+
+    /* Case 1: best fitness (1.0). No mutation. */
+
+    double risk = 0.0;
+
+    /* Case 2: worst fitness. Mutate. */
+
+    if (victim->fitness <= 0.0) {
+        risk = 1.0;
+
+    /* Case 3: victim is equal or better than parents. */
+
+    } else if ((victim->fitness < 1.0) && (victim->evolvability >= 1.0)) {
+        risk = exp(-(victim->evolvability) * (victim->fitness)) * 0.1;
+
+    /* Case 4: victim is worse. */
+
+    } else if ((victim->fitness < 1.0) && (victim->evolvability < 1.0)) {
+        risk = exp(-(victim->evolvability) * (victim->fitness)) * 0.5;
+    }
+    return risk;
+}
+
+int
+mutagen(
+        double (*risk)(struct Individual *),
+        struct Individual *victim,
+        struct Encoding *e
+) {
+    assert((risk != NULL) && (victim != NULL) && (e != NULL));
+
+    int mutated = 0;
+    double luck = random_double_inclusive(0.0, 1.0);
+
+    if (luck < (*risk)(victim)) {
+        single_point_mutation(victim, e);
+        mutated = 1;
+    }
+    return mutated;
+}
 
 /*
-    Replacement.
+    REPLACEMENT.
 */
 
 int

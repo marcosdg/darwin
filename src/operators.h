@@ -53,13 +53,20 @@ single_point_mutation(
         struct Individual *victim,
         struct Encoding *e
 );
-/*
-extern int
-adaptative_mutation(
-        struct population *pop,
-        double (*mutation_probability_function)(struct *individual)
+extern double
+constant_mutation_risk(
+       struct Individual *victim
 );
-*/
+extern double
+adaptative_mutation_risk(
+        struct Individual *victim
+);
+extern int
+mutagen(
+        double (*risk)(struct Individual *), /* mutation probability function */
+        struct Individual *victim,
+        struct Encoding *e
+);
 
 extern int
 replace_worst(

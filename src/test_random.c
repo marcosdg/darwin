@@ -39,10 +39,10 @@ int main(int argc, char **argv)
 
     start_random_generator();
 
-    printf("======== TEST RANDOM_IN_RANGE_EXCLUSIVE ========\n");
+    printf("======== TEST RANDOM_INT_EXCLUSIVE ========\n");
 
     for (i = 0; i < NUM_RUNS; i += 1) {
-        r = random_in_range_exclusive(0,5);
+        r = random_int_exclusive(0,5);
         switch(r) {
         case 0:
             zeroes += 1.0;
@@ -68,13 +68,13 @@ int main(int argc, char **argv)
     printf("Threes: %f \n", threes / NUM_RUNS);
     printf("Fours: %f \n", fours / NUM_RUNS);
 
-    printf("======== TEST RANDOM_IN_RANGE_INCLUSIVE ========\n");
+    printf("======== TEST RANDOM_INT_INCLUSIVE ========\n");
 
     zeroes = 0.0;
     ones = 0.0;
 
     for (i = 0; i < NUM_RUNS; i += 1) {
-        r = random_in_range_inclusive(0, 1);
+        r = random_int_inclusive(0, 1);
         switch(r) {
         case 0:
             zeroes += 1.0;

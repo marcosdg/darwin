@@ -129,7 +129,7 @@ single_point_crossover(
     }
     /* X point: to avoid (offspring == parents), then (locus != 0) */
 
-    long int locus = random_in_range_inclusive(1, (e->dna_length - 1));
+    long int locus = random_int_inclusive(1, (e->dna_length - 1));
     int fst_half = locus * UNIT_BYTE_SIZE;
     int snd_half = e->dna_byte_size - fst_half;
 
@@ -159,7 +159,7 @@ single_point_mutation(
 ) {
     assert((victim != NULL) && (e != NULL));
 
-    long int locus = random_in_range_exclusive(0, e->dna_length);
+    long int locus = random_int_exclusive(0, e->dna_length);
     invert(victim, locus, e);
 
     return locus;

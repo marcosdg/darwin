@@ -162,7 +162,7 @@ pick_random_individual(
 ) {
     assert(city != NULL);
 
-    int at = random_in_range_exclusive(0, city->max_size);
+    int at = random_int_exclusive(0, city->max_size);
 
     return city->people[at];
 }

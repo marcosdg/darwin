@@ -43,7 +43,7 @@ start_random_generator(
 
 
 long int
-random_in_range_exclusive(
+random_int_exclusive(
         long int lower,
         long int upper
 ) {
@@ -65,11 +65,11 @@ random_double_exclusive(
     return lower + ((rand() * width) / RAND_MAX);
 }
 long int
-random_in_range_inclusive(
+random_int_inclusive(
         long int lower,
         long int upper
 ) {
-    return random_in_range_exclusive(lower, upper + 1);
+    return random_int_exclusive(lower, upper + 1);
 }
 double
 random_double_inclusive(
@@ -91,7 +91,7 @@ random_excluding(
 
     long int r;
     do {
-        r = random_in_range_inclusive(lower, upper);
+        r = random_int_inclusive(lower, upper);
     } while (r == banned);
 
     return r;
@@ -108,7 +108,7 @@ randomize_ints(
 
     int i;
     for (i = 0; i < length; i += 1) {
-        ints[i] = random_in_range_inclusive(lower, upper);
+        ints[i] = random_int_inclusive(lower, upper);
     }
 }
 void

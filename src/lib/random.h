@@ -37,7 +37,7 @@ start_random_generator(
 );
 
 extern long int
-random_in_range_exclusive(
+random_int_exclusive(
         long int lower,
         long int upper
 );
@@ -47,7 +47,7 @@ random_double_exclusive(
         double upper
 );
 extern long int
-random_in_range_inclusive(
+random_int_inclusive(
         long int lower,
         long int upper
 );

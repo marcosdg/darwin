@@ -23,11 +23,11 @@
     fundamentals of the genetic algorithm to be implemented are specified.
 
     It defines how candidate solutions (also called individuals) to a particular
-    problem are encoded. All solutions can be represented in 2 different,
-    but related, ways: in the "Search Space" or in the "Solution space". The
-    former is also known as the "Genotype" and the latter as the "Phenotype".
-    For different problems they will be different, as well as the mapping
-    function (decoding function) which translates Genotype to Phenotype.
+    problem are encoded. All solutions can be represented within 2 different,
+    but related, spaces: "Search Space" or "Solution Space". The former is also
+    known as the "Genotype" and the latter as the "Phenotype". Normally, these
+    will be different for each problem at hand, as well as the mapping function
+    (decoding function) which translates from Genotype to Phenotype.
 
     Darwin forces an integer-based (limited to 0 and 1) genotypic representation.
     Thus, every problem must be encoded in a binary fashion, independently of
@@ -40,15 +40,15 @@
 #include "lib/random.h"
 
 /*
- * Encoding.
- */
+    Encoding.
+*/
 
 #define UNIT_BYTE_SIZE sizeof(long int)
 #define MIN_UNITS_PER_GENE 1
-#define MIN_NUM_GENES 2 /* at least, to perform crossover */
+#define MIN_NUM_GENES 2     /* at least, to perform crossover */
 
 struct Encoding {
-    int units_per_gene;
+    int units_per_gene;     /* allele's length */
     int num_genes;
     int dna_byte_size;
     int dna_length;
@@ -65,9 +65,9 @@ create_encoding(
 */
 
 struct Individual {
-    double fitness;
-    double evolvability;
-    long int *dna;
+    double fitness;         /* solution's goodness */
+    double evolvability;    /* parent's average fitness */
+    long int *dna;          /* genotypical solution representation */
 };
 
 extern struct Individual *
@@ -110,11 +110,13 @@ create_random_population(
         int size,
         struct Encoding *e
 );
+
 extern void
 add_individual(
         struct Population *city,
         struct Individual *new
 );
+
 extern struct Individual *
 pick_random_individual(
         struct Population *city

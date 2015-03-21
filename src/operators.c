@@ -33,8 +33,8 @@
 #include "operators.h"
 
 /*
-    Default mutation probability of an individual. It may be later redefined by
-    the user via the Genetic Algorithm configuration file.
+    Individual's default mutation probability. It may be later redefined by the
+    user via darwin's Genetic Algorithm configuration file.
 */
 static double default_mutation_risk = 0.1;
 
@@ -91,7 +91,7 @@ tournament_selection(
         int num_rounds
 ) {
     assert(city != NULL);
-    assert(num_rounds >= 1); /* zero rounds means zero rivals */
+    assert(num_rounds >= 1); /* empty tournaments are pointless */
 
     struct Individual *best = pick_random_individual(city);
     struct Individual *rival;
@@ -174,7 +174,7 @@ constant_mutation_risk(
 /*
     adaptative_mutation_risk:
 
-    The mutation probability vary according to victim's fitness and evolvability
+    The mutation probability varies according to victim's fitness and evolvability
     (parents' average fitness):
         · Better fitness or evolvability, decreases risk.
         · Worse fitness or evolvability, increases risk.

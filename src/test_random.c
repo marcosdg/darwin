@@ -21,7 +21,7 @@
 /*
     Just to play around.
 */
-#include "lib/random.h"
+#include "base/random.h"
 
 
 static double NUM_RUNS = 1000;

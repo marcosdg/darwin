@@ -1,0 +1,12 @@
+AUTHOR: Marcos Díez García
+MAIL: <marcos.diez.garcia@gmail.com>
+LAST MODIFICATION: 24-03-2015
+
+                            ATTENTION
+
+'autoreconf' command (version 2.68) contains a BUG related to the "m4 subdir
+convention" when executing 'autoreconf -i' with an empty m4 directory. The 
+solution is adding a dummy file.
+
+At the moment, the darwin project does not use m4 macros. This file exists for
+mere informative purposes and solving the issue above mentioned.

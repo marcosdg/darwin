@@ -1,12 +1,12 @@
-# Makefile
-
+# Automake script for darwin.
+#
 # This is part of the darwin program.
-
+#
 # darwin. A simple genetic algorithm implementation with a self-adaptative
 # strategy.
-
+#
 # Copyright (C) 2015 Marcos Díez García <marcos.diez.garcia@gmail.com>
-
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -18,21 +18,16 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-CFLAGS = -Wall -Wextra
-LDLIBS = -lm -lrt
 
-test_random_SOURCES = src/lib/random.c src/test_random.c
-test_operators_SOURCES = src/lib/random.c src/genome.c src/operators.c \
-						 src/test_operators.c
+ACLOCAL_AMFLAGS = -I m4 --install
+AM_LDFLAGS = -lrt -lm
 
-all: tests
+bin_PROGRAMS = testrandom testoperators
+testrandom_SOURCES = ./src/base/report.h ./src/base/random.h \
+					 ./src/base/random.c ./src/test_random.c
+testoperators_SOURCES = ./src/base/report.h ./src/base/random.h \
+					   	./src/base/random.c ./src/genome.h ./src/genome.c \
+					   	./src/operators.h ./src/operators.c \
+						./src/test_operators.c
 
-tests: test_random test_operators
-test_random:
-	$(CC) $(CFLAGS) $(test_random_SOURCES) -o $@ $(LDLIBS)
-test_operators:
-	$(CC) $(CFLAGS) $(test_operators_SOURCES) -o $@ $(LDLIBS)
-
-.PHONY: clean
-clean:
-	$(RM) test_random test_operators
+EXTRA_DIST = m4/NOTES # autoreconf -i bug (v.268)

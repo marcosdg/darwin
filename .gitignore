@@ -1,0 +1,103 @@
+# Files that Git should ignore in the darwin source directory.
+#
+# This is part of the darwin program.
+#
+# darwin. A simple genetic algorithm implementation with a self-adaptative
+# strategy.
+#
+# Copyright (C) 2015 Marcos Díez García <marcos.diez.garcia@gmail.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+# NOTE: Adapted from the GNU Emacs GitHub mirror.
+
+# Built by 'autoreconf'.
+/aclocal.m4
+/configure
+build-aux/compile
+build-aux/config.guess
+build-aux/config.sub
+build-aux/depcomp
+build-aux/install-sh
+build-aux/missing
+lib/Makefile.in
+config.in
+
+# Built by 'configure'.
+Info.plist
+InfoPlist.strings
+Makefile
+/*.cache
+/confdefs.h
+/config.status
+/configure.lineno
+/conftest*
+config.h
+epaths.h
+
+# Dependencies.
+.deps/
+deps/
+
+# Logs and temporaries.
+*.log
+*.tmp
+
+# Time stamps.
+stamp_BLD
+gl-stamp
+stamp-h.in
+stamp-h1
+
+# Object files and debugging.
+*.a
+*.dSYM/
+*.core
+*.elc
+*.o
+*.res
+[0-9]*.core
+core
+core.*[0-9]
+oo/
+oo-spd/
+src/*.map
+
+# Tests.
+test/
+
+# ctags, etags.
+TAGS
+
+# GNU global.
+GPATH
+GSYMS
+GRTAGS
+GTAGS
+
+# GNU idutils.
+ID
+
+# Executables.
+*.exe
+a.out
+
+# Version control and locks.
+*.orig
+*.rej
+*~
+.#*
+\#*\#
+[0-9]*.patch
+
+# Distribution directories.
+/darwin-[1-9]*/

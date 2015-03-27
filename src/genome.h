@@ -37,7 +37,7 @@
 #define GENOME_H_INCLUDED
 
 #include <string.h>
-#include "lib/random.h"
+#include "base/random.h"
 
 /*
     Encoding.

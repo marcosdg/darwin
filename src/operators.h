@@ -33,7 +33,6 @@
 #ifndef OPERATORS_H_INCLUDED
 #define OPERATORS_H_INCLUDED
 
-#include "genome.h"
 
 extern struct Individual *
 tournament_selection(

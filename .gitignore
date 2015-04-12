@@ -21,6 +21,7 @@
 # NOTE: Adapted from the GNU Emacs GitHub mirror.
 
 # Built by 'autoreconf'.
+
 /aclocal.m4
 /configure
 build-aux/compile
@@ -30,7 +31,8 @@ build-aux/depcomp
 build-aux/install-sh
 build-aux/missing
 lib/Makefile.in
-config.in
+Makefile.in # by automake
+config.h.in # by autoheader
 
 # Built by 'configure'.
 Info.plist
@@ -57,6 +59,7 @@ stamp_BLD
 gl-stamp
 stamp-h.in
 stamp-h1
+.dirstamp
 
 # Object files and debugging.
 *.a

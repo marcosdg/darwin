@@ -21,10 +21,17 @@
 /*
     random.{h,c} implement routines to handle random numbers.
 */
+#include <assert.h>
+#include <float.h>  /* DBL_MIN */
+#include <math.h>   /* abs */
+#include <stdio.h>  /* printf */
+#include <stdlib.h> /* RAND_MAX */
+#include <time.h>   /* clock_gettime, CLOCK_REALTIME, rand, srand, timespec */
+#include "report.h"
 #include "random.h"
 
-
 static int sequence_started = 0;
+
 
 void
 start_random_generator(
@@ -34,13 +41,12 @@ start_random_generator(
     unsigned int seed;
 
     if (clock_gettime(CLOCK_REALTIME, &now) == -1) {
-        ERROR_VERBOSE("Could not generate seed correctly");
+        error("Could not generate seed correctly");
     }
     seed = (unsigned int) (now.tv_sec * now.tv_nsec);
     srand(seed);
     sequence_started = 1;
 }
-
 
 long int
 random_int_exclusive(
@@ -118,4 +124,3 @@ randomize_bins(
 ) {
     randomize_ints(bins, length, 0, 1);
 }
-

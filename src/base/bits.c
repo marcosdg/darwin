@@ -1,4 +1,4 @@
-/*  report.h
+/*  bits.c
 
     This is part of the darwin program.
 
@@ -19,13 +19,38 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 /*
-    report.h implements error reporting functions.
+    bits.{h,c} implement routines for bit manipulation.
 */
-#ifndef REPORT_H_INCLUDED
-#define REPORT_H_INCLUDED
+#include <assert.h>
+#include <limits.h> /* INT_MAX */
+#include <math.h>   /* exp2 */
+#include <stdio.h>
+#include <stdlib.h> /* NULL */
+#include "bits.h"
 
-extern void
-error(
-        char *details
-);
-#endif /* REPORT_H_INCLUDED */
+/*
+    bits2int:
+
+    Undefined behaviour if:
+        1. 'length' does not match the actual 'bits' length
+        2. Elements in 'bits' are greater than INT_MAX (see TODO in genome.h)
+*/
+int
+bits2int(
+        long int *bits,
+        int length
+) {
+    assert(bits != NULL);
+    assert(length > 0);
+
+    int result = 0;
+    double place = 0.0; /* Least Significant Bit */
+    int at;
+
+    /* result = (b{length-1} * 2^(length-1)) +...+ (b{1} * 2^1) + (b{0} * 2^0) */
+    for (at = length - 1; 0 <= at; at -= 1) {
+        result += ((int) bits[at]) * ((int) exp2(place));
+        place += 1.0;
+    }
+    return result; 
+}

@@ -22,6 +22,13 @@
     genome.c implements the basic routines to manipulate individuals and
     the population.
 */
+#include <assert.h>
+#include <math.h>       /* abs */
+#include <stdio.h>      /* printf */
+#include <stdlib.h>     /* malloc */
+#include <string.h>     /* memset */
+#include "base/report.h"
+#include "base/random.h"
 #include "genome.h"
 
 
@@ -38,8 +45,8 @@ create_encoding(
             && (num_genes >= MIN_NUM_GENES));
 
     struct Encoding *e = (struct Encoding *) malloc(sizeof(struct Encoding));
-    if (!e) {
-        ERROR_VERBOSE("Could not create encoding");
+    if (e == NULL) {
+        error("Could not create encoding");
     }
     e->units_per_gene = units_per_gene;
     e->num_genes = num_genes;
@@ -62,8 +69,8 @@ create_individual(
     struct Individual *one = (struct Individual *)
                                 malloc(sizeof(struct Individual));
     long int *dna = (long int *) malloc(e->dna_byte_size);
-    if (!one || !dna) {
-        ERROR_VERBOSE("Could not create individual");
+    if (one == NULL || dna == NULL) {
+        error("Could not create individual");
     }
     memset(dna, 0, e->dna_byte_size);
     one->dna = dna;
@@ -72,7 +79,6 @@ create_individual(
 
     return one;
 }
-
 struct Individual *
 create_random_individual(
         struct Encoding *e
@@ -83,6 +89,16 @@ create_random_individual(
     randomize_bins(one->dna, e->dna_length);
 
     return one;
+}
+void
+kill(
+        struct Individual *it,
+        struct Encoding *e
+) {
+    assert((e != NULL) && (it != NULL));
+
+    free(it->dna);
+    free(it);
 }
 
 void
@@ -112,10 +128,10 @@ create_empty_population(
                                 malloc(sizeof(struct Population));
     struct Individual **people = (struct Individual **)
                                     malloc(max_size * sizeof(struct Individual));
-    if (!city || !people) {
-        ERROR_VERBOSE("Could not create empty population");
+    if (city == NULL || people == NULL) {
+        error("Could not create empty population");
     }
-    city->encoding = e;
+    city->e = e;
     city->people = people;
     city->next_free_spot = 0;
     city->generation = 0;
@@ -141,6 +157,21 @@ create_random_population(
 
     return city;
 }
+void
+exterminate(
+        struct Population *city
+) {
+    assert(city != NULL);
+
+    int at;
+
+    for (at = 0; at < city->current_size; at += 1) {
+        kill(city->people[at], city->e);
+    }
+    free(city->people);
+    free(city->e);
+    free(city);
+}
 
 void
 add_individual(
@@ -162,7 +193,7 @@ pick_random_individual(
 ) {
     assert(city != NULL);
 
-    int at = random_int_exclusive(0, city->max_size);
+    int at = random_int_exclusive(0, city->current_size);
 
     return city->people[at];
 }

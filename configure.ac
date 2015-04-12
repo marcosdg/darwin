@@ -42,7 +42,7 @@ AC_CHECK_LIB([m], [exp])
 AC_CHECK_LIB([rt], [clock_gettime])
 
 dnl Checks for header files.
-AC_CHECK_HEADERS([float.h stdlib.h string.h])
+AC_CHECK_HEADERS([float.h limits.h stdlib.h string.h])
 dnl Checks for typedefs, structures, and compiler characteristics.
 dnl Checks for library functions.
 AC_FUNC_MALLOC

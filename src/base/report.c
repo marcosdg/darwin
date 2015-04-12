@@ -1,4 +1,4 @@
-/*  report.h
+/*  report.c
 
     This is part of the darwin program.
 
@@ -19,13 +19,20 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 /*
-    report.h implements error reporting functions.
+    report.{h,c} implements error reporting functions.
 */
-#ifndef REPORT_H_INCLUDED
-#define REPORT_H_INCLUDED
+#include <assert.h>
+#include <stdio.h>  /* fprintf */
+#include <stdlib.h> /* exit, EXIT_FAILURE */
+#include "report.h"
 
-extern void
+
+void
 error(
         char *details
-);
-#endif /* REPORT_H_INCLUDED */
+) {
+    assert(details != NULL);
+
+    fprintf(stderr, "darwin error: %s\n", (details));
+    exit(EXIT_FAILURE);
+}

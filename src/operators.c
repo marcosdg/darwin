@@ -30,6 +30,14 @@
         4. Replacement: which individuals persist between generations.
             (Replace Worst Individual)
 */
+#include <assert.h>
+#include <math.h>       /* exp */
+#include <stdio.h>      /* printf */
+#include <stdlib.h>     /* malloc */
+#include <string.h>     /* memcpy */
+#include "base/report.h"
+#include "base/random.h"
+#include "genome.h"
 #include "operators.h"
 
 /*
@@ -124,8 +132,8 @@ single_point_crossover(
                                     malloc(2 * sizeof(struct Individual *));
     struct Individual *son = create_individual(e);
     struct Individual *daughter = create_individual(e);
-    if (!offspring || !son || !daughter) {
-        ERROR_VERBOSE("Could not create offspring");
+    if (offspring == NULL || son == NULL || daughter == NULL) {
+        error("Could not create offspring");
     }
     /* X point: to avoid (offspring == parents), then (locus != 0) */
 
@@ -253,4 +261,3 @@ replace_worst(
     }
     return replaced;
 }
-

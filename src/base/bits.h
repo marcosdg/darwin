@@ -1,4 +1,4 @@
-/*  report.h
+/*  bits.c
 
     This is part of the darwin program.
 
@@ -19,13 +19,14 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 /*
-    report.h implements error reporting functions.
+    bits.{h,c} implement routines bit manipulation.
 */
-#ifndef REPORT_H_INCLUDED
-#define REPORT_H_INCLUDED
+#ifndef BITS_H_INCLUDED
+#define BITS_H_INCLUDED
 
-extern void
-error(
-        char *details
+extern int
+bits2int(
+        long int *bits,
+        int length
 );
-#endif /* REPORT_H_INCLUDED */
+#endif /* BITS_H_INCLUDED */

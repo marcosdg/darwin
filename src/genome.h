@@ -29,15 +29,27 @@
     will be different for each problem at hand, as well as the mapping function
     (decoding function) which translates from Genotype to Phenotype.
 
-    Darwin forces an integer-based (limited to 0 and 1) genotypic representation.
-    Thus, every problem must be encoded in a binary fashion, independently of
-    the phenotypic representation chosen.
+    Darwin assumes:
+
+        1. An INTEGER-BASED (limited to 0 and 1) genotypic representation.
+        Thus, every problem must be encoded in a binary scheme, independently of
+        the phenotypic representation of the problem.
+
+        2. All problems are treated as MAXIMIZATION problems. Hence, higher
+        fitness means better solutions. Minimization problems can be equivalently
+        interpreted as maximization ones.
+
+        3. Fitness is normalized to the range [0, 1].
+ 
+    TODO:
+        Use a more appropriate type than 'long int' to encode binary sequences.
+        Initially, 'long int' was chosen to avoid a possible overflow error in
+        random_int_exlusive (see base/random.{h,c}) due to the limitation of
+        the GNU C Library of having: RAND_MAX == INT_MAX.
+
 */
 #ifndef GENOME_H_INCLUDED
 #define GENOME_H_INCLUDED
-
-#include <string.h>
-#include "base/random.h"
 
 /*
     Encoding.
@@ -45,7 +57,7 @@
 
 #define UNIT_BYTE_SIZE sizeof(long int)
 #define MIN_UNITS_PER_GENE 1
-#define MIN_NUM_GENES 2     /* at least, to perform crossover */
+#define MIN_NUM_GENES 2     /* required by crossover operator */
 
 struct Encoding {
     int units_per_gene;     /* allele's length */
@@ -78,6 +90,11 @@ extern struct Individual *
 create_random_individual(
         struct Encoding *e
 );
+extern void
+kill(
+        struct Individual *it,
+        struct Encoding *e
+);
 
 extern void
 invert(
@@ -86,13 +103,12 @@ invert(
         struct Encoding *e
 );
 
-
 /*
     Population.
 */
 
 struct Population {
-    struct Encoding *encoding;
+    struct Encoding *e;
     struct Individual **people;
     int next_free_spot;     /* helpful to add individuals */
     int generation;
@@ -109,6 +125,10 @@ extern struct Population *
 create_random_population(
         int size,
         struct Encoding *e
+);
+extern void
+exterminate(
+        struct Population *city
 );
 
 extern void

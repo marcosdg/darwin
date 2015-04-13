@@ -22,9 +22,7 @@
     bits.{h,c} implement routines for bit manipulation.
 */
 #include <assert.h>
-#include <limits.h> /* INT_MAX */
 #include <math.h>   /* exp2 */
-#include <stdio.h>
 #include <stdlib.h> /* NULL */
 #include "bits.h"
 

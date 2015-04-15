@@ -29,7 +29,7 @@ int main(int argc, char **argv)
 {
     start_random_generator();
 
-    struct NQueens *nqueens = create_instance(5);
+    struct NQueens *nqueens = create_nqueens(5);
     printf("5-Queens encoding:\n");
     printf("\t min. number of bits: %i\n", nqueens->e->units_per_gene);
     printf("\t number of genes: %i\n", nqueens->e->num_genes);

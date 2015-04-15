@@ -43,7 +43,7 @@ objective(struct Candidate *candidate, struct NQueens *nqueens);
 
 
 struct NQueens *
-create_instance(
+create_nqueens(
         int board_size
 ) {
     assert(board_size > MIN_BOARD_SIZE);

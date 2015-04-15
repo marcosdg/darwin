@@ -121,7 +121,7 @@ struct NQueens {
 };
 
 extern struct NQueens *
-create_instance(
+create_nqueens(
         int board_size
 );
 #endif /* NQUEENS_H_INCLUDED */

@@ -29,7 +29,7 @@
 #include "../base/bits.h"
 #include "nqueens.h"        /* genome.h */
 
-static const int MIN_BOARD_SIZE = 4; /* No solutions for n=2 and n=3 */
+const int MIN_BOARD_SIZE = 4; /* No solutions for n=2 and n=3 */
 
 static struct Candidate *
 decode(struct Individual *cryptic, struct NQueens *nqueens);
@@ -46,7 +46,7 @@ struct NQueens *
 create_nqueens(
         int board_size
 ) {
-    assert(board_size > MIN_BOARD_SIZE);
+    assert(board_size >= MIN_BOARD_SIZE);
 
     int min_bits = (int) ceil(log2(board_size));
     struct Encoding *e = create_encoding(min_bits, board_size);

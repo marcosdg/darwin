@@ -32,8 +32,8 @@
     One important insight is that for each row (or column) only one queen will be
     placed. Taking this into account allow us to reduce complexity, as once we
     place one queen we do not have to consider again that row or column for the
-    next queen. Indeed, we are recursively reducing the number of rows or columns
-    by 1 each time we place a queen.
+    next queen. Indeed, we are 'recursively' reducing the board dimension (number
+    of rows or columns) by 1 each time we place a queen.
 
     Secondly, no solutions exist for board sizes equal to 2 or 3 so Darwin omits
     them as well as the trivial case of 1.
@@ -52,6 +52,9 @@
 
         · Gene locus: the row at which the queen is placed.
         · Gene value (allele): the column at which the queen is placed.
+        · Allele's length: minimum number of bits required to encode all possible
+                            alleles: ceil(log2(board size))
+        · DNA length: number of rows = number of columns = board size
 
         It is trivial to see that, under this representation, we have implicitly
         encoded the aforementioned observation, since each locus is unique.
@@ -60,7 +63,7 @@
 
     (2) Phenotype representation:
 
-        The list of queens equivalent to the Genotype representation.
+        The list of queens equivalent to the genotypic representation.
 
     (3) Decoding function:
 

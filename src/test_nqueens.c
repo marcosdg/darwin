@@ -30,7 +30,7 @@ int main(int argc, char **argv)
     start_random_generator();
 
     struct NQueens *nqueens = create_nqueens(5);
-    printf("5-Queens encoding:\n");
+    printf("5-Queens individuals' encoding:\n");
     printf("\t min. number of bits: %i\n", nqueens->e->units_per_gene);
     printf("\t number of genes: %i\n", nqueens->e->num_genes);
     printf("\t dna length: %i\n", nqueens->e->dna_length);
@@ -48,6 +48,7 @@ int main(int argc, char **argv)
 
         Q: Queen, X: illegal board positions(alleles), XQ: illegal queen
     */
+
     struct Individual *setup = create_individual(nqueens->e);
     long int sample_dna[15] = {0,0,0, 0,1,0, 1,1,0, 0,0,1, 0,1,1};
     int i;
@@ -62,9 +63,10 @@ int main(int argc, char **argv)
         printf("Queen %i row %i column %i \n", i, candidate->queens[i]->row,
                 candidate->queens[i]->column);
     }
-    printf("Penalty: %lf\n", (*nqueens->penalty)(candidate, nqueens));
+    printf("Penalty: %i\n", (*nqueens->penalty)(candidate, nqueens));
     printf("Fitness: %lf\n", (*nqueens->objective)(candidate, nqueens));
 
     kill(setup, nqueens->e);
+
     return 0;
 }

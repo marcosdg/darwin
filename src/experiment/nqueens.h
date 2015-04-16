@@ -113,7 +113,7 @@ struct NQueens {
     struct Candidate *
     (*decode)(struct Individual *cryptic, struct NQueens *nqueens);
 
-    double
+    int
     (*penalty)(struct Candidate *candidate, struct NQueens *nqueens);
 
     double

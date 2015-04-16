@@ -22,7 +22,7 @@
     The N-Queens problem (see nqueens.h for details)
 */
 #include <assert.h>
-#include <math.h>           /* ceil, exp2, log2 */
+#include <math.h>           /* abs, ceil, exp2, log2 */
 #include <stdlib.h>         /* malloc, NULL */
 #include <string.h>         /* memset */
 #include "../base/report.h"
@@ -34,7 +34,7 @@ static const int MIN_BOARD_SIZE = 4; /* No solutions for n=2 and n=3 */
 static struct Candidate *
 decode(struct Individual *cryptic, struct NQueens *nqueens);
 
-static double
+static int
 penalty(struct Candidate *candidate, struct NQueens *nqueens);
 
 static double
@@ -125,15 +125,15 @@ decode(
     return candidate;
 }
 
-static double
+static int
 penalty(
         struct Candidate *candidate,
         struct NQueens *nqueens
 ) {
     assert((candidate != NULL) && (nqueens != NULL));
 
-    double attacks = 0.0;
-    double illegals = 0.0;
+    int attacks = 0;
+    int illegals = 0;
     int at;
     int next;
     /*
@@ -141,7 +141,7 @@ penalty(
     */
     for (at = 0; at < nqueens->e->num_genes; at += 1) {
         if (candidate->loci_junk_alleles[at]) {
-            illegals += 1.0;
+            illegals += 1;
         }
     }
     /*
@@ -153,7 +153,7 @@ penalty(
             if (!candidate->loci_junk_alleles[at]
                 && !candidate->loci_junk_alleles[next]
                 && attack(candidate->queens[at], candidate->queens[next])) {
-                    attacks += 1.0;
+                    attacks += 1;
             }
         }
     }
@@ -167,6 +167,6 @@ objective(
 ) {
     assert((candidate != NULL) && (nqueens != NULL));
 
-    return (((double)(nqueens->e->num_genes) - penalty(candidate, nqueens))
-            / (double)(nqueens->e->num_genes));
+    return  ((double) abs(nqueens->e->num_genes - penalty(candidate, nqueens)))
+            / (double)(nqueens->e->num_genes);
 }

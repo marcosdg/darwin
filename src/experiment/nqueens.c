@@ -68,7 +68,7 @@ create_candidate(
 ) {
     assert(nqueens != NULL);
 
-    int *loci_junk_alleles = (int *) malloc(nqueens->e->num_genes);
+    int *loci_junk_alleles = (int *) malloc(nqueens->e->num_genes * sizeof(int));
     struct Queen **queens = (struct Queen **)
                             malloc(nqueens->e->num_genes * sizeof(struct Queen *));
     struct Candidate *candidate = (struct Candidate *)

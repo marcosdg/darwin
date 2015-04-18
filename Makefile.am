@@ -22,12 +22,19 @@
 ACLOCAL_AMFLAGS = -I m4 --install
 AM_LDFLAGS = -lrt -lm
 
-bin_PROGRAMS = testnqueens
-testnqueens_SOURCES = ./src/base/report.h ./src/base/report.c ./src/base/random.h \
-					  ./src/base/random.c ./src/base/bits.h ./src/base/bits.c \
-					  ./src/genome.h ./src/genome.c ./src/experiment/queen.h \
-					  ./src/experiment/queen.c ./src/experiment/nqueens.h \
-					  ./src/experiment/nqueens.c ./src/test_nqueens.c
+
+bin_PROGRAMS = testsubsetsum
+testsubsetsum_SOURCES = ./src/base/report.h ./src/base/report.c \
+						./src/base/random.h ./src/base/random.c ./src/genome.h \
+						./src/genome.c ./src/experiment/subset_sum.h \
+						./src/experiment/subset_sum.c ./src/test_subset_sum.c
+
+##bin_PROGRAMS = testnqueens
+##testnqueens_SOURCES = ./src/base/report.h ./src/base/report.c ./src/base/random.h \
+##					  ./src/base/random.c ./src/base/bits.h ./src/base/bits.c \
+##					  ./src/genome.h ./src/genome.c ./src/experiment/queen.h \
+##					  ./src/experiment/queen.c ./src/experiment/nqueens.h \
+##					  ./src/experiment/nqueens.c ./src/test_nqueens.c
 
 ##bin_PROGRAMS = testoperators testrandom
 ##testrandom_SOURCES = ./src/base/report.h ./src/base/report.c ./src/base/random.h \

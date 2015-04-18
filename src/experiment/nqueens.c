@@ -76,7 +76,7 @@ create_candidate(
     if (loci_junk_alleles == NULL || queens == NULL || candidate == NULL) {
         error("NQueens: Could not create candidate");
     }
-    memset(loci_junk_alleles, 0, nqueens->e->num_genes);
+    memset(loci_junk_alleles, 0, nqueens->e->num_genes * sizeof(int));
     candidate->loci_junk_alleles = loci_junk_alleles;
     candidate->queens = queens;
 

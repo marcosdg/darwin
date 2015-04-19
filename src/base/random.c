@@ -19,12 +19,12 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 /*
-    random.{h,c} implement routines to handle random numbers.
+    The random numbers module.
 */
 #include <assert.h>
 #include <float.h>  /* DBL_MIN */
 #include <math.h>   /* abs */
-#include <stdio.h>  /* printf */
+#include <stdio.h>
 #include <stdlib.h> /* RAND_MAX */
 #include <time.h>   /* clock_gettime, CLOCK_REALTIME, rand, srand, timespec */
 #include "report.h"

@@ -19,7 +19,7 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 /*
-    report.{h,c} implements error reporting functions.
+    The error-reporting module.
 */
 #include <assert.h>
 #include <stdio.h>  /* fprintf */

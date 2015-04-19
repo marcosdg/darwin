@@ -19,7 +19,7 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 /*
-    bits.{h,c} implement routines bit manipulation.
+    The bits module.
 */
 #ifndef BITS_H_INCLUDED
 #define BITS_H_INCLUDED

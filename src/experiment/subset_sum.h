@@ -23,7 +23,7 @@
     ----------------------
 
     An instance of the Subset-Sum problem is a pair (S, t), where S is a set of
-    positive integers and t, the target, is a positive integer. The problem
+    positive integers and t, the target, is also positive integer. The problem
     consists in determining whether S has a subset such that its sum is t.
 
     The genetic approach
@@ -34,7 +34,7 @@
         (2) Phenotype representation
         (3) Decoding function
         (4) Penalty/Cost function
-        (3) Objective function
+        (5) Objective function
 
     (1) Genotype representation:
 

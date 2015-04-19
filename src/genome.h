@@ -19,8 +19,8 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 /*
-    genome.h constitutes the lowest abstraction level of DARWIN in which the
-    fundamentals of the genetic algorithm to be implemented are specified.
+    This is darwin's first level of abstraction, in which the fundamentals of the
+    genetic algorithm are specified.
 
     It defines how candidate solutions (also called individuals) to a particular
     problem are encoded. All solutions can be represented within 2 different,
@@ -46,15 +46,12 @@
         Initially, 'long int' was chosen to avoid a possible overflow error in
         random_int_exlusive (see base/random.{h,c}) due to the limitation of
         the GNU C Library of having: RAND_MAX == INT_MAX.
-
 */
 #ifndef GENOME_H_INCLUDED
 #define GENOME_H_INCLUDED
-
 /*
     Encoding.
 */
-
 #define UNIT_BYTE_SIZE sizeof(long int)
 #define MIN_UNITS_PER_GENE 1
 #define MIN_NUM_GENES 2     /* required by crossover operator */
@@ -71,11 +68,9 @@ create_encoding(
         int units_per_gene,
         int num_genes
 );
-
 /*
     Individual.
 */
-
 struct Individual {
     double fitness;         /* solution's goodness */
     double evolvability;    /* parent's average fitness */
@@ -102,11 +97,9 @@ invert(
         long int locus,
         struct Encoding *e
 );
-
 /*
     Population.
 */
-
 struct Population {
     struct Encoding *e;
     struct Individual **people;

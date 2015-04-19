@@ -19,8 +19,8 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 /*
-    queen.{h,c} provide the basic structures and functions to the N-Queens
-    problem (see nqueens.{h, c}).
+    The N-Queens submodule: basic structures and functions.
+    (see nqueens.{h, c})
 */
 #ifndef QUEEN_H_INCLUDED
 #define QUEEN_H_INCLUDED

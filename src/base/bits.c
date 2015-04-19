@@ -19,13 +19,12 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 /*
-    bits.{h,c} implement routines for bit manipulation.
+    The bits module.
 */
 #include <assert.h>
 #include <math.h>   /* exp2 */
 #include <stdlib.h> /* NULL */
 #include "bits.h"
-
 /*
     bits2int:
 
@@ -42,10 +41,11 @@ bits2int(
     assert(length > 0);
 
     int result = 0;
-    double place = 0.0; /* Least Significant Bit */
+    double place = 0.0;
     int at;
-
-    /* result = (b{length-1} * 2^(length-1)) +...+ (b{1} * 2^1) + (b{0} * 2^0) */
+    /*
+        result = (b{length-1} * 2^(length-1)) +...+ (b{1} * 2^1) + (b{0} * 2^0)
+    */
     for (at = length - 1; 0 <= at; at -= 1) {
         result += ((int) bits[at]) * ((int) exp2(place));
         place += 1.0;

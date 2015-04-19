@@ -29,7 +29,7 @@
 #include "../base/bits.h"
 #include "nqueens.h"        /* genome.h */
 
-const int MIN_BOARD_SIZE = 4; /* No solutions for n=2 and n=3 */
+const int MIN_BOARD_SIZE = 4; /* No solutions exist for N=2 and N=3 */
 
 static struct Candidate *
 decode(struct Individual *cryptic, struct NQueens *nqueens);
@@ -110,12 +110,12 @@ decode(
     */
     for (gene = 0; gene < nqueens->e->num_genes; gene += 1) {
         /*
-            From Genotype (extract genetic info from allele)
+            from Genotype (extract genetic info from allele)
         */
         locus = gene * nqueens->e->units_per_gene;
         column = bits2int(cryptic->dna + locus, nqueens->e->units_per_gene);
         /*
-            To Phenotype
+            to Phenotype
         */
         row = gene;
         i = gene;

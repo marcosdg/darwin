@@ -19,8 +19,8 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 /*
-    queen.{h,c} provide the basic structures and functions to the N-Queens
-    problem.
+    The N-Queens submodule: basic structures and functions.
+    (see nqueens.{h, c})
 */
 #include <assert.h>
 #include <math.h>           /* abs */
@@ -45,7 +45,6 @@ create_queen(
 
     return queen;
 }
-
 /*
     attack:
 
@@ -58,7 +57,7 @@ attack(
 ) {
     assert((q1 != NULL) && (q2 != NULL));
 
-    /* same row|column|diagonal ? */
+    /* same row||column||diagonal ? */
     return ((q1->row == q2->row) || (q1->column == q2->column)
             || (abs(q1->row - q2->row) == abs(q1->column - q2->column))) ? 1 : 0;
 }

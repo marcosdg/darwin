@@ -19,23 +19,20 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 /*
-    genome.c implements the basic routines to manipulate individuals and
-    the population.
+    This is darwin's first level of abstraction, in which the fundamentals of the
+    genetic algorithm are specified (see genome.h for details)
 */
 #include <assert.h>
 #include <math.h>       /* abs */
-#include <stdio.h>      /* printf */
+#include <stdio.h>
 #include <stdlib.h>     /* malloc */
 #include <string.h>     /* memset */
 #include "base/report.h"
 #include "base/random.h"
 #include "genome.h"
-
-
 /*
     Encoding.
 */
-
 struct Encoding *
 create_encoding(
         int units_per_gene,
@@ -55,11 +52,9 @@ create_encoding(
 
     return e;
 }
-
 /*
     Individual.
 */
-
 struct Individual *
 create_individual(
         struct Encoding *e
@@ -112,11 +107,9 @@ invert(
 
     one->dna[locus] = abs(1 - (one->dna[locus]));
 }
-
 /*
     Population.
 */
-
 struct Population *
 create_empty_population(
         int max_size,

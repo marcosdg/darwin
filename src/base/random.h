@@ -19,7 +19,7 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 /*
-    random.{h,c} implement routines to handle random numbers.
+    The random numbers module.
 */
 #ifndef RANDOM_H_INCLUDED
 #define RANDOM_H_INCLUDED

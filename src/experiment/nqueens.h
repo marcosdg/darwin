@@ -32,8 +32,8 @@
     One important insight is that for each row (or column) only one queen will be
     placed. Taking this into account allow us to reduce complexity, as once we
     place one queen we do not have to consider again that row or column for the
-    next queen. Indeed, we are 'recursively' reducing the board dimension (number
-    of rows or columns) by 1 each time we place a queen.
+    next queen. Indeed, we are 'recursively' reducing the board dimensions
+    (number of rows or columns) by 1 each time we place a queen.
 
     Secondly, no solutions exist for board sizes equal to 2 or 3 so Darwin omits
     them as well as the trivial case of 1.
@@ -46,7 +46,7 @@
         (2) Phenotype representation
         (3) Decoding function
         (4) Penalty/Cost function
-        (3) Objective function
+        (5) Objective function
 
     (1) Genotype representation:
 
@@ -67,7 +67,7 @@
 
     (3) Decoding function:
 
-        Essentially, translates a number in base 2 (binary) to base 10 (decimal)
+        Essentially, translates a number in base 2 (binary) to base 10 (decimal).
 
     (4) Penalty/Cost function:
 
@@ -105,7 +105,7 @@ struct Candidate {
         being produced in an individual. They are illegal in the sense that they
         are values not considered in the problem domain for a particular instance.
         Thus, loci_junk_alleles will be used in the decoding stage to store
-        positions of illegal alleles as it is needed to evaluate solutions.
+        positions of illegal alleles to evaluate solutions appropriately.
     */
     int *loci_junk_alleles;
 };

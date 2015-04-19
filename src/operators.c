@@ -19,16 +19,9 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 /*
-    operators.{h,c} implement the 4 basic evolutional operations of Genetic
-    Algorithms:
-        1. Selection: which individuals will produce new individuals?
-            (Fitness-proportioned Tournament Selection)
-        2. Crossover: maiting between selected individuals.
-            (Single Point Crossover)
-        3. Mutation: individuals' DNA alterations.
-            (Single Point Mutation)
-        4. Replacement: which individuals persist between generations.
-            (Replace Worst Individual)
+    This is darwin's second level of abstraction, in which the 4 basic
+    evolutional operations of Genetic Algorithms are defined (see operators.h for
+    details).
 */
 #include <assert.h>
 #include <math.h>       /* exp */
@@ -45,7 +38,6 @@
     user via darwin's Genetic Algorithm configuration file.
 */
 static double default_mutation_risk = 0.1;
-
 /*
     SELECTION.
 */
@@ -115,11 +107,9 @@ tournament_selection(
     }
     return best;
 }
-
 /*
     CROSSOVER.
 */
-
 struct Individual **
 single_point_crossover(
         struct Individual *dad,
@@ -135,7 +125,7 @@ single_point_crossover(
     if (offspring == NULL || son == NULL || daughter == NULL) {
         error("Could not create offspring");
     }
-    /* X point: to avoid (offspring == parents), then (locus != 0) */
+    /* X point: (locus != 0) to avoid (offspring == parents) */
 
     long int locus = random_int_inclusive(1, (e->dna_length - 1));
     int fst_half = locus * UNIT_BYTE_SIZE;
@@ -152,14 +142,12 @@ single_point_crossover(
     offspring[1] = daughter;
     return offspring;
 }
-
 /*
     MUTATION.
 
     A mutagen will cause mutations in an individual's DNA depending on the risk
     factor (mutation probability function).
 */
-
 long int
 single_point_mutation(
         struct Individual *victim,
@@ -232,11 +220,9 @@ mutagen(
     }
     return mutated;
 }
-
 /*
     REPLACEMENT.
 */
-
 int
 replace_worst(
         struct Individual *incomer,

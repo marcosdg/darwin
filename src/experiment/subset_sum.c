@@ -29,7 +29,7 @@
 #include "subset_sum.h"     /* genome.h */
 
 const int MIN_TARGET = 0;
-const int MIN_SET_SIZE = 2; /* a minimum of 2 genes is required */
+const int MIN_SET_SIZE = 2; /* a minimum of 2 genes is required for crossover */
 const int MIN_SUBSET_SIZE = 0;
 static int target;
 static int *set;
@@ -50,8 +50,8 @@ create_subset_sum(
         int *s,
         int s_size
 ) {
-    assert(t >= MIN_TARGET);        /* t can be zero */
-    assert(s_size >= MIN_SET_SIZE); /* s cannot be empty */
+    assert(t >= MIN_TARGET);
+    assert(s_size >= MIN_SET_SIZE);
     assert(s != NULL);
 
     struct Encoding *e = create_encoding(1, s_size);

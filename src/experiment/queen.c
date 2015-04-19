@@ -58,6 +58,6 @@ attack(
     assert((q1 != NULL) && (q2 != NULL));
 
     /* same row||column||diagonal ? */
-    return ((q1->row == q2->row) || (q1->column == q2->column)
-            || (abs(q1->row - q2->row) == abs(q1->column - q2->column))) ? 1 : 0;
+    return (q1->row == q2->row) || (q1->column == q2->column)
+            || (abs(q1->row - q2->row) == abs(q1->column - q2->column));
 }

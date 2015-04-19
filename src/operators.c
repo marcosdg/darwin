@@ -82,7 +82,7 @@ fight(
     double goodness = fitness_proportion(aspirant, rival);
     double bad_luck = random_double_inclusive(0.0, 1.0);
 
-    return bad_luck > goodness? 1 : 0;
+    return bad_luck > goodness;
 }
 
 struct Individual *

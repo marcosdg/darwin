@@ -90,7 +90,7 @@ is_junk_allele(
 ) {
     assert(nqueens != NULL);
 
-    return (column >= nqueens->e->num_genes)? 1 : 0;
+    return column >= nqueens->e->num_genes;
 }
 static struct Candidate *
 decode(

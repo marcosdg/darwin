@@ -68,16 +68,16 @@ create_candidate(
 ) {
     assert(nqueens != NULL);
 
-    int *loci_junk_alleles = (int *) malloc(nqueens->e->num_genes * sizeof(int));
+    int *junk_alleles = (int *) malloc(nqueens->e->num_genes * sizeof(int));
     struct Queen **queens = (struct Queen **)
                             malloc(nqueens->e->num_genes * sizeof(struct Queen *));
     struct Candidate *candidate = (struct Candidate *)
                                     malloc(sizeof(struct Candidate));
-    if (loci_junk_alleles == NULL || queens == NULL || candidate == NULL) {
+    if (junk_alleles == NULL || queens == NULL || candidate == NULL) {
         error("NQueens: Could not create candidate");
     }
-    memset(loci_junk_alleles, 0, nqueens->e->num_genes * sizeof(int));
-    candidate->loci_junk_alleles = loci_junk_alleles;
+    memset(junk_alleles, 0, nqueens->e->num_genes * sizeof(int));
+    candidate->junk_alleles = junk_alleles;
     candidate->queens = queens;
 
     return candidate;
@@ -120,7 +120,7 @@ decode(
         row = gene;
         i = gene;
         candidate->queens[i] = create_queen(row, column);
-        candidate->loci_junk_alleles[i] = is_junk_allele(column, nqueens);
+        candidate->junk_alleles[i] = is_junk_allele(column, nqueens);
     }
     return candidate;
 }
@@ -140,7 +140,7 @@ penalty(
         Count illegal alleles
     */
     for (at = 0; at < nqueens->e->num_genes; at += 1) {
-        if (candidate->loci_junk_alleles[at]) {
+        if (candidate->junk_alleles[at]) {
             illegals += 1;
         }
     }
@@ -150,8 +150,7 @@ penalty(
     */
     for (at = 0; at < nqueens->e->num_genes - 1; at += 1) {
         for (next = at + 1; next < nqueens->e->num_genes; next += 1) {
-            if (!candidate->loci_junk_alleles[at]
-                && !candidate->loci_junk_alleles[next]
+            if (!candidate->junk_alleles[at] && !candidate->junk_alleles[next]
                 && attack(candidate->queens[at], candidate->queens[next])) {
                     attacks += 1;
             }

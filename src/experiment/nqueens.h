@@ -69,6 +69,12 @@
 
         Essentially, translates a number in base 2 (binary) to base 10 (decimal).
 
+        The binary encoding rises the problem of illegal (or 'junk') alleles
+        being produced in an individual. They are illegal in the sense that they
+        are values not considered in the problem domain for a particular instance.
+        It is in the decoding stage where such alleles are marked (see 'struct
+        Candidate').
+ 
     (4) Penalty/Cost function:
 
         Helps to separate "good" candidate solutions from "bad" ones.
@@ -101,13 +107,10 @@
 struct Candidate {
     struct Queen **queens;
     /*
-        The binary encoding rises the problem of illegal (or 'junk') alleles
-        being produced in an individual. They are illegal in the sense that they
-        are values not considered in the problem domain for a particular instance.
-        Thus, loci_junk_alleles will be used in the decoding stage to store
-        positions of illegal alleles to evaluate solutions appropriately.
+        'junk_alleles' is regarded as a boolean (0 or 1) vector to mark positions
+        (loci) corresponding to illegal alleles in an individual's DNA.
     */
-    int *loci_junk_alleles;
+    int *junk_alleles;
 };
 
 struct NQueens {

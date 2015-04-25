@@ -40,7 +40,7 @@
         interpreted as maximization ones.
 
         3. Fitness is normalized to the range [0, 1].
- 
+
     TODO:
         Use a more appropriate type than 'long int' to encode binary sequences.
         Initially, 'long int' was chosen to avoid a possible overflow error in

@@ -50,5 +50,5 @@ bits2int(
         result += ((int) bits[at]) * ((int) exp2(place));
         place += 1.0;
     }
-    return result; 
+    return result;
 }

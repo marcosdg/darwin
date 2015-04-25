@@ -50,16 +50,20 @@
 
     (1) Genotype representation:
 
-        · Gene locus: the row at which the queen is placed.
-        · Gene value (allele): the column at which the queen is placed.
+        · Gene locus: the row at which the queen is placed
+        · Gene value (allele): the column at which the queen is placed
         · Allele's length: minimum number of bits required to encode all possible
                             alleles: ceil(log2(board size))
         · DNA length: number of rows = number of columns = board size
 
-        It is trivial to see that, under this representation, we have implicitly
-        encoded the aforementioned observation, since each locus is unique.
-        Similarly, the analogous representation in which we consider the gene
-        locus to be the columns, works as well.
+        Under this representation, we have implicitly encoded the aforementioned
+        observation, since each locus is unique. Similarly, the analogous
+        representation in which we consider the gene locus to be the columns,
+        works as well.
+
+        Unfortunately, a binary coding scheme may lead to individuals with
+        illegal or 'junk' alleles; illegal in the sense that they are
+        values not considered in the problem domain for a particular instance.
 
     (2) Phenotype representation:
 
@@ -67,21 +71,17 @@
 
     (3) Decoding function:
 
-        Essentially, translates a number in base 2 (binary) to base 10 (decimal).
+        Returns the list of queens encoded in the DNA strand, where loci are the
+        the rows and alleles are the columns. Additionally, it resolves the issue
+        with the illegal alleles by 'tracking' them (see 'struct Candidate').
 
-        The binary encoding rises the problem of illegal (or 'junk') alleles
-        being produced in an individual. They are illegal in the sense that they
-        are values not considered in the problem domain for a particular instance.
-        It is in the decoding stage where such alleles are marked (see 'struct
-        Candidate').
- 
     (4) Penalty/Cost function:
 
-        Helps to separate "good" candidate solutions from "bad" ones.
+        Helps separate "good" candidate solutions from "bad" ones.
 
-        Darwin may generate alleles which do not belong to the problem instance's
-        domain. The penalty function will be used to penalize not just individuals
-        who are not a solution, but individuals with illegal alleles.
+        Illegal alleles may be generated, thus the penalty function will penalize
+        not just individuals who are not a solution, but individuals with illegal
+        alleles.
 
             penalty = number of attacking queens + number of illegal alleles
 

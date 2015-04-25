@@ -38,16 +38,16 @@
 
     (1) Genotype representation:
 
-        · Gene locus: the integer's position in the given set.
+        · Gene locus: the integer's position in the given set
         · Gene value (allele): '1' or '0' representing, respectively, whether the
-                                integer at that locus is selected or not.
-        · Allele length: 1 (the only admitted values are '0' or '1').
-        · DNA length: number of elements in S.
+                                integer at that locus is selected or not
+        · Allele length: 1 (the only admitted values are '0' or '1')
+        · DNA length: number of elements in S
 
     (2) Phenotype representation:
 
         The numbers of the given set selected by an individual's genotype.
- 
+
     Example:
         S = {1, 5, 4, 7}
 
@@ -56,18 +56,18 @@
 
     (3) Decoding function:
 
-        Essentially, returns back the integers selected from the input set S.
+        Returns the integers selected from the input set S.
 
     (4) Penalty/Cost function:
 
-        Helps to separate "good" candidate solutions from "bad" ones.
+        Helps separate "good" candidate solutions from "bad" ones.
 
         Although darwin may generate alleles which do not belong to the problem
         instance's domain (as happens in the N-Queens problem), it is the
-        specific genotypic representation chosen that prevents it from happening.
-        The reason behind is that, by restricting the allele length to be '1', is
-        impossible for darwin to generate numbers other than '0' or '1'. In other
-        words, there are no illegal alleles.
+        specific genotypic representation here chosen that prevents it from
+        happening. The reason behind is that, by restricting the allele length to
+        be '1', is impossible for darwin to generate numbers other than '0' or '1'.
+        In other words, there are no illegal alleles.
 
         Hence, in this case, the penalty function will only penalize individuals
         which are not a solution: those whose sum exceed or fall behind the
@@ -103,7 +103,7 @@ struct Subset_sum {
 
     struct Candidate *
     (*decode)(struct Individual *cryptic, struct Subset_sum *subset_sum);
-    
+
     int
     (*penalty)(struct Candidate *candidate, struct Subset_sum *subset_sum);
 

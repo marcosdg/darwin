@@ -75,13 +75,13 @@ int main(int argc, char **argv)
     for (trial = 0; trial < 10000; trial += 1) {
         struct Individual *best = tournament_selection(city, 1);
         if (best->fitness == 0.57) {
-            times_ind1 += 1.0; 
+            times_ind1 += 1.0;
         } else if (best->fitness == 0.30) {
-            times_ind2 += 1.0; 
+            times_ind2 += 1.0;
         } else if (best->fitness == 0.75) {
-            times_ind3 += 1.0; 
+            times_ind3 += 1.0;
         } else /* best finess == 0.70 */ {
-            times_ind4 += 1.0; 
+            times_ind4 += 1.0;
         }
     }
     printf("%% times ind1 (0.57) wins: %lf\n", times_ind1 / 10000);

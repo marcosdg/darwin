@@ -35,7 +35,7 @@ int main(int argc, char **argv)
 
     printf("==== SUBSET SUM INSTANCE ====\n");
     printf("Target: %i\n", t);
-    printf("Set: ");
+    printf("Set:\n");
     int i;
     for (i = 0; i < 3; i += 1) {
         printf("%i ", s[i]);
@@ -43,13 +43,13 @@ int main(int argc, char **argv)
     printf("\n");
 
     printf("==== CONFIGURATION ====\n");
-    
+
     printf("Subset Sum individuals' encoding:\n");
     printf("  min. number of bits: %i\n", subset_sum->e->units_per_gene);
     printf("  number of genes: %i\n", subset_sum->e->num_genes);
     printf("  dna length: %i\n", subset_sum->e->dna_length);
-    
-    printf("Test individual: ");
+
+    printf("Test individual:\n");
     struct Individual *test = create_random_individual(subset_sum->e);
     int locus;
     for (locus = 0; locus < subset_sum->e->dna_length; locus += 1) {
@@ -69,6 +69,6 @@ int main(int argc, char **argv)
     printf("==== EVALUATE ====\n");
     printf("Penalty: %i\n", (*subset_sum->penalty)(candidate, subset_sum));
     printf("Fitness: %lf\n", (*subset_sum->objective)(candidate, subset_sum));
-    
+
     return 0;
 }

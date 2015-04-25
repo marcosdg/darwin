@@ -105,7 +105,7 @@ decode(
 
     int locus;  /* location in DNA strand */
     int i = 0;  /* location in candidate subset */
-    
+
     int subset_size = 0;
     struct Candidate *candidate;
     for (locus = 0; locus < subset_sum->e->dna_length; locus += 1) {

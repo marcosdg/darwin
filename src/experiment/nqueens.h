@@ -104,8 +104,9 @@
 #include "queen.h"
 
 
-struct Candidate {
+struct NQueens_candidate {
     struct Queen **queens;
+    int num_queens;
     /*
         'junk_alleles' is regarded as a boolean (0 or 1) vector to mark positions
         (loci) corresponding to illegal alleles in an individual's DNA.
@@ -116,14 +117,17 @@ struct Candidate {
 struct NQueens {
     struct Encoding *e;
 
-    struct Candidate *
+    struct NQueens_candidate *
     (*decode)(struct Individual *cryptic, struct NQueens *nqueens);
 
+    void
+    (*print)(struct NQueens_candidate *candidate);
+
     int
-    (*penalty)(struct Candidate *candidate, struct NQueens *nqueens);
+    (*penalty)(struct NQueens_candidate *candidate);
 
     double
-    (*objective)(struct Candidate *candidate, struct NQueens *nqueens);
+    (*objective)(struct NQueens_candidate *candidate);
 };
 
 extern struct NQueens *

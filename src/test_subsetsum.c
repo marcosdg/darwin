@@ -22,7 +22,7 @@
     Just to play around.
 */
 #include <stdio.h>
-#include "experiment/subset_sum.h"
+#include "experiment/subsetsum.h"
 
 
 int main(int argc, char **argv)
@@ -31,7 +31,7 @@ int main(int argc, char **argv)
 
     int t = 3;
     int s[3] = {4, 1, 2};
-    struct Subset_sum *subset_sum = create_subset_sum(t, s, 3);
+    struct Subsetsum *subsetsum = create_subsetsum(t, s, 3);
 
     printf("==== SUBSET SUM INSTANCE ====\n");
     printf("Target: %i\n", t);
@@ -43,32 +43,26 @@ int main(int argc, char **argv)
     printf("\n");
 
     printf("==== CONFIGURATION ====\n");
-
     printf("Subset Sum individuals' encoding:\n");
-    printf("  min. number of bits: %i\n", subset_sum->e->units_per_gene);
-    printf("  number of genes: %i\n", subset_sum->e->num_genes);
-    printf("  dna length: %i\n", subset_sum->e->dna_length);
+    printf("  min. number of bits: %i\n", subsetsum->e->units_per_gene);
+    printf("  number of genes: %i\n", subsetsum->e->num_genes);
+    printf("  dna length: %i\n", subsetsum->e->dna_length);
 
     printf("Test individual:\n");
-    struct Individual *test = create_random_individual(subset_sum->e);
+    struct Individual *test = create_random_individual(subsetsum->e);
     int locus;
-    for (locus = 0; locus < subset_sum->e->dna_length; locus += 1) {
+    for (locus = 0; locus < subsetsum->e->dna_length; locus += 1) {
         printf("%li ", test->dna[locus]);
     }
     printf("\n");
 
     printf("==== DECODE ====\n");
-
-    struct Candidate *candidate = (*subset_sum->decode)(test, subset_sum);
-    printf("Subset size: %i\n", candidate->subset_size);
-    for (i = 0; i < candidate->subset_size; i += 1) {
-        printf("%i ", candidate->subset[i]);
-    }
-    printf("\n");
+    struct Subsetsum_candidate *candidate = (*subsetsum->decode)(test, subsetsum);
+    (*subsetsum->print)(candidate);
 
     printf("==== EVALUATE ====\n");
-    printf("Penalty: %i\n", (*subset_sum->penalty)(candidate, subset_sum));
-    printf("Fitness: %lf\n", (*subset_sum->objective)(candidate, subset_sum));
+    printf("Penalty: %i\n", (*subsetsum->penalty)(candidate));
+    printf("Fitness: %lf\n", (*subsetsum->objective)(candidate));
 
     return 0;
 }

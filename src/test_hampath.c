@@ -53,7 +53,6 @@ int main(int argc, char **argv)
     struct Hampath *hampath = create_hampath(graph);
 
     printf("==== CONFIGURATION ====\n");
-
     printf("Hamiltonian Path individuals' encoding:\n");
     printf("  min. number of bits: %i\n", hampath->e->units_per_gene);
     printf("  number of genes: %i\n", hampath->e->num_genes);
@@ -68,13 +67,8 @@ int main(int argc, char **argv)
     printf("\n");
 
     printf("==== DECODE ====\n");
-
-    struct Candidate *candidate = (*hampath->decode)(test, hampath);
-    printf("Path:\n");
-    for (i = 0; i < hampath->e->num_genes; i += 1) {
-        printf("%i ", candidate->path[i]);
-    }
-    printf("\n");
+    struct Hampath_candidate *candidate = (*hampath->decode)(test, hampath);
+    (*hampath->print)(candidate);
 
     printf("==== EVALUATE ====\n");
     printf("Penalty: %i\n", (*hampath->penalty)(candidate));

@@ -102,21 +102,24 @@
 #include "graph.h"
 
 
-struct Candidate {
+struct Hampath_candidate {
     int *path;
 };
 
 struct Hampath {
     struct Encoding *e;
 
-    struct Candidate *
+    struct Hampath_candidate *
     (*decode)(struct Individual *cryptic, struct Hampath *hampath);
 
+    void
+    (*print)(struct Hampath_candidate *candidate);
+
     int
-    (*penalty)(struct Candidate *candidate/* , struct Hampath *hampath*/);
+    (*penalty)(struct Hampath_candidate *candidate);
 
     double
-    (*objective)(struct Candidate *candidate /*, struct Hampath *hampath*/);
+    (*objective)(struct Hampath_candidate *candidate);
 };
 
 extern struct Hampath *

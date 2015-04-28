@@ -23,6 +23,7 @@
 */
 #include <assert.h>
 #include <math.h>           /* ceil, exp2, log2 */
+#include <stdio.h>
 #include <stdlib.h>         /* malloc, NULL */
 #include <string.h>         /* memset */
 #include "../base/report.h"
@@ -31,14 +32,17 @@
 
 static struct Graph *graph;
 
-static struct Candidate *
+static struct Hampath_candidate *
 decode(struct Individual *cryptic, struct Hampath *hampath);
 
+static void
+print(struct Hampath_candidate *candidate);
+
 static int
-penalty(struct Candidate *candidate);
+penalty(struct Hampath_candidate *candidate);
 
 static double
-objective(struct Candidate *candidate);
+objective(struct Hampath_candidate *candidate);
 
 
 
@@ -57,21 +61,22 @@ create_hampath(
     graph = g;
     instance->e = e;
     instance->decode = decode;
+    instance->print = print;
     instance->penalty = penalty;
     instance->objective = objective;
 
     return instance;
 }
 
-static struct Candidate *
-create_candidate(
+static struct Hampath_candidate *
+create_hampath_candidate(
         struct Hampath *hampath
 ) {
     assert(hampath != NULL);
 
     int *path = (int *) malloc(hampath->e->num_genes * sizeof(int));
-    struct Candidate *candidate = (struct Candidate *)
-                                    malloc(sizeof(struct Candidate));
+    struct Hampath_candidate *candidate = (struct Hampath_candidate *)
+                                    malloc(sizeof(struct Hampath_candidate));
     if (path == NULL || candidate == NULL) {
         error("hampath: Could not create candidate");
     }
@@ -80,18 +85,19 @@ create_candidate(
     return candidate;
 }
 
-static struct Candidate *
+static struct Hampath_candidate *
 decode(
         struct Individual *cryptic,
         struct Hampath *hampath
 ) {
-    assert((cryptic != NULL) && (hampath != NULL));
+    assert(cryptic != NULL);
+    assert(hampath != NULL);
 
     int locus;
     int gene = 0;
     int i = 0;
     int vertex;
-    struct Candidate *candidate = create_candidate(hampath);
+    struct Hampath_candidate *candidate = create_hampath_candidate(hampath);
     /*
         DNA's translation:
     */
@@ -104,10 +110,25 @@ decode(
             to Phenotype
         */
         candidate->path[i] = vertex;
-        gene += 1;
         i += 1;
+        gene += 1;
     } while (gene < hampath->e->num_genes);
     return candidate;
+}
+static void
+print(
+        struct Hampath_candidate *candidate
+) {
+    assert(candidate != NULL);
+    assert(graph != NULL);
+    
+    int i;
+    
+    printf("start> ");
+    for (i = 0; i < graph->size; i += 1) {
+        printf("%i ", candidate->path[i]);
+    }
+    printf("<end\n");
 }
 
 static int *
@@ -147,9 +168,10 @@ was_visited(
 }
 static int
 penalty(
-       struct Candidate *candidate
+       struct Hampath_candidate *candidate
 ) {
-    assert((candidate != NULL) && (graph != NULL));
+    assert(candidate != NULL);
+    assert(graph != NULL);
 
     int at = 0;
     int next = 1;
@@ -173,11 +195,13 @@ penalty(
 
 static double
 objective(
-        struct Candidate *candidate
+        struct Hampath_candidate *candidate
 ) {
     assert(candidate != NULL);
     assert(graph != NULL);
-
+    /*
+        num. path edges - penalty / num. path edges
+    */
     return ((double) ((graph->size - 1) - penalty(candidate)))
-            / (double)(graph->size - 1);
+            / (double) (graph->size - 1);
 }

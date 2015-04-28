@@ -87,34 +87,37 @@
                                     / |S|
         where |S| is the number of elements in S.
 */
-#ifndef SUBSET_SUM_H_INCLUDED
-#define SUBSET_SUM_H_INCLUDED
+#ifndef SUBSETSUM_H_INCLUDED
+#define SUBSETSUM_H_INCLUDED
 
 #include "../genome.h"
 
 
-struct Candidate {
+struct Subsetsum_candidate {
     int *subset;
     int subset_size;
 };
 
-struct Subset_sum {
+struct Subsetsum {
     struct Encoding *e;
 
-    struct Candidate *
-    (*decode)(struct Individual *cryptic, struct Subset_sum *subset_sum);
+    struct Subsetsum_candidate *
+    (*decode)(struct Individual *cryptic, struct Subsetsum *subsetsum);
+
+    void
+    (*print)(struct Subsetsum_candidate *candidate);
 
     int
-    (*penalty)(struct Candidate *candidate, struct Subset_sum *subset_sum);
+    (*penalty)(struct Subsetsum_candidate *candidate);
 
     double
-    (*objective)(struct Candidate *candidate, struct Subset_sum *subset_sum);
+    (*objective)(struct Subsetsum_candidate *candidate);
 };
 
-extern struct Subset_sum *
-create_subset_sum(
+extern struct Subsetsum *
+create_subsetsum(
         int t,
         int *s,
         int s_size
 );
-#endif /* SUBSET_SUM_H_INCLUDED */
+#endif /* SUBSETSUM_H_INCLUDED */

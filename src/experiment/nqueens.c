@@ -23,6 +23,7 @@
 */
 #include <assert.h>
 #include <math.h>           /* abs, ceil, exp2, log2 */
+#include <stdio.h>
 #include <stdlib.h>         /* malloc, NULL */
 #include <string.h>         /* memset */
 #include "../base/report.h"
@@ -31,14 +32,17 @@
 
 const int MIN_BOARD_SIZE = 4; /* No solutions exist for N=2 and N=3 */
 
-static struct Candidate *
+static struct NQueens_candidate *
 decode(struct Individual *cryptic, struct NQueens *nqueens);
 
+static void
+print(struct NQueens_candidate *candidate);
+
 static int
-penalty(struct Candidate *candidate, struct NQueens *nqueens);
+penalty(struct NQueens_candidate *candidate);
 
 static double
-objective(struct Candidate *candidate, struct NQueens *nqueens);
+objective(struct NQueens_candidate *candidate);
 
 
 
@@ -55,6 +59,7 @@ create_nqueens(
         error("NQueens: Could not create instance");
     }
     instance->e = e;
+    instance->print = print;
     instance->decode = decode;
     instance->penalty = penalty;
     instance->objective = objective;
@@ -62,8 +67,8 @@ create_nqueens(
     return instance;
 }
 
-static struct Candidate *
-create_candidate(
+static struct NQueens_candidate *
+create_nqueens_candidate(
         struct NQueens *nqueens
 ) {
     assert(nqueens != NULL);
@@ -71,14 +76,15 @@ create_candidate(
     int *junk_alleles = (int *) malloc(nqueens->e->num_genes * sizeof(int));
     struct Queen **queens = (struct Queen **)
                             malloc(nqueens->e->num_genes * sizeof(struct Queen *));
-    struct Candidate *candidate = (struct Candidate *)
-                                    malloc(sizeof(struct Candidate));
+    struct NQueens_candidate *candidate = (struct NQueens_candidate *)
+                                    malloc(sizeof(struct NQueens_candidate));
     if (junk_alleles == NULL || queens == NULL || candidate == NULL) {
         error("NQueens: Could not create candidate");
     }
     memset(junk_alleles, 0, nqueens->e->num_genes * sizeof(int));
     candidate->junk_alleles = junk_alleles;
     candidate->queens = queens;
+    candidate->num_queens = nqueens->e->num_genes;
 
     return candidate;
 }
@@ -92,7 +98,7 @@ is_junk_allele(
 
     return column >= nqueens->e->num_genes;
 }
-static struct Candidate *
+static struct NQueens_candidate *
 decode(
         struct Individual *cryptic,
         struct NQueens *nqueens
@@ -100,16 +106,15 @@ decode(
     assert((cryptic != NULL) && (nqueens != NULL));
 
     int locus;
-    int gene;
-    int row;
+    int gene = 0;
+    int row = 0;
     int column;
-    int i;
-    struct Candidate *candidate = create_candidate(nqueens);
+    int i = 0;
+    struct NQueens_candidate *candidate = create_nqueens_candidate(nqueens);
     /*
         DNA's translation:
     */
-    for (gene = 0; gene < nqueens->e->num_genes; gene += 1) {
-        /*
+    do {/*
             from Genotype (extract genetic info from allele)
         */
         locus = gene * nqueens->e->units_per_gene;
@@ -117,39 +122,52 @@ decode(
         /*
             to Phenotype
         */
-        row = gene;
-        i = gene;
         candidate->queens[i] = create_queen(row, column);
         candidate->junk_alleles[i] = is_junk_allele(column, nqueens);
-    }
+        i += 1;
+        row += 1;
+        gene += 1;
+    } while (gene < nqueens->e->num_genes);
+    
     return candidate;
+}
+static void
+print(
+        struct NQueens_candidate *candidate
+) {
+    assert(candidate != NULL);
+
+    int i;
+    for (i = 0; i < candidate->num_queens; i += 1) {
+        printf("Queen %i row %i column %i \n", i, candidate->queens[i]->row,
+                candidate->queens[i]->column);
+    }
 }
 
 static int
 penalty(
-        struct Candidate *candidate,
-        struct NQueens *nqueens
+        struct NQueens_candidate *candidate
 ) {
-    assert((candidate != NULL) && (nqueens != NULL));
+    assert(candidate != NULL);
 
     int attacks = 0;
     int illegals = 0;
     int at;
     int next;
     /*
-        Count illegal alleles
+        Count illegal alleles (queens)
     */
-    for (at = 0; at < nqueens->e->num_genes; at += 1) {
+    for (at = 0; at < candidate->num_queens; at += 1) {
         if (candidate->junk_alleles[at]) {
             illegals += 1;
         }
     }
     /*
-        Count attacks just against queens ahead to avoid repeated checks
-        (if A attacks B, B also attacks A), only if legal
+        Count attacks just against (legal) queens ahead to avoid repeated checks
+        (if A attacks B, B also attacks A)
     */
-    for (at = 0; at < nqueens->e->num_genes - 1; at += 1) {
-        for (next = at + 1; next < nqueens->e->num_genes; next += 1) {
+    for (at = 0; at < candidate->num_queens - 1; at += 1) {
+        for (next = at + 1; next < candidate->num_queens; next += 1) {
             if (!candidate->junk_alleles[at] && !candidate->junk_alleles[next]
                 && attack(candidate->queens[at], candidate->queens[next])) {
                     attacks += 1;
@@ -161,11 +179,10 @@ penalty(
 
 static double
 objective(
-        struct Candidate *candidate,
-        struct NQueens *nqueens
+        struct NQueens_candidate *candidate
 ) {
-    assert((candidate != NULL) && (nqueens != NULL));
+    assert(candidate != NULL);
 
-    return  ((double) abs(nqueens->e->num_genes - penalty(candidate, nqueens)))
-            / (double)(nqueens->e->num_genes);
+    return ((double) abs(candidate->num_queens - penalty(candidate)))
+            / (double) (candidate->num_queens);
 }

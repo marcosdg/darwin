@@ -23,10 +23,11 @@
 */
 #include <assert.h>
 #include <math.h>           /* abs */
+#include <stdio.h>
 #include <stdlib.h>         /* malloc, NULL */
 #include <string.h>         /* memset */
 #include "../base/report.h"
-#include "subset_sum.h"     /* genome.h */
+#include "subsetsum.h"     /* genome.h */
 
 const int MIN_TARGET = 0;
 const int MIN_SET_SIZE = 2; /* a minimum of 2 genes is required for crossover */
@@ -34,18 +35,21 @@ const int MIN_SUBSET_SIZE = 0;
 static int target;
 static int *set;
 
-static struct Candidate *
-decode(struct Individual *cryptic, struct Subset_sum *subset_sum);
+static struct Subsetsum_candidate *
+decode(struct Individual *cryptic, struct Subsetsum *subsetsum);
+
+static void
+print(struct Subsetsum_candidate *candidate);
 
 static int
-penalty(struct Candidate *candidate, struct Subset_sum *subset_sum);
+penalty(struct Subsetsum_candidate *candidate);
 
 static double
-objective(struct Candidate *candidate, struct Subset_sum *subset_sum);
+objective(struct Subsetsum_candidate *candidate);
 
 
-struct Subset_sum *
-create_subset_sum(
+struct Subsetsum *
+create_subsetsum(
         int t,
         int *s,
         int s_size
@@ -55,8 +59,8 @@ create_subset_sum(
     assert(s != NULL);
 
     struct Encoding *e = create_encoding(1, s_size);
-    struct Subset_sum *instance = (struct Subset_sum *)
-                                    malloc(sizeof(struct Subset_sum));
+    struct Subsetsum *instance = (struct Subsetsum *)
+                                    malloc(sizeof(struct Subsetsum));
     if (instance == NULL) {
         error("subset sum: Could not create instance");
     }
@@ -64,60 +68,61 @@ create_subset_sum(
     set = s;
     instance->e = e;
     instance->decode = decode;
+    instance->print = print;
     instance->penalty = penalty;
     instance->objective = objective;
 
     return instance;
 }
 /*
-    create_candidate:
+    create_subsetsum_candidate:
 
     Relies on the 'decode' function to know the size of the subset, so that it can
     avoid allocating more memory than needed.
 */
-static struct Candidate *
-create_candidate(
+static struct Subsetsum_candidate *
+create_subsetsum_candidate(
         int subset_size,                    /* from decoding stage */
-        struct Subset_sum *subset_sum
+        struct Subsetsum *subsetsum
 ) {
     assert(subset_size >= MIN_SUBSET_SIZE); /* empty set is a valid subset */
-    assert(subset_sum != NULL);
+    assert(subsetsum != NULL);
 
     int *subset = (int *) malloc(subset_size * sizeof(int));
-    struct Candidate *candidate = (struct Candidate *)
-                                    malloc(sizeof(struct Candidate));
+    struct Subsetsum_candidate *candidate = (struct Subsetsum_candidate *)
+                                    malloc(sizeof(struct Subsetsum_candidate));
     if (subset == NULL || candidate == NULL) {
         error("subset sum: Could not create candidate");
     }
-    memset(subset, 0, subset_sum->e->num_genes * sizeof(int));
+    memset(subset, 0, subsetsum->e->num_genes * sizeof(int));
     candidate->subset = subset;
     candidate->subset_size = subset_size;
 
     return candidate;
 }
 
-static struct Candidate *
+static struct Subsetsum_candidate *
 decode(
         struct Individual *cryptic,
-        struct Subset_sum *subset_sum
+        struct Subsetsum *subsetsum
 ) {
-    assert((cryptic != NULL) && (subset_sum != NULL));
+    assert((cryptic != NULL) && (subsetsum != NULL));
 
     int locus;  /* location in DNA strand */
     int i = 0;  /* location in candidate subset */
 
     int subset_size = 0;
-    struct Candidate *candidate;
-    for (locus = 0; locus < subset_sum->e->dna_length; locus += 1) {
+    struct Subsetsum_candidate *candidate;
+    for (locus = 0; locus < subsetsum->e->dna_length; locus += 1) {
         if (cryptic->dna[locus] == 1) {
             subset_size += 1;
         }
     }
-    candidate = create_candidate(subset_size, subset_sum);
+    candidate = create_subsetsum_candidate(subset_size, subsetsum);
     /*
         DNA translation (dna has the same length as set S)
     */
-    for (locus = 0; locus < subset_sum->e->dna_length; locus += 1) {
+    for (locus = 0; locus < subsetsum->e->dna_length; locus += 1) {
         if (cryptic->dna[locus] == 1) {
             candidate->subset[i] = set[locus];
             i += 1;
@@ -125,32 +130,42 @@ decode(
     }
     return candidate;
 }
+static void
+print(
+        struct Subsetsum_candidate *candidate
+) {
+    assert(candidate != NULL);
+
+    int i;
+
+    printf("{ ");
+    for (i = 0; i < candidate->subset_size; i += 1) {
+        printf("%i ", candidate->subset[i]);
+    }
+    printf("}\n");
+}
 
 static int
 penalty(
-        struct Candidate *candidate,
-        struct Subset_sum *subset_sum
+        struct Subsetsum_candidate *candidate
 ) {
-    assert((candidate != NULL) && (subset_sum != NULL));
+    assert(candidate != NULL);
 
     int i;
     int sum = 0;
 
-    if (candidate->subset_size > 0) {
-        for (i = 0; i < candidate->subset_size; i += 1) {
-            sum += candidate->subset[i];
-        }
+    for (i = 0; i < candidate->subset_size; i += 1) {
+        sum += candidate->subset[i];
     }
     return abs(target - sum);
 }
 
 static double
 objective(
-        struct Candidate *candidate,
-        struct Subset_sum *subset_sum
+        struct Subsetsum_candidate *candidate
 ) {
-    assert((candidate != NULL) && (subset_sum != NULL));
+    assert(candidate != NULL);
 
-    return (((double) target - penalty(candidate, subset_sum))
-            / (double) target);
+    return ((double) abs(target - penalty(candidate)))
+            / (double) target;
 }

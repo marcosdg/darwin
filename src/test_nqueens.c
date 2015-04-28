@@ -30,10 +30,12 @@ int main(int argc, char **argv)
     start_random_generator();
 
     struct NQueens *nqueens = create_nqueens(5);
+    
+    printf("==== CONFIGURATION ====\n");
     printf("5-Queens individuals' encoding:\n");
-    printf("\t min. number of bits: %i\n", nqueens->e->units_per_gene);
-    printf("\t number of genes: %i\n", nqueens->e->num_genes);
-    printf("\t dna length: %i\n", nqueens->e->dna_length);
+    printf("  min. number of bits: %i\n", nqueens->e->units_per_gene);
+    printf("  number of genes: %i\n", nqueens->e->num_genes);
+    printf("  dna length: %i\n", nqueens->e->dna_length);
     /*
         Sample:
 
@@ -48,25 +50,25 @@ int main(int argc, char **argv)
 
         Q: Queen, X: illegal board positions(alleles), XQ: illegal queen
     */
-
-    struct Individual *setup = create_individual(nqueens->e);
-    long int sample_dna[15] = {0,0,0, 0,1,0, 1,1,0, 0,0,1, 0,1,1};
-    int i;
-    for (i = 0; i < nqueens->e->dna_length; i += 1) {
-        setup->dna[i] = sample_dna[i];
+    printf("Test individual:\n");
+    struct Individual *test = create_individual(nqueens->e);
+    long int test_dna[15] = {0,0,0, 0,1,0, 1,1,0, 0,0,1, 0,1,1};
+    int locus;
+    for (locus = 0; locus < nqueens->e->dna_length; locus += 1) {
+        test->dna[locus] = test_dna[locus];
+        printf("%li ", test->dna[locus]);
     }
-    /*
-        Evaluate
-    */
-    struct Candidate *candidate = (*nqueens->decode)(setup, nqueens);
-    for (i = 0; i < nqueens->e->num_genes; i += 1) {
-        printf("Queen %i row %i column %i \n", i, candidate->queens[i]->row,
-                candidate->queens[i]->column);
-    }
-    printf("Penalty: %i\n", (*nqueens->penalty)(candidate, nqueens));
-    printf("Fitness: %lf\n", (*nqueens->objective)(candidate, nqueens));
+    printf("\n");
+    
+    printf("==== DECODE ====\n");
+    struct NQueens_candidate *candidate = (*nqueens->decode)(test, nqueens);
+    (*nqueens->print)(candidate);
 
-    kill(setup, nqueens->e);
+    printf("==== EVALUATE ====\n");
+    printf("Penalty: %i\n", (*nqueens->penalty)(candidate));
+    printf("Fitness: %lf\n", (*nqueens->objective)(candidate));
+
+    kill(test, nqueens->e);
 
     return 0;
 }

@@ -58,7 +58,8 @@ create_subsetsum(
     assert(s_size >= MIN_SET_SIZE);
     assert(s != NULL);
 
-    struct Encoding *e = create_encoding(1, s_size);
+    struct Encoding *e = create_encoding(1      /* units_per_gene */,
+                                         s_size /* dna_length */);
     struct Subsetsum *instance = (struct Subsetsum *)
                                     malloc(sizeof(struct Subsetsum));
     if (instance == NULL) {
@@ -106,7 +107,8 @@ decode(
         struct Individual *cryptic,
         struct Subsetsum *subsetsum
 ) {
-    assert((cryptic != NULL) && (subsetsum != NULL));
+    assert(cryptic != NULL);
+    assert(subsetsum != NULL);
 
     int locus;  /* location in DNA strand */
     int i = 0;  /* location in candidate subset */

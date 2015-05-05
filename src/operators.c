@@ -25,14 +25,12 @@
 */
 #include <assert.h>
 #include <math.h>       /* exp */
-#include <stdio.h>      /* printf */
 #include <stdlib.h>     /* malloc */
 #include <string.h>     /* memcpy */
 #include "base/report.h"
 #include "base/random.h"
 #include "genome.h"
 #include "operators.h"
-
 /*
     Individual's default mutation probability. It may be later redefined by the
     user via darwin's Genetic Algorithm configuration file.
@@ -77,7 +75,8 @@ fight(
         struct Individual *aspirant,
         struct Individual *rival
 ) {
-    assert((aspirant != NULL) && (rival != NULL));
+    assert(aspirant != NULL);
+    assert(rival != NULL);
 
     double goodness = fitness_proportion(aspirant, rival);
     double bad_luck = random_double_inclusive(0.0, 1.0);
@@ -116,7 +115,9 @@ single_point_crossover(
         struct Individual *mom,
         struct Encoding *e
 ) {
-    assert((dad != NULL) && (mom != NULL) && (e != NULL));
+    assert(dad != NULL);
+    assert(mom != NULL);
+    assert(e != NULL);
 
     struct Individual **offspring = (struct Individual **)
                                     malloc(2 * sizeof(struct Individual *));
@@ -153,7 +154,8 @@ single_point_mutation(
         struct Individual *victim,
         struct Encoding *e
 ) {
-    assert((victim != NULL) && (e != NULL));
+    assert(victim != NULL);
+    assert(e != NULL);
 
     long int locus = random_int_exclusive(0, e->dna_length);
     invert(victim, locus, e);
@@ -180,23 +182,23 @@ adaptative_mutation_risk(
         struct Individual *victim
 ) {
     assert(victim != NULL);
-
-    /* Case 1: best fitness (1.0). No mutation. */
-
+    /*
+        Case 1: best fitness (1.0). No mutation.
+    */
     double risk = 0.0;
-
-    /* Case 2: worst fitness. Mutate. */
-
+    /*
+        Case 2: worst fitness. Mutate.
+    */
     if (victim->fitness <= 0.0) {
         risk = 1.0;
-
-    /* Case 3: victim is equal or better than parents. */
-
+    /*
+        Case 3: victim is equal or better than parents.
+    */
     } else if ((victim->fitness < 1.0) && (victim->evolvability >= 1.0)) {
         risk = exp(-(victim->evolvability) * (victim->fitness)) * 0.1;
-
-    /* Case 4: victim is worse. */
-
+    /*
+        Case 4: victim is worse.
+    */
     } else if ((victim->fitness < 1.0) && (victim->evolvability < 1.0)) {
         risk = exp(-(victim->evolvability) * (victim->fitness)) * 0.5;
     }
@@ -209,7 +211,9 @@ mutagen(
         struct Individual *victim,
         struct Encoding *e
 ) {
-    assert((risk != NULL) && (victim != NULL) && (e != NULL));
+    assert(risk != NULL);
+    assert(victim != NULL);
+    assert(e != NULL);
 
     int mutated = 0;
     double luck = random_double_inclusive(0.0, 1.0);
@@ -228,7 +232,8 @@ replace_worst(
         struct Individual *incomer,
         struct Population *city
 ) {
-    assert((incomer != NULL) && (city != NULL));
+    assert(incomer != NULL);
+    assert(city != NULL);
     assert(city->current_size > 0);
 
     int replaced = 0;

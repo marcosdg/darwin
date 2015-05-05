@@ -19,11 +19,10 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 /*
-    The random numbers module.
+    Common random numbers utility functions.
 */
 #ifndef RANDOM_H_INCLUDED
 #define RANDOM_H_INCLUDED
-
 
 extern void
 start_random_generator(
@@ -50,6 +49,7 @@ random_double_inclusive(
         double lower,
         double upper
 );
+
 extern long int
 random_excluding(
         long int lower,
@@ -63,10 +63,5 @@ randomize_ints(
         int length,
         long int lower,
         long int upper
-);
-extern void
-randomize_bins(
-        long int *bins,
-        int length
 );
 #endif /* RANDOM_H_INCLUDED */

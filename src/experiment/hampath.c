@@ -53,7 +53,8 @@ create_hampath(
     assert(g != NULL);
 
     int min_bits = (int) ceil(log2(g->size));
-    struct Encoding *e = create_encoding(min_bits, g->size);
+    struct Encoding *e = create_encoding(min_bits /* units_per_gene */,
+                                         g->size  /* dna_length */);
     struct Hampath *instance = (struct Hampath *) malloc(sizeof(struct Hampath));
     if (instance == NULL) {
         error("hamiltonian path: Could not create instance");
@@ -121,9 +122,9 @@ print(
 ) {
     assert(candidate != NULL);
     assert(graph != NULL);
-    
+
     int i;
-    
+
     printf("start> ");
     for (i = 0; i < graph->size; i += 1) {
         printf("%i ", candidate->path[i]);

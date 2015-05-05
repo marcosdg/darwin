@@ -19,19 +19,17 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 /*
-    The random numbers module.
+    Common random numbers utility functions.
 */
 #include <assert.h>
 #include <float.h>  /* DBL_MIN */
 #include <math.h>   /* abs */
-#include <stdio.h>
 #include <stdlib.h> /* RAND_MAX */
 #include <time.h>   /* clock_gettime, CLOCK_REALTIME, rand, srand, timespec */
 #include "report.h"
 #include "random.h"
 
 static int sequence_started = 0;
-
 
 void
 start_random_generator(
@@ -48,12 +46,14 @@ start_random_generator(
     sequence_started = 1;
 }
 
+
 long int
 random_int_exclusive(
         long int lower,
         long int upper
 ) {
-    assert((lower <= upper) && (sequence_started == 1));
+    assert(sequence_started == 1);
+    assert(lower <= upper);
 
     long int width = abs(upper - lower);
 
@@ -64,7 +64,8 @@ random_double_exclusive(
         double lower,
         double upper
 ) {
-    assert((lower <= upper) && (sequence_started == 1));
+    assert(sequence_started == 1);
+    assert(lower <= upper);
 
     double width = upper - lower;
 
@@ -82,7 +83,8 @@ random_double_inclusive(
         double lower,
         double upper
 ) {
-    assert((lower <= upper) && (sequence_started == 1));
+    assert(sequence_started == 1);
+    assert(lower <= upper);
 
     return random_double_exclusive(lower, upper + DBL_MIN);
 }
@@ -110,17 +112,11 @@ randomize_ints(
         long int lower,
         long int upper
 ) {
-    assert((ints != NULL) && (length > 0));
+    assert(ints != NULL);
+    assert(length > 0);
 
     int i;
     for (i = 0; i < length; i += 1) {
         ints[i] = random_int_inclusive(lower, upper);
     }
-}
-void
-randomize_bins(
-        long int *bins,
-        int length
-) {
-    randomize_ints(bins, length, 0, 1);
 }

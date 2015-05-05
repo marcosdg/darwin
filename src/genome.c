@@ -24,8 +24,7 @@
 */
 #include <assert.h>
 #include <math.h>       /* abs */
-#include <stdio.h>
-#include <stdlib.h>     /* malloc */
+#include <stdlib.h>     /* malloc, free */
 #include <string.h>     /* memset */
 #include "base/report.h"
 #include "base/random.h"
@@ -38,8 +37,8 @@ create_encoding(
         int units_per_gene,
         int num_genes
 ) {
-    assert((units_per_gene >= MIN_UNITS_PER_GENE)
-            && (num_genes >= MIN_NUM_GENES));
+    assert(units_per_gene >= MIN_UNITS_PER_GENE);
+    assert(num_genes >= MIN_NUM_GENES);
 
     struct Encoding *e = (struct Encoding *) malloc(sizeof(struct Encoding));
     if (e == NULL) {
@@ -81,7 +80,7 @@ create_random_individual(
     assert(e != NULL);
 
     struct Individual *one = create_individual(e);
-    randomize_bins(one->dna, e->dna_length);
+    randomize_ints(one->dna, e->dna_length, 0, 1);
 
     return one;
 }
@@ -90,7 +89,8 @@ kill(
         struct Individual *it,
         struct Encoding *e
 ) {
-    assert((e != NULL) && (it != NULL));
+    assert(e != NULL);
+    assert(it != NULL);
 
     free(it->dna);
     free(it);
@@ -102,7 +102,8 @@ invert(
         long int locus,
         struct Encoding *e
 ) {
-    assert((one != NULL) && (e != NULL));
+    assert(one != NULL);
+    assert(e != NULL);
     assert((locus >= 0) && (locus < e->dna_length));
 
     one->dna[locus] = abs(1 - (one->dna[locus]));
@@ -115,7 +116,8 @@ create_empty_population(
         int max_size,
         struct Encoding *e
 ) {
-    assert((e != NULL) && (max_size > 0));
+    assert(e != NULL);
+    assert(max_size > 0);
 
     struct Population *city = (struct Population *)
                                 malloc(sizeof(struct Population));
@@ -138,7 +140,8 @@ create_random_population(
         int size,
         struct Encoding *e
 ) {
-    assert((e != NULL) && (size > 0));
+    assert(e != NULL);
+    assert(size > 0);
 
     struct Population *city = create_empty_population(size, e);
     struct Individual *one;
@@ -171,7 +174,8 @@ add_individual(
         struct Population *city,
         struct Individual *new
 ) {
-    assert((city != NULL) && (new != NULL));
+    assert(city != NULL);
+    assert(new != NULL);
 
     if (city->current_size < city->max_size) {
         city->people[city->next_free_spot] = new;

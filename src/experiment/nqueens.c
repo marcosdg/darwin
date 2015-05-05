@@ -103,7 +103,8 @@ decode(
         struct Individual *cryptic,
         struct NQueens *nqueens
 ) {
-    assert((cryptic != NULL) && (nqueens != NULL));
+    assert(cryptic != NULL);
+    assert(nqueens != NULL);
 
     int locus;
     int gene = 0;
@@ -128,7 +129,7 @@ decode(
         row += 1;
         gene += 1;
     } while (gene < nqueens->e->num_genes);
-    
+
     return candidate;
 }
 static void

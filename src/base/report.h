@@ -19,7 +19,7 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 /*
-    The error-reporting module.
+    Common error-reporting utility functions.
 */
 #ifndef REPORT_H_INCLUDED
 #define REPORT_H_INCLUDED

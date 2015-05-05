@@ -18,34 +18,50 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-
 ACLOCAL_AMFLAGS = -I m4 --install
+
+###############################################################################
+# Linker
+###############################################################################
 AM_LDFLAGS = -lrt -lm
 
-bin_PROGRAMS = testhampath testsubsetsum testnqueens
-testhampath_SOURCES = ./src/base/report.h ./src/base/report.c ./src/base/random.h \
-					  ./src/base/random.c ./src/base/bits.h ./src/base/bits.c \
-					  ./src/genome.h ./src/genome.c ./src/experiment/graph.h \
-					  ./src/experiment/graph.c ./src/experiment/hampath.h \
-					  ./src/experiment/hampath.c ./src/test_hampath.c
+###############################################################################
+# Main program
+###############################################################################
+bin_PROGRAMS = test_parser_hampath test_parser_subsetsum
+test_parser_hampath_SOURCES = ./src/base/report.h ./src/base/report.c \
+				./src/base/random.h ./src/base/random.c ./src/base/bits.h \
+				./src/base/bits.c ./src/genome.h ./src/genome.c \
+				./src/experiment/graph.h ./src/experiment/graph.c \
+				./src/experiment/hampath.h ./src/experiment/hampath.c \
+				./src/experiment/io/in/parse.h ./src/experiment/io/in/parse.c \
+				./src/experiment/io/in/parser_hampath.h \
+				./src/experiment/io/in/parser_hampath.c \
+				./src/test_parser_hampath.c
+test_parser_subsetsum_SOURCES = ./src/base/report.h ./src/base/report.c \
+				./src/base/random.h ./src/base/random.c ./src/genome.h \
+				./src/genome.c ./src/experiment/subsetsum.h \
+				./src/experiment/subsetsum.c ./src/experiment/io/in/parse.h \
+				./src/experiment/io/in/parse.c \
+				./src/experiment/io/in/parser_subsetsum.h \
+				./src/experiment/io/in/parser_subsetsum.c \
+				./src/test_parser_subsetsum.c
+###############################################################################
+# Configuration files and scripts
+###############################################################################
+# Enable distribution and installation of darwin's scripts.
+pkgdata_DATA = ./data/autogen_subsetsum_config.pl \
+			   ./data/autogen_hampath_config.pl
 
-testsubsetsum_SOURCES = ./src/base/report.h ./src/base/report.c \
-						./src/base/random.h ./src/base/random.c ./src/genome.h \
-						./src/genome.c ./src/experiment/subsetsum.h \
-						./src/experiment/subsetsum.c ./src/test_subsetsum.c
+install-data-hook:
+	cd $(DESTDIR)$(pkgdatadir);\
+	chmod u+x ./*.pl
 
-testnqueens_SOURCES = ./src/base/report.h ./src/base/report.c ./src/base/random.h \
-					  ./src/base/random.c ./src/base/bits.h ./src/base/bits.c \
-					  ./src/genome.h ./src/genome.c ./src/experiment/queen.h \
-					  ./src/experiment/queen.c ./src/experiment/nqueens.h \
-					  ./src/experiment/nqueens.c ./src/test_nqueens.c
+# Enable cleaning of darwin's configuration files.
+CLEANFILES = ./data/*.config
 
-##bin_PROGRAMS = testoperators testrandom
-##testrandom_SOURCES = ./src/base/report.h ./src/base/report.c ./src/base/random.h \
-##					 ./src/base/random.c ./src/test_random.c
-##testoperators_SOURCES = ./src/base/report.h ./src/base/report.c \
-##						./src/base/random.h ./src/base/random.c ./src/genome.h \
-##						./src/genome.c ./src/operators.h ./src/operators.c \
-##						./src/test_operators.c
+# Preprocessor symbol to be used by darwin's parsers to locate the configuration
+# files.
+#AM_CPPFLAGS = -DDATADIR=\"$(pkgdatadir)\"
 
-EXTRA_DIST = m4/NOTES # autoreconf -i bug (v.268)
+EXTRA_DIST = m4/NOTES # autoreconf -i bug (v2.68)

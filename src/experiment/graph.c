@@ -30,7 +30,6 @@
 const int MIN_GRAPH_SIZE = 2; /* a minimum of 2 genes is required for crossover */
 
 
-
 struct Graph *
 create_graph(
         int **adjacency,

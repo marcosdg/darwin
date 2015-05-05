@@ -19,9 +19,10 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 /*
-    The bits module.
+    Common bit-manipulation utility functions.
 */
 #include <assert.h>
+#include <ctype.h>  /* isascii */
 #include <math.h>   /* exp2 */
 #include <stdlib.h> /* NULL */
 #include "bits.h"
@@ -51,4 +52,17 @@ bits2int(
         place += 1.0;
     }
     return result;
+}
+
+/*
+    digit_to_int:
+
+    ISO C standard imposes the ten decimal digits from '0' up to '9' to have
+    consecutive values in the character set.
+*/
+int
+digit_to_int(
+        char digit
+) {
+    return digit - '0';
 }

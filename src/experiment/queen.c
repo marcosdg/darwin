@@ -34,7 +34,8 @@ create_queen(
         int row,
         int column
 ) {
-    assert((row >= 0) && (column >= 0));
+    assert(row >= 0);
+    assert(column >= 0);
 
     struct Queen *queen = (struct Queen *) malloc(sizeof(struct Queen));
     if (queen == NULL) {
@@ -55,7 +56,8 @@ attack(
         struct Queen *q1,
         struct Queen *q2
 ) {
-    assert((q1 != NULL) && (q2 != NULL));
+    assert(q1 != NULL);
+    assert(q2 != NULL);
 
     /* same row||column||diagonal ? */
     return (q1->row == q2->row) || (q1->column == q2->column)

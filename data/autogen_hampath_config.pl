@@ -62,7 +62,7 @@ sub random_int_inclusive
 
 # The output file.
 
-my $file_name = "hampath.config";
+my $file_name = "hampath-auto.config";
 open(my $fh, '>', $file_name)
     or die "Could not open file '$file_name' $!";
 

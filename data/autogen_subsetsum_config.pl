@@ -13,7 +13,7 @@ my $num_args = $#ARGV + 1;
 if ($num_args == 0) {
     print_usage();
     exit 1;
-} elsif ($num_args > 3 || $ARGV[1] < 0) {
+} elsif ($num_args != 3 || $ARGV[1] < 0) {
     print "$0: Bad arguments\n";
     exit 0;
 }
@@ -52,7 +52,7 @@ sub random_int_inclusive
 
 # Create the output file.
 
-my $file_name = "subsetsum.config";
+my $file_name = "subsetsum-auto.config";
 open(my $fh, '>', $file_name)
     or die "Could not open file '$file_name' $!";
 

@@ -83,8 +83,7 @@
         though, for many problems (as in here) both the objective and fitness
         functions match:
 
-            fitness === objective = (|S| - penalty)
-                                    / |S|
+            fitness === objective = |S| / (|S| + penalty)
         where |S| is the number of elements in S.
 */
 #ifndef SUBSETSUM_H_INCLUDED

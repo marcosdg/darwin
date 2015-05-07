@@ -168,6 +168,5 @@ objective(
 ) {
     assert(candidate != NULL);
 
-    return ((double) abs(target - penalty(candidate)))
-            / (double) target;
+    return (double) target / (double) (target + penalty(candidate));
 }

@@ -29,15 +29,15 @@ int main(int argc, char **argv)
 {
     start_random_generator();
 
-    int t = 3;
-    int s[3] = {4, 1, 2};
-    struct Subsetsum *subsetsum = create_subsetsum(t, s, 3);
+    int t = 4032;
+    int s[4] = {120000, 80367, 110029, 4032};
+    struct Subsetsum *subsetsum = create_subsetsum(t, s, 4);
 
     printf("==== SUBSET SUM INSTANCE ====\n");
     printf("Target: %i\n", t);
     printf("Set:\n");
     int i;
-    for (i = 0; i < 3; i += 1) {
+    for (i = 0; i < 4; i += 1) {
         printf("%i ", s[i]);
     }
     printf("\n");

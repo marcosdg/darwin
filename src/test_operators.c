@@ -1,4 +1,4 @@
-/*  test.c
+/*  test_operators.c
 
     This is part of the darwin program.
 
@@ -21,6 +21,10 @@
 /*
     Just to play around.
 */
+#include <stdio.h>
+#include "base/report.h"
+#include "base/random.h"
+#include "genome.h"
 #include "operators.h"
 
 
@@ -60,12 +64,31 @@ int main(int argc, char **argv)
         printf("\t\t fitness: %lf \n", (city->people[i])->fitness);
         printf("\t\t evolvability: %lf \n", (city->people[i])->evolvability);
     }
-/*
     printf("======== TEST TOURNAMENT SELECTION ========\n");
 
-    struct Individual *best = tournament_selection(city, 1);
-    printf("Best individual fitness: %lf \n", best->fitness);
-*/
+    double times_ind1 = 0;
+    double times_ind2 = 0;
+    double times_ind3 = 0;
+    double times_ind4 = 0;
+
+    int trial;
+    for (trial = 0; trial < 10000; trial += 1) {
+        struct Individual *best = tournament_selection(city, 1);
+        if (best->fitness == 0.57) {
+            times_ind1 += 1.0;
+        } else if (best->fitness == 0.30) {
+            times_ind2 += 1.0;
+        } else if (best->fitness == 0.75) {
+            times_ind3 += 1.0;
+        } else /* best finess == 0.70 */ {
+            times_ind4 += 1.0;
+        }
+    }
+    printf("%% times ind1 (0.57) wins: %lf\n", times_ind1 / 10000);
+    printf("%% times ind2 (0.30) wins: %lf\n", times_ind2 / 10000);
+    printf("%% times ind3 (0.75) wins: %lf\n", times_ind3 / 10000);
+    printf("%% times ind4 (0.70) wins: %lf\n", times_ind4 / 10000);
+
 /*
     printf("======== TEST CROSSOVER ========\n");
 
@@ -84,6 +107,7 @@ int main(int argc, char **argv)
 	}
     printf("\n");
 */
+/*
     printf("======== TEST MUTATION ========\n");
 
     ind1->evolvability = ind1->fitness
@@ -104,6 +128,7 @@ int main(int argc, char **argv)
     }
     printf("%% mutations =  %lf (should be close to the risk factor)\n",
             mutations / 100000.0);
+*/
 /*
     printf("======== TEST REPLACEMENT  ========\n");
 

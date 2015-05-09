@@ -21,6 +21,9 @@
 /*
     Just to play around.
 */
+#include <stdio.h>
+
+#include "base/report.h"
 #include "base/random.h"
 
 

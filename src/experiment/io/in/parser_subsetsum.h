@@ -1,4 +1,4 @@
-/*  random.h
+/*  parser_subsetsum.h
 
     This is part of the darwin program.
 
@@ -19,49 +19,16 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 /*
-    Common random numbers utility functions.
+    The Subset Sum problem configuration file parser.
 */
-#ifndef RANDOM_H_INCLUDED
-#define RANDOM_H_INCLUDED
+#ifndef PARSER_SUBSETSUM_H_INCLUDED
+#define PARSER_SUBSETSUM_H_INCLUDED
 
-extern void
-start_random_generator(
-        void
-);
+#include "../../subsetsum.h"
 
-extern long int
-random_int_exclusive(
-        long int lower,
-        long int upper
-);
-extern double
-random_double_exclusive(
-        double lower,
-        double upper
-);
-extern long int
-random_int_inclusive(
-        long int lower,
-        long int upper
-);
-extern double
-random_double_inclusive(
-        double lower,
-        double upper
+extern struct Subsetsum *
+load_subsetsum(
+        const char *file_name
 );
 
-extern long int
-random_excluding(
-        long int lower,
-        long int banned,
-        long int upper
-);
-
-extern void
-randomize_ints(
-        long int *ints,
-        int length,
-        long int lower,
-        long int upper
-);
-#endif /* RANDOM_H_INCLUDED */
+#endif /* PARSER_SUBSETSUM_H_INCLUDED */

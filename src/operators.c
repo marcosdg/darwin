@@ -19,25 +19,23 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 /*
-    operators.{h,c} implement the 4 basic evolutional operations of Genetic
-    Algorithms:
-        1. Selection: which individuals will produce new individuals?
-            (Fitness-proportioned Tournament Selection)
-        2. Crossover: maiting between selected individuals.
-            (Single Point Crossover)
-        3. Mutation: individuals' DNA alterations.
-            (Single Point Mutation)
-        4. Replacement: which individuals persist between generations.
-            (Replace Worst Individual)
+    This is darwin's second level of abstraction, in which the 4 basic
+    evolutional operations of Genetic Algorithms are defined (see operators.h for
+    details).
 */
+#include <assert.h>
+#include <math.h>       /* exp */
+#include <stdlib.h>     /* malloc */
+#include <string.h>     /* memcpy */
+#include "base/report.h"
+#include "base/random.h"
+#include "genome.h"
 #include "operators.h"
-
 /*
     Individual's default mutation probability. It may be later redefined by the
     user via darwin's Genetic Algorithm configuration file.
 */
 static double default_mutation_risk = 0.1;
-
 /*
     SELECTION.
 */
@@ -77,12 +75,13 @@ fight(
         struct Individual *aspirant,
         struct Individual *rival
 ) {
-    assert((aspirant != NULL) && (rival != NULL));
+    assert(aspirant != NULL);
+    assert(rival != NULL);
 
     double goodness = fitness_proportion(aspirant, rival);
     double bad_luck = random_double_inclusive(0.0, 1.0);
 
-    return bad_luck > goodness? 1 : 0;
+    return bad_luck > goodness;
 }
 
 struct Individual *
@@ -107,27 +106,27 @@ tournament_selection(
     }
     return best;
 }
-
 /*
     CROSSOVER.
 */
-
 struct Individual **
 single_point_crossover(
         struct Individual *dad,
         struct Individual *mom,
         struct Encoding *e
 ) {
-    assert((dad != NULL) && (mom != NULL) && (e != NULL));
+    assert(dad != NULL);
+    assert(mom != NULL);
+    assert(e != NULL);
 
     struct Individual **offspring = (struct Individual **)
                                     malloc(2 * sizeof(struct Individual *));
     struct Individual *son = create_individual(e);
     struct Individual *daughter = create_individual(e);
-    if (!offspring || !son || !daughter) {
-        ERROR_VERBOSE("Could not create offspring");
+    if (offspring == NULL || son == NULL || daughter == NULL) {
+        error("Could not create offspring");
     }
-    /* X point: to avoid (offspring == parents), then (locus != 0) */
+    /* X point: (locus != 0) to avoid (offspring == parents) */
 
     long int locus = random_int_inclusive(1, (e->dna_length - 1));
     int fst_half = locus * UNIT_BYTE_SIZE;
@@ -144,20 +143,19 @@ single_point_crossover(
     offspring[1] = daughter;
     return offspring;
 }
-
 /*
     MUTATION.
 
     A mutagen will cause mutations in an individual's DNA depending on the risk
     factor (mutation probability function).
 */
-
 long int
 single_point_mutation(
         struct Individual *victim,
         struct Encoding *e
 ) {
-    assert((victim != NULL) && (e != NULL));
+    assert(victim != NULL);
+    assert(e != NULL);
 
     long int locus = random_int_exclusive(0, e->dna_length);
     invert(victim, locus, e);
@@ -184,23 +182,23 @@ adaptative_mutation_risk(
         struct Individual *victim
 ) {
     assert(victim != NULL);
-
-    /* Case 1: best fitness (1.0). No mutation. */
-
+    /*
+        Case 1: best fitness (1.0). No mutation.
+    */
     double risk = 0.0;
-
-    /* Case 2: worst fitness. Mutate. */
-
+    /*
+        Case 2: worst fitness. Mutate.
+    */
     if (victim->fitness <= 0.0) {
         risk = 1.0;
-
-    /* Case 3: victim is equal or better than parents. */
-
+    /*
+        Case 3: victim is equal or better than parents.
+    */
     } else if ((victim->fitness < 1.0) && (victim->evolvability >= 1.0)) {
         risk = exp(-(victim->evolvability) * (victim->fitness)) * 0.1;
-
-    /* Case 4: victim is worse. */
-
+    /*
+        Case 4: victim is worse.
+    */
     } else if ((victim->fitness < 1.0) && (victim->evolvability < 1.0)) {
         risk = exp(-(victim->evolvability) * (victim->fitness)) * 0.5;
     }
@@ -213,7 +211,9 @@ mutagen(
         struct Individual *victim,
         struct Encoding *e
 ) {
-    assert((risk != NULL) && (victim != NULL) && (e != NULL));
+    assert(risk != NULL);
+    assert(victim != NULL);
+    assert(e != NULL);
 
     int mutated = 0;
     double luck = random_double_inclusive(0.0, 1.0);
@@ -224,17 +224,16 @@ mutagen(
     }
     return mutated;
 }
-
 /*
     REPLACEMENT.
 */
-
 int
 replace_worst(
         struct Individual *incomer,
         struct Population *city
 ) {
-    assert((incomer != NULL) && (city != NULL));
+    assert(incomer != NULL);
+    assert(city != NULL);
     assert(city->current_size > 0);
 
     int replaced = 0;
@@ -253,4 +252,3 @@ replace_worst(
     }
     return replaced;
 }
-

@@ -1,4 +1,4 @@
-/*  random.h
+/*  life.c
 
     This is part of the darwin program.
 
@@ -19,49 +19,28 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 /*
-    Common random numbers utility functions.
+
 */
-#ifndef RANDOM_H_INCLUDED
-#define RANDOM_H_INCLUDED
+#include <assert.h>
+#include <math.h>       /* abs */
+#include <stdlib.h>     /* malloc, free */
+#include <string.h>     /* memset */
+#include "base/report.h"
+#include "life.h"
 
-extern void
-start_random_generator(
+
+struct Evolution *
+genesis(
         void
-);
+) {
+    struct Evolution *evol = (struct Evolution *) malloc(sizeof(struct Evolution));
+    if (evol == NULL) {
+        error("Could not begin genesis");
+    }
+    evol->max_generations = 0;
+    evol->population_size = 0;
+    evol->tournament_size = 0;
+    evol->mutability = 0;
 
-extern long int
-random_int_exclusive(
-        long int lower,
-        long int upper
-);
-extern double
-random_double_exclusive(
-        double lower,
-        double upper
-);
-extern long int
-random_int_inclusive(
-        long int lower,
-        long int upper
-);
-extern double
-random_double_inclusive(
-        double lower,
-        double upper
-);
-
-extern long int
-random_excluding(
-        long int lower,
-        long int banned,
-        long int upper
-);
-
-extern void
-randomize_ints(
-        long int *ints,
-        int length,
-        long int lower,
-        long int upper
-);
-#endif /* RANDOM_H_INCLUDED */
+    return evol;
+}

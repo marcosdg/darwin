@@ -19,21 +19,19 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 /*
-    operators.{h,c} implement the 4 basic evolutional operations of Genetic
-    Algorithms:
-        1. Selection:
-            which individuals will produce new individuals?
-        2. Crossover:
-            maiting between selected individuals.
-        3. Mutation:
-            individuals' DNA alterations.
-        4. Replacement:
-            which individuals will persist from one generation to the next one?
+    This is darwin's second level of abstraction, in which the 4 basic
+    evolutional operations of Genetic Algorithms are defined:
+        1. Selection: which individuals will produce new individuals?
+            (Fitness-proportioned Tournament Selection)
+        2. Crossover: maiting between selected individuals.
+            (Single Point Crossover)
+        3. Mutation: individuals' DNA alterations.
+            (Single Point Mutation)
+        4. Replacement: which individuals persist between generations.
+            (Replace Worst Individual)
 */
 #ifndef OPERATORS_H_INCLUDED
 #define OPERATORS_H_INCLUDED
-
-#include "genome.h"
 
 extern struct Individual *
 tournament_selection(

@@ -24,7 +24,7 @@
 #include <assert.h>
 #include <stdio.h>              /* fclose, fgets, fopen */
 #include <stdlib.h>             /* atoi, free, malloc, NULL */
-#include <string.h>             /* strcmp, strlen, strstr */
+#include <string.h>             /* strstr */
 #include "../../../base/report.h"
 #include "parse.h"
 #include "parser_subsetsum.h"
@@ -75,7 +75,6 @@ load_subsetsum(
             for (i = 0; i < set_size; i += 1) {
                 set[i] = atoi(get_line(line, MAX_COLUMNS, file));
             }
-            break; /* nothing to parse after the set */
         }
     } while (get_line(line, MAX_COLUMNS, file) != NULL);
 

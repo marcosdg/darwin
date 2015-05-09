@@ -1,4 +1,4 @@
-/*  parser_hampath.c
+/*  parser_species.c
 
     This is part of the darwin program.
 
@@ -19,38 +19,36 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 /*
-    The Hamiltonian Path problem (undirected version) configuration file parser.
+
 */
 #include <assert.h>
 #include <stdio.h>              /* fclose, fgets, fopen */
-#include <stdlib.h>             /* atoi, free, malloc, NULL */
+#include <stdlib.h>             /* atoi, free, NULL */
 #include <string.h>             /* strstr */
 #include "../../../base/report.h"
-#include "../../../base/bits.h"
 #include "parse.h"
-#include "parser_hampath.h"
-
-const int MAX_COLUMNS = 1024;
+#include "parser_evolution.h"
+/*
+    Parser features.
+*/
+const int MAX_COLUMNS = 80;
 /*
     Configuration file symbols.
 */
 const char *TOKEN_COMMENT = "#";
-const char *TOKEN_DIMENSION = "DIMENSION";
-const char *TOKEN_ADJACENCY = "ADJACENCY";
+const char *TOKEN_MAX_GENERATIONS = "MAX_GENERATIONS";
+const char *TOKEN_POPULATION_SIZE = "POPULATION_SIZE";
+const char *TOKEN_TOURNAMENT_SIZE = "TOURNAMENT_SIZE";
+const char *TOKEN_MUTATION_PROBABILITY = "MUTATION_PROBABILITY";
 
-struct Hampath *
-load_hampath(
-       const char *file_name /* hampath instance */
+
+struct Evolution *
+load_evolution(
+        const char *file_name
 ) {
-    int *row;
-    int col;
-    int dimension;
-    int **adjacency;
-    int i = 0;
-
-    char *chunks;
+    struct Evolution *evol = genesis();
+    int i;
     char *line = (char *) malloc(MAX_COLUMNS * sizeof(char));
-    // char *file_name = get_path(instance_name);
     FILE *file;
     if (line == NULL) {
         error("Could not start parsing. Out of memory");
@@ -63,25 +61,22 @@ load_hampath(
     while (strstr(get_line(line, MAX_COLUMNS, file), TOKEN_COMMENT));
 
     do {
-        if (strstr(line, TOKEN_DIMENSION)) {
-            dimension = atoi(get_line(line, MAX_COLUMNS, file));
+        if (strstr(line, TOKEN_MAX_GENERATIONS)) {
+            evol->max_generations = atoi(get_line(line, MAX_COLUMNS, file));
 
-        } else if (strstr(line, TOKEN_ADJACENCY)) {
-            adjacency = (int **) malloc(dimension * sizeof(int *));
-            while (get_line(line, MAX_COLUMNS, file)) {
-                row =  (int *) malloc(dimension * sizeof(int));
-                chunks = str_chop(line, " ");
-                for (col = 0; col < dimension; col += 1) {
-                    row[col] = digit_to_int(chunks[col]);
-                }
-                adjacency[i] = row;
-                i += 1;
-            }
+        } else if (strstr(line, TOKEN_POPULATION_SIZE)) {
+            evol->population_size = atoi(get_line(line, MAX_COLUMNS, file));
+
+        } else if (strstr(line, TOKEN_TOURNAMENT_SIZE)) {
+            evol->tournament_size = atoi(get_line(line, MAX_COLUMNS, file));
+
+        } else if (strstr(line, TOKEN_MUTATION_PROBABILITY)) {
+            evol->mutability = atoi(get_line(line, MAX_COLUMNS, file));
         }
     } while (get_line(line, MAX_COLUMNS, file) != NULL);
 
     free(line);
     fclose(file);
 
-    return create_hampath(create_graph(adjacency, dimension));
+    return evol;
 }

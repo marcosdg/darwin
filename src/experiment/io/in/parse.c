@@ -24,7 +24,7 @@
 #include <assert.h>
 #include <stdio.h>  /* fgets */
 #include <stdlib.h> /* atoi, malloc, NULL */
-#include <string.h> /* strcat, strcmp, strdup, strlen, strsep */
+#include <string.h> /* strcat, strdup, strlen, strsep */
 #include "parse.h"
 
 /*

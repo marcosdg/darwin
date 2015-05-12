@@ -52,10 +52,10 @@ If you do not want to mess the source tree you can create a subfolder where exec
 
 1. Open up a terminal and `cd` into the (unzipped) folder
 2. `./autogen.sh`
-2. `mkdir build && cd !$`
-3. `../configure`
-4. `make`
-5. Done
+3. `mkdir build && cd !$`
+4. `../configure`
+5. `make`
+6. Done
 
 ##### The full installation
 

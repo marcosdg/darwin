@@ -36,25 +36,25 @@ By default, almost all modern desktop operative systems come with C compiler ins
 * If you already have [git](http://git-scm.com/):
 `git clone https://github.com/marcosdg/darwin.git`
 
-* If you do not have it: download the zip archive [here](https://github.com/marcosdg/darwin)
+* If you don't have git: download the zip archive [here](https://github.com/marcosdg/darwin)
 
 ##### The quick dirty way
 
-1. Open up a terminal and `$ cd` into the (unzipped) darwin folder
-2. `$ ./autogen.sh` to bootstrap darwin
-3. `$ ./configure` to generate configuration files
-4. `$ make` to generate the binary image
+1. Open up a terminal and `cd` into the (unzipped) darwin folder
+2. `./autogen.sh` to bootstrap darwin
+3. `./configure` to generate configuration files
+4. `make` to generate the binary image
 5. Done
 
 ##### A cleaner way
 
 If you do not want to mess the source tree you can create a subfolder where execute the configure script, so all the generated files will be placed there instead:
 
-1. Open up a terminal and `$ cd` into the (unzipped) folder
-2. `$ ./autogen.sh`
-2. `$mkdir build && cd !$`
-3. `$ ../configure`
-4. `$ make`
+1. Open up a terminal and `cd` into the (unzipped) folder
+2. `./autogen.sh`
+2. `mkdir build && cd !$`
+3. `../configure`
+4. `make`
 5. Done
 
 ##### The full installation

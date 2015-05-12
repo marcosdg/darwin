@@ -1,4 +1,4 @@
-/*  parser_subsetsum.c
+/*  parser_hampath.c
 
     This is part of the darwin program.
 
@@ -19,39 +19,38 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 /*
-    The Subset Sum problem configuration file parser.
+    The Hamiltonian Path problem (undirected version) configuration file parser.
 */
 #include <assert.h>
 #include <stdio.h>              /* fclose, fgets, fopen */
 #include <stdlib.h>             /* atoi, free, malloc, NULL */
 #include <string.h>             /* strstr */
-#include "../../../base/report.h"
-#include "parse.h"
-#include "parser_subsetsum.h"
-/*
-    Parser features.
-*/
-static const int MAX_COLUMNS = 80;
+#include "../../base/report.h"
+#include "../../base/bits.h"
+#include "../parse.h"
+#include "parser_hampath.h"
+
+static const int MAX_COLUMNS = 1024;
 /*
     Configuration file symbols.
 */
 static const char *TOKEN_COMMENT = "#";
-static const char *TOKEN_TARGET = "TARGET";
-static const char *TOKEN_SETSIZE = "SETSIZE";
-static const char *TOKEN_SET = "SET";
+static const char *TOKEN_DIMENSION = "DIMENSION";
+static const char *TOKEN_ADJACENCY = "ADJACENCY";
 
-
-struct Subsetsum *
-load_subsetsum(
-        const char *file_name /* subsetsum instance */
+struct Hampath *
+load_hampath(
+       const char *file_name /* hampath instance */
 ) {
-    int target = 0;
-    int set_size = 0;
-    int *set;
-    int i;
+    int *row;
+    int col;
+    int dimension;
+    int **adjacency;
+    int i = 0;
 
+    char *chunks;
     char *line = malloc(MAX_COLUMNS * sizeof(char));
-    //char *file_name = get_path(instance_name);
+    // char *file_name = get_path(instance_name);
     FILE *file;
     if (line == NULL) {
         error("Could not start parsing. Out of memory");
@@ -64,16 +63,19 @@ load_subsetsum(
     while (strstr(get_line(line, MAX_COLUMNS, file), TOKEN_COMMENT));
 
     do {
-        if (strstr(line, TOKEN_TARGET)) {
-            target = atoi(get_line(line, MAX_COLUMNS, file));
+        if (strstr(line, TOKEN_DIMENSION)) {
+            dimension = atoi(get_line(line, MAX_COLUMNS, file));
 
-        } else if (strstr(line, TOKEN_SETSIZE)) {
-            set_size = atoi(get_line(line, MAX_COLUMNS, file));
-
-        } else if (strstr(line, TOKEN_SET)) {
-            set = malloc(set_size * sizeof(int));
-            for (i = 0; i < set_size; i += 1) {
-                set[i] = atoi(get_line(line, MAX_COLUMNS, file));
+        } else if (strstr(line, TOKEN_ADJACENCY)) {
+            adjacency = malloc(dimension * sizeof(int *));
+            while (get_line(line, MAX_COLUMNS, file)) {
+                row = malloc(dimension * sizeof(int));
+                chunks = str_chop(line, " ");
+                for (col = 0; col < dimension; col += 1) {
+                    row[col] = digit_to_int(chunks[col]);
+                }
+                adjacency[i] = row;
+                i += 1;
             }
         }
     } while (get_line(line, MAX_COLUMNS, file) != NULL);
@@ -81,5 +83,5 @@ load_subsetsum(
     free(line);
     fclose(file);
 
-    return create_subsetsum(target, set, set_size);
+    return create_hampath(create_graph(adjacency, dimension));
 }

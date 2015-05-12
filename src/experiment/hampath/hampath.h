@@ -98,7 +98,7 @@
 #ifndef HAMPATH_H_INCLUDED
 #define HAMPATH_H_INCLUDED
 
-#include "../genome.h"
+#include "../../genome.h"
 #include "graph.h"
 
 

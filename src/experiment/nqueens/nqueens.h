@@ -100,7 +100,7 @@
 #ifndef NQUEENS_H_INCLUDED
 #define NQUEENS_H_INCLUDED
 
-#include "../genome.h"
+#include "../../genome.h"
 #include "queen.h"
 
 

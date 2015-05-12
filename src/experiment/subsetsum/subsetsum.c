@@ -26,7 +26,7 @@
 #include <stdio.h>
 #include <stdlib.h>         /* malloc, NULL */
 #include <string.h>         /* memset */
-#include "../base/report.h"
+#include "../../base/report.h"
 #include "subsetsum.h"     /* genome.h */
 
 const int MIN_TARGET = 0;

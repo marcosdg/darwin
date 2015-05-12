@@ -1,4 +1,4 @@
-/*  graph.c
+/*  graph.h
 
     This is part of the darwin program.
 
@@ -22,56 +22,40 @@
     The Hamiltonian Path submodule: basic structures and functions.
     (see hampath.{h, c})
 */
-#include <assert.h>
-#include <stdlib.h>         /* malloc */
-#include "../base/report.h"
-#include "graph.h"
+#ifndef GRAPH_H_INCLUDED
+#define GRAPH_H_INCLUDED
+/*
+    A graph G is a pair (V, E) where V is the set of vertices,
+                V = {v1, v2, ..., vn} (n: number of vertices)
+    which will be tagged consecutively with positive integer numbers
+    {0, 1, 2, ..., n} to facilitate the genotypic encoding (see hampath.h); and E
+    is the set of edges,
+                E = {e1, e2, ..., em} (m: number of edges)
+    indicating which vertex is connected to which vertices. Both, V and E, are
+    encoded by means of the adjacency matrix. The size of G will be taken as the
+    number of vertices.
+*/
+struct Graph {
+    int **adjacency;
+    int size;
+};
 
-const int MIN_GRAPH_SIZE = 2; /* a minimum of 2 genes is required for crossover */
-
-
-struct Graph *
+extern struct Graph *
 create_graph(
         int **adjacency,
         int size
-) {
-    assert(adjacency != NULL);
-    assert(size >= MIN_GRAPH_SIZE);
+);
 
-    struct Graph *graph = malloc(sizeof(struct Graph));
-    if (graph == NULL) {
-        error("Could not create graph");
-    }
-    graph->adjacency = adjacency;
-    graph->size = size;
-
-    return graph;
-}
-
-int
+extern int
 is_vertex(
-        int x,
+        int v,
         struct Graph *graph
-) {
-    assert(graph != NULL);
-    return (0 <= x) && (x < graph->size);
-}
-/*
-    is_undirected_edge:
+);
 
-    It checks if both (v1, v2) and (v2, v1) are edges in the given graph; if one
-    them fails it means that the edge is directed, and if both fail it means that
-    there is no edge. Loops (v1, v1) or (v2, v2) are prohibited.
-*/
-int
+extern int
 is_undirected_edge(
         int v1,
         int v2,
         struct Graph *graph /* undirected */
-) {
-    assert(graph != NULL);
-    return is_vertex(v1, graph) && is_vertex(v2, graph)
-            && (v1 != v2)
-            && (graph->adjacency[v1][v2] == 1)
-            && (graph->adjacency[v2][v1] == 1);
-}
+);
+#endif /* GRAPH_H_INCLUDED */

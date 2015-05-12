@@ -22,13 +22,13 @@
     The N-Queens problem (see nqueens.h for details)
 */
 #include <assert.h>
-#include <math.h>           /* abs, ceil, exp2, log2 */
+#include <math.h>               /* abs, ceil, exp2, log2 */
 #include <stdio.h>
-#include <stdlib.h>         /* malloc, NULL */
-#include <string.h>         /* memset */
-#include "../base/report.h"
-#include "../base/bits.h"
-#include "nqueens.h"        /* genome.h */
+#include <stdlib.h>             /* malloc, NULL */
+#include <string.h>             /* memset */
+#include "../../base/report.h"
+#include "../../base/bits.h"
+#include "nqueens.h" 
 
 const int MIN_BOARD_SIZE = 4; /* No solutions exist for N=2 and N=3 */
 

@@ -35,10 +35,10 @@ test_parser_evolution_SOURCES = \
 	./src/base/report.c \
 	./src/life.h \
 	./src/life.c \
-	./src/experiment/io/in/parse.h \
-	./src/experiment/io/in/parse.c \
-	./src/experiment/io/in/parser_evolution.h \
-	./src/experiment/io/in/parser_evolution.c \
+	./src/experiment/parse.h \
+	./src/experiment/parse.c \
+	./src/experiment/parser_evolution.h \
+	./src/experiment/parser_evolution.c \
 	./src/test_parser_evolution.c
 
 test_parser_hampath_SOURCES = \
@@ -50,14 +50,14 @@ test_parser_hampath_SOURCES = \
 	./src/base/random.c \
 	./src/genome.h \
 	./src/genome.c \
-	./src/experiment/graph.h \
-	./src/experiment/graph.c \
-	./src/experiment/hampath.h \
-	./src/experiment/hampath.c \
-	./src/experiment/io/in/parse.h \
-	./src/experiment/io/in/parse.c \
-	./src/experiment/io/in/parser_hampath.h \
-	./src/experiment/io/in/parser_hampath.c \
+	./src/experiment/parse.h \
+	./src/experiment/parse.c \
+	./src/experiment/hampath/graph.h \
+	./src/experiment/hampath/graph.c \
+	./src/experiment/hampath/hampath.h \
+	./src/experiment/hampath/hampath.c \
+	./src/experiment/hampath/parser_hampath.h \
+	./src/experiment/hampath/parser_hampath.c \
 	./src/test_parser_hampath.c
 
 test_parser_subsetsum_SOURCES = \
@@ -67,12 +67,12 @@ test_parser_subsetsum_SOURCES = \
 	./src/base/random.c \
 	./src/genome.h \
 	./src/genome.c \
-	./src/experiment/subsetsum.h \
-	./src/experiment/subsetsum.c \
-	./src/experiment/io/in/parse.h \
-	./src/experiment/io/in/parse.c \
-	./src/experiment/io/in/parser_subsetsum.h \
-	./src/experiment/io/in/parser_subsetsum.c \
+	./src/experiment/parse.h \
+	./src/experiment/parse.c \
+	./src/experiment/subsetsum/subsetsum.h \
+	./src/experiment/subsetsum/subsetsum.c \
+	./src/experiment/subsetsum/parser_subsetsum.h \
+	./src/experiment/subsetsum/parser_subsetsum.c \
 	./src/test_parser_subsetsum.c
 ###############################################################################
 # Configuration files and scripts

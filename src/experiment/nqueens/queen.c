@@ -25,7 +25,7 @@
 #include <assert.h>
 #include <math.h>           /* abs */
 #include <stdlib.h>         /* malloc */
-#include "../base/report.h"
+#include "../../base/report.h"
 #include "queen.h"
 
 

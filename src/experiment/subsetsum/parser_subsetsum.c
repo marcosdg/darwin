@@ -1,4 +1,4 @@
-/*  parser_species.c
+/*  parser_subsetsum.c
 
     This is part of the darwin program.
 
@@ -19,15 +19,15 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 /*
-
+    The Subset Sum problem configuration file parser.
 */
 #include <assert.h>
 #include <stdio.h>              /* fclose, fgets, fopen */
-#include <stdlib.h>             /* atoi, free, NULL */
+#include <stdlib.h>             /* atoi, free, malloc, NULL */
 #include <string.h>             /* strstr */
-#include "../../../base/report.h"
-#include "parse.h"
-#include "parser_evolution.h"
+#include "../../base/report.h"
+#include "../parse.h"
+#include "parser_subsetsum.h"
 /*
     Parser features.
 */
@@ -36,19 +36,22 @@ static const int MAX_COLUMNS = 80;
     Configuration file symbols.
 */
 static const char *TOKEN_COMMENT = "#";
-static const char *TOKEN_MAX_GENERATIONS = "MAX_GENERATIONS";
-static const char *TOKEN_POPULATION_SIZE = "POPULATION_SIZE";
-static const char *TOKEN_TOURNAMENT_SIZE = "TOURNAMENT_SIZE";
-static const char *TOKEN_MUTATION_PROBABILITY = "MUTATION_PROBABILITY";
+static const char *TOKEN_TARGET = "TARGET";
+static const char *TOKEN_SETSIZE = "SETSIZE";
+static const char *TOKEN_SET = "SET";
 
 
-struct Evolution *
-load_evolution(
-        const char *file_name
+struct Subsetsum *
+load_subsetsum(
+        const char *file_name /* subsetsum instance */
 ) {
-    struct Evolution *evol = genesis();
+    int target = 0;
+    int set_size = 0;
+    int *set;
     int i;
+
     char *line = malloc(MAX_COLUMNS * sizeof(char));
+    //char *file_name = get_path(instance_name);
     FILE *file;
     if (line == NULL) {
         error("Could not start parsing. Out of memory");
@@ -61,22 +64,22 @@ load_evolution(
     while (strstr(get_line(line, MAX_COLUMNS, file), TOKEN_COMMENT));
 
     do {
-        if (strstr(line, TOKEN_MAX_GENERATIONS)) {
-            evol->max_generations = atoi(get_line(line, MAX_COLUMNS, file));
+        if (strstr(line, TOKEN_TARGET)) {
+            target = atoi(get_line(line, MAX_COLUMNS, file));
 
-        } else if (strstr(line, TOKEN_POPULATION_SIZE)) {
-            evol->population_size = atoi(get_line(line, MAX_COLUMNS, file));
+        } else if (strstr(line, TOKEN_SETSIZE)) {
+            set_size = atoi(get_line(line, MAX_COLUMNS, file));
 
-        } else if (strstr(line, TOKEN_TOURNAMENT_SIZE)) {
-            evol->tournament_size = atoi(get_line(line, MAX_COLUMNS, file));
-
-        } else if (strstr(line, TOKEN_MUTATION_PROBABILITY)) {
-            evol->mutability = atoi(get_line(line, MAX_COLUMNS, file));
+        } else if (strstr(line, TOKEN_SET)) {
+            set = malloc(set_size * sizeof(int));
+            for (i = 0; i < set_size; i += 1) {
+                set[i] = atoi(get_line(line, MAX_COLUMNS, file));
+            }
         }
     } while (get_line(line, MAX_COLUMNS, file) != NULL);
 
     free(line);
     fclose(file);
 
-    return evol;
+    return create_subsetsum(target, set, set_size);
 }

@@ -22,7 +22,7 @@
     Just to play around.
 */
 #include <stdio.h>
-#include "experiment/subsetsum.h"
+#include "experiment/subsetsum/subsetsum.h"
 
 
 int main(int argc, char **argv)

@@ -22,7 +22,7 @@
     Just to play around.
 */
 #include <stdio.h>
-#include "experiment/nqueens.h"
+#include "experiment/nqueens/nqueens.h"
 
 
 int main(int argc, char **argv)

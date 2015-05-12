@@ -24,7 +24,7 @@
 #ifndef PARSER_EVOLUTION_H_INCLUDED
 #define PARSER_EVOLUTION_H_INCLUDED
 
-#include "../../../life.h"
+#include "../life.h"
 
 extern struct Evolution *
 load_evolution(

@@ -1,4 +1,4 @@
-/*  parser_hampath.h
+/*  parser_subsetsum.h
 
     This is part of the darwin program.
 
@@ -19,16 +19,16 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 /*
-    The Hamiltonian Path problem (undirected version) configuration file parser.
+    The Subset Sum problem configuration file parser.
 */
-#ifndef PARSER_HAMPATH_H_INCLUDED
-#define PARSER_HAMPATH_H_INCLUDED
+#ifndef PARSER_SUBSETSUM_H_INCLUDED
+#define PARSER_SUBSETSUM_H_INCLUDED
 
-#include "../../hampath.h"
+#include "subsetsum.h"
 
-extern struct Hampath *
-load_hampath(
+extern struct Subsetsum *
+load_subsetsum(
         const char *file_name
 );
 
-#endif /* PARSER_HAMPATH_H_INCLUDED */
+#endif /* PARSER_SUBSETSUM_H_INCLUDED */

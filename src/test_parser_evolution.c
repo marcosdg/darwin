@@ -23,7 +23,7 @@
 */
 #include <stdio.h>
 #include <stdlib.h>
-#include "experiment/io/in/parser_evolution.h"
+#include "experiment/parser_evolution.h"
 
 int main(int argc, char **argv)
 {

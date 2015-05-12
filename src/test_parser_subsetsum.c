@@ -23,7 +23,7 @@
 */
 #include <stdio.h>
 #include <stdlib.h>
-#include "experiment/io/in/parser_subsetsum.h"
+#include "experiment/subsetsum/parser_subsetsum.h"
 
 int main(int argc, char **argv)
 {

@@ -1,4 +1,4 @@
-/*  parser_subsetsum.h
+/*  queen.h
 
     This is part of the darwin program.
 
@@ -19,16 +19,26 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 /*
-    The Subset Sum problem configuration file parser.
+    The N-Queens submodule: basic structures and functions.
+    (see nqueens.{h, c})
 */
-#ifndef PARSER_SUBSETSUM_H_INCLUDED
-#define PARSER_SUBSETSUM_H_INCLUDED
+#ifndef QUEEN_H_INCLUDED
+#define QUEEN_H_INCLUDED
 
-#include "../../subsetsum.h"
+struct Queen {
+    int row;    /* gene's locus (genotype) */
+    int column; /* allele (genotype) */
+};
 
-extern struct Subsetsum *
-load_subsetsum(
-        const char *file_name
+extern struct Queen *
+create_queen(
+        int row,
+        int column
 );
 
-#endif /* PARSER_SUBSETSUM_H_INCLUDED */
+extern int
+attack(
+        struct Queen *q1,
+        struct Queen *q2
+);
+#endif /* QUEEN_H_INCLUDED */

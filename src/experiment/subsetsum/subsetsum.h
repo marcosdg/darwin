@@ -89,7 +89,7 @@
 #ifndef SUBSETSUM_H_INCLUDED
 #define SUBSETSUM_H_INCLUDED
 
-#include "../genome.h"
+#include "../../genome.h"
 
 
 struct Subsetsum_candidate {

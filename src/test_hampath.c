@@ -23,7 +23,7 @@
 */
 #include <stdio.h>
 #include <stdlib.h>
-#include "experiment/hampath.h"
+#include "experiment/hampath/hampath.h"
 
 int main(int argc, char **argv)
 {

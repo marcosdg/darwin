@@ -26,8 +26,8 @@
 #include <stdio.h>
 #include <stdlib.h>         /* malloc, NULL */
 #include <string.h>         /* memset */
-#include "../base/report.h"
-#include "../base/bits.h"
+#include "../../base/report.h"
+#include "../../base/bits.h"
 #include "hampath.h"        /* genome.h */
 
 static struct Graph *graph;

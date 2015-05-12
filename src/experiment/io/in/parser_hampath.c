@@ -49,7 +49,7 @@ load_hampath(
     int i = 0;
 
     char *chunks;
-    char *line = (char *) malloc(MAX_COLUMNS * sizeof(char));
+    char *line = malloc(MAX_COLUMNS * sizeof(char));
     // char *file_name = get_path(instance_name);
     FILE *file;
     if (line == NULL) {
@@ -67,9 +67,9 @@ load_hampath(
             dimension = atoi(get_line(line, MAX_COLUMNS, file));
 
         } else if (strstr(line, TOKEN_ADJACENCY)) {
-            adjacency = (int **) malloc(dimension * sizeof(int *));
+            adjacency = malloc(dimension * sizeof(int *));
             while (get_line(line, MAX_COLUMNS, file)) {
-                row =  (int *) malloc(dimension * sizeof(int));
+                row = malloc(dimension * sizeof(int));
                 chunks = str_chop(line, " ");
                 for (col = 0; col < dimension; col += 1) {
                     row[col] = digit_to_int(chunks[col]);

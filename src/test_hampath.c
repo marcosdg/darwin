@@ -36,11 +36,11 @@ int main(int argc, char **argv)
                     {1, 0, 0, 1, 0},
                     {0, 1, 1, 0, 1},
                     {0, 1, 0, 1, 0}};
-    int **adjacency = (int **) malloc(5 * sizeof(int *));
+    int **adjacency = malloc(5 * sizeof(int *));
     int i;
     int j;
     for (i = 0; i < 5; i += 1) {
-        adjacency[i] = (int *) malloc(5 * sizeof(int));
+        adjacency[i] = malloc(5 * sizeof(int));
     }
     for (i = 0; i < 5; i += 1) {
         for (j = 0; j < 5; j += 1) {

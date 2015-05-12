@@ -50,7 +50,7 @@ load_subsetsum(
     int *set;
     int i;
 
-    char *line = (char *) malloc(MAX_COLUMNS * sizeof(char));
+    char *line = malloc(MAX_COLUMNS * sizeof(char));
     //char *file_name = get_path(instance_name);
     FILE *file;
     if (line == NULL) {
@@ -71,7 +71,7 @@ load_subsetsum(
             set_size = atoi(get_line(line, MAX_COLUMNS, file));
 
         } else if (strstr(line, TOKEN_SET)) {
-            set = (int *) malloc(set_size * sizeof(int));
+            set = malloc(set_size * sizeof(int));
             for (i = 0; i < set_size; i += 1) {
                 set[i] = atoi(get_line(line, MAX_COLUMNS, file));
             }

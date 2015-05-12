@@ -55,7 +55,7 @@ create_hampath(
     int min_bits = (int) ceil(log2(g->size));
     struct Encoding *e = create_encoding(min_bits /* units_per_gene */,
                                          g->size  /* dna_length */);
-    struct Hampath *instance = (struct Hampath *) malloc(sizeof(struct Hampath));
+    struct Hampath *instance = malloc(sizeof(struct Hampath));
     if (instance == NULL) {
         error("hamiltonian path: Could not create instance");
     }
@@ -75,9 +75,8 @@ create_hampath_candidate(
 ) {
     assert(hampath != NULL);
 
-    int *path = (int *) malloc(hampath->e->num_genes * sizeof(int));
-    struct Hampath_candidate *candidate = (struct Hampath_candidate *)
-                                    malloc(sizeof(struct Hampath_candidate));
+    int *path = malloc(hampath->e->num_genes * sizeof(int));
+    struct Hampath_candidate *candidate = malloc(sizeof(struct Hampath_candidate));
     if (path == NULL || candidate == NULL) {
         error("hampath: Could not create candidate");
     }
@@ -138,7 +137,7 @@ create_visited(
 ) {
     assert(graph != NULL);
 
-    int *visited = (int *) malloc(graph->size * sizeof(int));
+    int *visited = malloc(graph->size * sizeof(int));
 
     if (visited == NULL) {
         error("hampath: Could not create visited list");

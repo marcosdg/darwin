@@ -33,7 +33,7 @@ struct Evolution *
 genesis(
         void
 ) {
-    struct Evolution *evol = (struct Evolution *) malloc(sizeof(struct Evolution));
+    struct Evolution *evol = malloc(sizeof(struct Evolution));
     if (evol == NULL) {
         error("Could not begin genesis");
     }

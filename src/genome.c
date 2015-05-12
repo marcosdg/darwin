@@ -40,7 +40,7 @@ create_encoding(
     assert(units_per_gene >= MIN_UNITS_PER_GENE);
     assert(num_genes >= MIN_NUM_GENES);
 
-    struct Encoding *e = (struct Encoding *) malloc(sizeof(struct Encoding));
+    struct Encoding *e = malloc(sizeof(struct Encoding));
     if (e == NULL) {
         error("Could not create encoding");
     }
@@ -60,9 +60,8 @@ create_individual(
 ) {
     assert(e != NULL);
 
-    struct Individual *one = (struct Individual *)
-                                malloc(sizeof(struct Individual));
-    long int *dna = (long int *) malloc(e->dna_byte_size);
+    struct Individual *one = malloc(sizeof(struct Individual));
+    long int *dna = malloc(e->dna_byte_size);
     if (one == NULL || dna == NULL) {
         error("Could not create individual");
     }
@@ -119,10 +118,8 @@ create_empty_population(
     assert(e != NULL);
     assert(max_size > 0);
 
-    struct Population *city = (struct Population *)
-                                malloc(sizeof(struct Population));
-    struct Individual **people = (struct Individual **)
-                                    malloc(max_size * sizeof(struct Individual));
+    struct Population *city = malloc(sizeof(struct Population));
+    struct Individual **people = malloc(max_size * sizeof(struct Individual));
     if (city == NULL || people == NULL) {
         error("Could not create empty population");
     }

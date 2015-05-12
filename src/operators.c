@@ -119,8 +119,7 @@ single_point_crossover(
     assert(mom != NULL);
     assert(e != NULL);
 
-    struct Individual **offspring = (struct Individual **)
-                                    malloc(2 * sizeof(struct Individual *));
+    struct Individual **offspring = malloc(2 * sizeof(struct Individual *));
     struct Individual *son = create_individual(e);
     struct Individual *daughter = create_individual(e);
     if (offspring == NULL || son == NULL || daughter == NULL) {

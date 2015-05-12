@@ -54,7 +54,7 @@ create_nqueens(
 
     int min_bits = (int) ceil(log2(board_size));
     struct Encoding *e = create_encoding(min_bits, board_size);
-    struct NQueens *instance = (struct NQueens *) malloc(sizeof(struct NQueens));
+    struct NQueens *instance = malloc(sizeof(struct NQueens));
     if (instance == NULL) {
         error("NQueens: Could not create instance");
     }
@@ -73,11 +73,9 @@ create_nqueens_candidate(
 ) {
     assert(nqueens != NULL);
 
-    int *junk_alleles = (int *) malloc(nqueens->e->num_genes * sizeof(int));
-    struct Queen **queens = (struct Queen **)
-                            malloc(nqueens->e->num_genes * sizeof(struct Queen *));
-    struct NQueens_candidate *candidate = (struct NQueens_candidate *)
-                                    malloc(sizeof(struct NQueens_candidate));
+    int *junk_alleles = malloc(nqueens->e->num_genes * sizeof(int));
+    struct Queen **queens = malloc(nqueens->e->num_genes * sizeof(struct Queen *));
+    struct NQueens_candidate *candidate = malloc(sizeof(struct NQueens_candidate));
     if (junk_alleles == NULL || queens == NULL || candidate == NULL) {
         error("NQueens: Could not create candidate");
     }

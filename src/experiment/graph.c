@@ -38,7 +38,7 @@ create_graph(
     assert(adjacency != NULL);
     assert(size >= MIN_GRAPH_SIZE);
 
-    struct Graph *graph = (struct Graph *) malloc(sizeof(struct Graph));
+    struct Graph *graph = malloc(sizeof(struct Graph));
     if (graph == NULL) {
         error("Could not create graph");
     }

@@ -75,7 +75,7 @@ str_chop(
         const char *delim
 ) {
     size_t length = strlen(str) + 1;                        /* count '\0' */
-    char *chunks = (char *) malloc(length * sizeof(char));
+    char *chunks = malloc(length * sizeof(char));
     char *copy = strdup(str);                               /* be safe */
     int i = 0;
     if (copy == NULL || chunks == NULL) {

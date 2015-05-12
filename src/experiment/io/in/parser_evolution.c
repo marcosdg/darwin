@@ -48,7 +48,7 @@ load_evolution(
 ) {
     struct Evolution *evol = genesis();
     int i;
-    char *line = (char *) malloc(MAX_COLUMNS * sizeof(char));
+    char *line = malloc(MAX_COLUMNS * sizeof(char));
     FILE *file;
     if (line == NULL) {
         error("Could not start parsing. Out of memory");

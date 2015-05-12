@@ -60,8 +60,7 @@ create_subsetsum(
 
     struct Encoding *e = create_encoding(1      /* units_per_gene */,
                                          s_size /* dna_length */);
-    struct Subsetsum *instance = (struct Subsetsum *)
-                                    malloc(sizeof(struct Subsetsum));
+    struct Subsetsum *instance = malloc(sizeof(struct Subsetsum));
     if (instance == NULL) {
         error("subset sum: Could not create instance");
     }
@@ -89,9 +88,8 @@ create_subsetsum_candidate(
     assert(subset_size >= MIN_SUBSET_SIZE); /* empty set is a valid subset */
     assert(subsetsum != NULL);
 
-    int *subset = (int *) malloc(subset_size * sizeof(int));
-    struct Subsetsum_candidate *candidate = (struct Subsetsum_candidate *)
-                                    malloc(sizeof(struct Subsetsum_candidate));
+    int *subset = malloc(subset_size * sizeof(int));
+    struct Subsetsum_candidate *candidate = malloc(sizeof(struct Subsetsum_candidate));
     if (subset == NULL || candidate == NULL) {
         error("subset sum: Could not create candidate");
     }

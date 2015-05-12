@@ -37,7 +37,7 @@ create_queen(
     assert(row >= 0);
     assert(column >= 0);
 
-    struct Queen *queen = (struct Queen *) malloc(sizeof(struct Queen));
+    struct Queen *queen = malloc(sizeof(struct Queen));
     if (queen == NULL) {
         error("Could not create queen");
     }

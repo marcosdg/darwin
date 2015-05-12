@@ -31,15 +31,15 @@
 /*
     Parser features.
 */
-const int MAX_COLUMNS = 80;
+static const int MAX_COLUMNS = 80;
 /*
     Configuration file symbols.
 */
-const char *TOKEN_COMMENT = "#";
-const char *TOKEN_MAX_GENERATIONS = "MAX_GENERATIONS";
-const char *TOKEN_POPULATION_SIZE = "POPULATION_SIZE";
-const char *TOKEN_TOURNAMENT_SIZE = "TOURNAMENT_SIZE";
-const char *TOKEN_MUTATION_PROBABILITY = "MUTATION_PROBABILITY";
+static const char *TOKEN_COMMENT = "#";
+static const char *TOKEN_MAX_GENERATIONS = "MAX_GENERATIONS";
+static const char *TOKEN_POPULATION_SIZE = "POPULATION_SIZE";
+static const char *TOKEN_TOURNAMENT_SIZE = "TOURNAMENT_SIZE";
+static const char *TOKEN_MUTATION_PROBABILITY = "MUTATION_PROBABILITY";
 
 
 struct Evolution *

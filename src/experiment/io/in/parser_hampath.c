@@ -30,13 +30,13 @@
 #include "parse.h"
 #include "parser_hampath.h"
 
-const int MAX_COLUMNS = 1024;
+static const int MAX_COLUMNS = 1024;
 /*
     Configuration file symbols.
 */
-const char *TOKEN_COMMENT = "#";
-const char *TOKEN_DIMENSION = "DIMENSION";
-const char *TOKEN_ADJACENCY = "ADJACENCY";
+static const char *TOKEN_COMMENT = "#";
+static const char *TOKEN_DIMENSION = "DIMENSION";
+static const char *TOKEN_ADJACENCY = "ADJACENCY";
 
 struct Hampath *
 load_hampath(

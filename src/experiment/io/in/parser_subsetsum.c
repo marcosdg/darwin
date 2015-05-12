@@ -31,14 +31,14 @@
 /*
     Parser features.
 */
-const int MAX_COLUMNS = 80;
+static const int MAX_COLUMNS = 80;
 /*
     Configuration file symbols.
 */
-const char *TOKEN_COMMENT = "#";
-const char *TOKEN_TARGET = "TARGET";
-const char *TOKEN_SETSIZE = "SETSIZE";
-const char *TOKEN_SET = "SET";
+static const char *TOKEN_COMMENT = "#";
+static const char *TOKEN_TARGET = "TARGET";
+static const char *TOKEN_SETSIZE = "SETSIZE";
+static const char *TOKEN_SET = "SET";
 
 
 struct Subsetsum *

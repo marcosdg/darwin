@@ -50,13 +50,18 @@ struct NQueens *
 create_nqueens(
         int board_size
 ) {
-    assert(board_size >= MIN_BOARD_SIZE);
+    int min_bits;
+    struct Encoding *e;
+    struct NQueens *instance;
 
-    int min_bits = (int) ceil(log2(board_size));
-    struct Encoding *e = create_encoding(min_bits, board_size);
-    struct NQueens *instance = malloc(sizeof(struct NQueens));
+    if (board_size < MIN_BOARD_SIZE) {
+        error("nqueens: boad size too small");
+    }
+    min_bits = (int) ceil(log2(board_size));
+    e = create_encoding(min_bits, board_size);
+    instance = malloc(sizeof(struct NQueens));
     if (instance == NULL) {
-        error("NQueens: Could not create instance");
+        error("nqueens: out of memory");
     }
     instance->e = e;
     instance->print = print;
@@ -77,7 +82,7 @@ create_nqueens_candidate(
     struct Queen **queens = malloc(nqueens->e->num_genes * sizeof(struct Queen *));
     struct NQueens_candidate *candidate = malloc(sizeof(struct NQueens_candidate));
     if (junk_alleles == NULL || queens == NULL || candidate == NULL) {
-        error("NQueens: Could not create candidate");
+        error("nqueens: out of memory");
     }
     memset(junk_alleles, 0, nqueens->e->num_genes * sizeof(int));
     candidate->junk_alleles = junk_alleles;
@@ -182,6 +187,6 @@ objective(
 ) {
     assert(candidate != NULL);
 
-    return ((double) abs(candidate->num_queens - penalty(candidate)))
-            / (double) (candidate->num_queens);
+    return (double) candidate->num_queens
+            / (double) (candidate->num_queens + penalty(candidate));
 }

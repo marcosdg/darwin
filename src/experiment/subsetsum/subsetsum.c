@@ -93,7 +93,7 @@ create_subsetsum_candidate(
     if (subset == NULL || candidate == NULL) {
         error("subset sum: Could not create candidate");
     }
-    memset(subset, 0, subsetsum->e->num_genes * sizeof(int));
+    memset(subset, 0, subset_size * sizeof(int));
     candidate->subset = subset;
     candidate->subset_size = subset_size;
 

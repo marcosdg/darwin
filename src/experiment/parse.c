@@ -21,10 +21,10 @@
 /*
     Common parse utility functions.
 */
-#include <assert.h>
-#include <stdio.h>  /* fgets */
-#include <stdlib.h> /* atoi, malloc, NULL */
-#include <string.h> /* strcat, strdup, strlen, strsep */
+#include <stdio.h>          /* fgets, NULL */
+#include <stdlib.h>         /* atoi */
+#include <string.h>         /* strcat, strlen, strsep */
+#include "../base/xmem.h"   /* xmalloc, xstrdup */
 #include "parse.h"
 
 /*
@@ -74,9 +74,9 @@ str_chop(
         const char *str,
         const char *delim
 ) {
-    size_t length = strlen(str) + 1;                        /* count '\0' */
-    char *chunks = malloc(length * sizeof(char));
-    char *copy = strdup(str);                               /* be safe */
+    size_t length = strlen(str) + 1; /* Count the '\0'. */
+    char *chunks = xmalloc(length * sizeof(char));
+    char *copy = xstrdup(str); /* strdup modifies the original. Be safe and copy. */
     int i = 0;
     if (copy == NULL || chunks == NULL) {
         return NULL;

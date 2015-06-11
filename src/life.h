@@ -19,7 +19,14 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 /*
+    This is darwin's third level of abstraction where the genetic algorithm is
+    defined using the genetic operators (see src/operators.h) and the basic
+    structures (see src/genome.h, src/experiment/hampath/hampath.h,
+    src/experiment/nqueens/nqueens.h, src/experiment/nqueens/nqueens.c)
 
+    It relies on 'life-generic-protos.h' to decide the appropriate macro
+    invocation, for the functions' prototypes, according to which problem the
+    user chose.
 */
 #ifndef LIFE_H_INCLUDED
 #define LIFE_H_INCLUDED
@@ -35,4 +42,14 @@ extern struct Evolution *
 genesis(
         void
 );
+
+#define DARWIN_DECLARE_FUNC_LIVE(T, problem)\
+void                                        \
+live(                                       \
+        struct Evolution *evol,             \
+        char * problem##_file_name          \
+);
+#include "life-generic-protos.h"
+#undef DARWIN_DECLARE_FUNC_LIVE
+
 #endif /* LIFE_H_INCLUDED */

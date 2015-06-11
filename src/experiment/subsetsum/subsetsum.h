@@ -91,7 +91,6 @@
 
 #include "../../genome.h"
 
-
 struct Subsetsum_candidate {
     int *subset;
     int subset_size;
@@ -118,5 +117,18 @@ create_subsetsum(
         int t,
         int *s,
         int s_size
+);
+extern int
+destroy_subsetsum(
+        struct Subsetsum *subsetsum
+);
+
+extern int
+subsetsum_min_target(
+        void
+);
+extern int
+subsetsum_min_set_size(
+        void
 );
 #endif /* SUBSETSUM_H_INCLUDED */

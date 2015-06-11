@@ -20,13 +20,13 @@
 */
 /*
     This is darwin's first level of abstraction, in which the fundamentals of the
-    genetic algorithm are specified (see genome.h for details)
+    genetic algorithm that it implements are specified (see genome.h for details)
 */
 #include <assert.h>
 #include <math.h>       /* abs */
-#include <stdlib.h>     /* malloc, free */
+#include <stdlib.h>     /* free, NULL */
 #include <string.h>     /* memset */
-#include "base/report.h"
+#include "base/xmem.h"  /* xmalloc */
 #include "base/random.h"
 #include "genome.h"
 /*
@@ -40,10 +40,7 @@ create_encoding(
     assert(units_per_gene >= MIN_UNITS_PER_GENE);
     assert(num_genes >= MIN_NUM_GENES);
 
-    struct Encoding *e = malloc(sizeof(struct Encoding));
-    if (e == NULL) {
-        error("Could not create encoding");
-    }
+    struct Encoding *e = xmalloc(sizeof(struct Encoding));
     e->units_per_gene = units_per_gene;
     e->num_genes = num_genes;
     e->dna_byte_size = UNIT_BYTE_SIZE * units_per_gene * num_genes;
@@ -60,11 +57,9 @@ create_individual(
 ) {
     assert(e != NULL);
 
-    struct Individual *one = malloc(sizeof(struct Individual));
-    long int *dna = malloc(e->dna_byte_size);
-    if (one == NULL || dna == NULL) {
-        error("Could not create individual");
-    }
+    struct Individual *one = xmalloc(sizeof(struct Individual));
+    long int *dna = xmalloc(e->dna_byte_size);
+
     memset(dna, 0, e->dna_byte_size);
     one->dna = dna;
     one->fitness = 0.0;
@@ -118,11 +113,9 @@ create_empty_population(
     assert(e != NULL);
     assert(max_size > 0);
 
-    struct Population *city = malloc(sizeof(struct Population));
-    struct Individual **people = malloc(max_size * sizeof(struct Individual));
-    if (city == NULL || people == NULL) {
-        error("Could not create empty population");
-    }
+    struct Population *city = xmalloc(sizeof(struct Population));
+    struct Individual **people = xmalloc(max_size * sizeof(struct Individual));
+
     city->e = e;
     city->people = people;
     city->next_free_spot = 0;
@@ -162,7 +155,6 @@ exterminate(
         kill(city->people[at], city->e);
     }
     free(city->people);
-    free(city->e);
     free(city);
 }
 

@@ -23,15 +23,15 @@
 */
 #include <assert.h>
 #include <math.h>           /* abs */
-#include <stdio.h>
-#include <stdlib.h>         /* malloc, NULL */
+#include <stdio.h>          /* NULL */
+#include <stdlib.h>         /* free */
 #include <string.h>         /* memset */
-#include "../../base/report.h"
-#include "subsetsum.h"     /* genome.h */
+#include "../../base/xmem.h"/* xmalloc */
+#include "subsetsum.h"      /* genome.h */
 
-const int MIN_TARGET = 0;
-const int MIN_SET_SIZE = 2; /* a minimum of 2 genes is required for crossover */
-const int MIN_SUBSET_SIZE = 0;
+static const int MIN_TARGET = 0;
+static const int MIN_SET_SIZE = 2; /* crossover requires at least 2 genes */
+static const int MIN_SUBSET_SIZE = 0;
 static int target;
 static int *set;
 
@@ -60,10 +60,7 @@ create_subsetsum(
 
     struct Encoding *e = create_encoding(1      /* units_per_gene */,
                                          s_size /* dna_length */);
-    struct Subsetsum *instance = malloc(sizeof(struct Subsetsum));
-    if (instance == NULL) {
-        error("subset sum: Could not create instance");
-    }
+    struct Subsetsum *instance = xmalloc(sizeof(struct Subsetsum));
     target = t;
     set = s;
     instance->e = e;
@@ -74,11 +71,38 @@ create_subsetsum(
 
     return instance;
 }
+int
+destroy_subsetsum(
+        struct Subsetsum *subsetsum
+) {
+    int destroyed = 0;
+    if (subsetsum != NULL) {
+        free(set);
+        free(subsetsum->e);
+        free(subsetsum);
+        destroyed = 1;
+    }
+    return destroyed;
+}
+
+int
+subsetsum_min_target(
+        void
+) {
+    return MIN_TARGET;
+}
+int
+subsetsum_min_set_size(
+        void
+) {
+    return MIN_SET_SIZE;
+}
+
 /*
     create_subsetsum_candidate:
 
-    Relies on the 'decode' function to know the size of the subset, so that it can
-    avoid allocating more memory than needed.
+    Relies on the 'decode' function to know the size of the subset, so that it
+    can avoid allocating more memory than needed.
 */
 static struct Subsetsum_candidate *
 create_subsetsum_candidate(
@@ -88,11 +112,9 @@ create_subsetsum_candidate(
     assert(subset_size >= MIN_SUBSET_SIZE); /* empty set is a valid subset */
     assert(subsetsum != NULL);
 
-    int *subset = malloc(subset_size * sizeof(int));
-    struct Subsetsum_candidate *candidate = malloc(sizeof(struct Subsetsum_candidate));
-    if (subset == NULL || candidate == NULL) {
-        error("subset sum: Could not create candidate");
-    }
+    int *subset = xmalloc(subset_size * sizeof(int));
+    struct Subsetsum_candidate *candidate = xmalloc(sizeof(struct Subsetsum_candidate));
+    
     memset(subset, 0, subset_size * sizeof(int));
     candidate->subset = subset;
     candidate->subset_size = subset_size;

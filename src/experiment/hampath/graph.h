@@ -47,6 +47,11 @@ create_graph(
 );
 
 extern int
+hampath_min_graph_size(
+        void
+);
+
+extern int
 is_vertex(
         int v,
         struct Graph *graph

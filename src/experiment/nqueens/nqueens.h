@@ -134,4 +134,10 @@ extern struct NQueens *
 create_nqueens(
         int board_size
 );
+
+extern int
+nqueens_min_board_size(
+        void
+);
+
 #endif /* NQUEENS_H_INCLUDED */

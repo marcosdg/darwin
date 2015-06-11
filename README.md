@@ -11,57 +11,74 @@ Given the complexity of the role that play [Evolution Strategies](https://en.wik
     how significant is the gain in performance that a Genetic Algorithm can achieve just by
     considering an adaptative mutation operator?
 
+To that end, darwin provides [several instances] (https://github.com/marcosdg/darwin/tree/master/src/experiment) of well known [NP-problems] (http://mathworld.wolfram.com/NP-Problem.html) on which it can be run to evaluate performance.
+
 Please, see the [wiki](https://github.com/marcosdg/darwin/wiki) for more information.
 
-## Warning!
+## Disclaimer
 
-* Currently, is not fully portable. It is not guaranteed to work in systems other than GNU/Linux.
-* Currently, is not optimized for peak performance.
+* Currently, darwin is not fully portable. It is not guaranteed to work in systems other than GNU/Linux.
+* Currently, darwin is not optimized for peak performance regarding both memory consumption and computing time.
 
-## Installation
+## Requirements
 
-### Requirements
-
-Please, make sure you have previously installed the following:
+Please, make sure you have installed the following:
 
 * [GNU Autoconf](https://www.gnu.org/software/autoconf/) (version 2.68 or greater)
 * [GNU Automake](https://www.gnu.org/software/automake/) (version 1.11 or greater)
 
-By default, almost all modern desktop operative systems come with C compiler installed, so this should not be a problem.
+By default, almost all modern desktop operative systems come with **C compiler** installed, so this should not be a problem. Additionally, it might help to have installed [Perl] (http://www.perl.org/) as darwin comes with various perl scripts (see [data] (https://github.com/marcosdg/darwin/tree/master/data)) to help you make your custom problem tests.
 
-### Process
+## Quick and easy
 
-##### Downloading
+After downloading darwin (.zip) or cloning it (`git clone https://github.com/marcosdg/darwin.git`):
 
-* If you already have [git](http://git-scm.com/):
-`git clone https://github.com/marcosdg/darwin.git`
-
-* If you don't have git: download the zip archive [here](https://github.com/marcosdg/darwin)
-
-##### The quick dirty way
-
-1. Open up a terminal and `cd` into the (unzipped) darwin folder
+1. Open up a terminal and `cd` into the (unzipped) darwin directory
 2. `./autogen.sh` to bootstrap darwin
 3. `./configure` to generate configuration files
 4. `make` to generate the binary image
 5. Done
 
-##### A cleaner way
+**Tip**: Just after `./autogen.sh` do `mkdir build && cd !$` followed by `../configure`, then `make`. This will build darwin in the subdirectory called *build*, avoiding messing up the darwin's source tree.
 
-If you do not want to mess the source tree you can create a subfolder where execute the configure script, so all the generated files will be placed there instead:
+## Installation
 
-1. Open up a terminal and `cd` into the (unzipped) folder
-2. `./autogen.sh`
-3. `mkdir build && cd !$`
-4. `../configure`
-5. `make`
-6. Done
+#### Darwin build options
 
-##### The full installation
+Darwin allows you to choose during the building process whether the **debugging mode** is enabled or disabled, and which **problem set** is supposed to run. The following is the list of all the current available options:
 
-For a **default** installation just use `make install` instead of `make`. This will use the system root folder (/usr/local). If you do not want to mess it use the custom installation.
+* `./configure` script options:
+    1. `--enable-darwin-debug-mode`
+* `make` options:
+    1. `-DDARWIN_USE_HAMPATH`
+    2. `-DDARWIN_USE_NQUEENS`
+    3. `-DDARWIN_USE_SUBSETSUM`
 
-For a **custom** installation you can select the target folder  `./configure --prefix=/the/path/to/my/folder` instead of `./configure`.
+#### The default install
+
+* __Install directory__: root (/usr/local)
+* __Debug mode__: disabled
+* __Problem set__: Subset-sum
+
+Inside the (unzipped) darwin directory:
+
+1. `./autogen.sh`
+2. `./configure`
+3. `make install`
+4. Done
+
+#### A custom install
+
+* __Install directory__: /home/alice/Desktop/test
+* __Debug mode__: enabled
+* __Problem set__: Hamiltonian Path (undirected version)
+
+Inside the (unzipped) darwin directory:
+
+1. `./autogen.sh`
+2. `./configure --enable-darwin-debud-mode --prefix=/home/alice/Desktop/test`
+3. `make DARWIN_FLAGS="-DDARWIN_USE_HAMPATH install"`
+4. Done
 
 ## Phylosophy
 
@@ -73,4 +90,3 @@ Here are some of the core values that darwin wants to deliver:
 * Usability
 * Extensibility
 * Maintainability
-

@@ -21,13 +21,13 @@
 /*
     The Hamiltonian Path problem (undirected version) configuration file parser.
 */
-#include <assert.h>
-#include <stdio.h>              /* fclose, fgets, fopen */
-#include <stdlib.h>             /* atoi, free, malloc, NULL */
+#include <stdio.h>              /* fclose, fopen, NULL */
+#include <stdlib.h>             /* atoi, free */
 #include <string.h>             /* strstr */
 #include "../../base/report.h"
-#include "../../base/bits.h"
-#include "../parse.h"
+#include "../../base/xmem.h"    /* xmalloc */
+#include "../../base/bits.h"    /* digit_to_int */
+#include "../parse.h"           /* get_line, strchop */
 #include "parser_hampath.h"
 
 static const int MAX_COLUMNS = 1024;
@@ -38,26 +38,31 @@ static const char *TOKEN_COMMENT = "#";
 static const char *TOKEN_DIMENSION = "DIMENSION";
 static const char *TOKEN_ADJACENCY = "ADJACENCY";
 
+
+static int
+valid_hampath_params(
+        int **adjacency,
+        int dimension
+) {
+    return (adjacency != NULL) && (dimension >= hampath_min_graph_size());
+}
+
 struct Hampath *
 load_hampath(
        const char *file_name /* hampath instance */
 ) {
     int *row;
     int col;
-    int dimension;
+    int dimension = 0;
     int **adjacency;
     int i = 0;
 
     char *chunks;
-    char *line = malloc(MAX_COLUMNS * sizeof(char));
+    char *line = xmalloc(MAX_COLUMNS * sizeof(char));
     // char *file_name = get_path(instance_name);
-    FILE *file;
-    if (line == NULL) {
-        error("Could not start parsing. Out of memory");
-    }
-    file = fopen(file_name, "r");
+    FILE *file = fopen(file_name, "r");
     if (file == NULL) {
-        error("Could not open configuration file");
+        DARWIN_ERROR("Could not open hamiltonian-path configuration file");
     }
 
     while (strstr(get_line(line, MAX_COLUMNS, file), TOKEN_COMMENT));
@@ -67,9 +72,9 @@ load_hampath(
             dimension = atoi(get_line(line, MAX_COLUMNS, file));
 
         } else if (strstr(line, TOKEN_ADJACENCY)) {
-            adjacency = malloc(dimension * sizeof(int *));
+            adjacency = xmalloc(dimension * sizeof(int *));
             while (get_line(line, MAX_COLUMNS, file)) {
-                row = malloc(dimension * sizeof(int));
+                row = xmalloc(dimension * sizeof(int));
                 chunks = str_chop(line, " ");
                 for (col = 0; col < dimension; col += 1) {
                     row[col] = digit_to_int(chunks[col]);
@@ -83,5 +88,8 @@ load_hampath(
     free(line);
     fclose(file);
 
+    if (!valid_hampath_params(adjacency, dimension)) {
+        DARWIN_ERROR("Bad hamiltonian-path configuration file");
+    }
     return create_hampath(create_graph(adjacency, dimension));
 }

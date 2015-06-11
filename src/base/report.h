@@ -10,7 +10,7 @@
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
-    at your option) any later version.
+    (at your option) any later version.
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -24,8 +24,34 @@
 #ifndef REPORT_H_INCLUDED
 #define REPORT_H_INCLUDED
 
-extern void
-error(
-        char *details
-);
+#ifdef HAVE_CONFIG_H
+#include "../../config.h"
+#endif /* HAVE_CONFIG_H */
+
+#include <stdio.h>  /* fflush, fprintf */
+#include <stdlib.h> /* exit, EXIT_FAILURE */
+/*
+    For compatibility with older versions of GCC (__FUNCTION__ is not
+    standardized).
+*/
+#if __STDC_VERSION__ < 199901L
+#   if __GNUC__ >= 2
+#       define __func__ __FUNCTION__
+#   else
+#       define __func__ "<unknown>"
+#   endif
+#endif
+
+#define DARWIN_ERROR(details)                                           \
+    do {                                                                \
+        if (DARWIN_DEBUG_MODE) {                                        \
+            fprintf(stderr, "darwin error: in %s: %s (%s at line %i)\n",\
+                    __FILE__, (details), __func__, __LINE__);           \
+        } else {                                                        \
+            fprintf(stderr, "darwin error: %s\n", (details));           \
+        }                                                               \
+        fflush(stderr);                                                 \
+        exit(EXIT_FAILURE);                                             \
+    } while (0)
+
 #endif /* REPORT_H_INCLUDED */

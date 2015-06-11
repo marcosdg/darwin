@@ -21,12 +21,12 @@
 /*
     The Subset Sum problem configuration file parser.
 */
-#include <assert.h>
-#include <stdio.h>              /* fclose, fgets, fopen */
-#include <stdlib.h>             /* atoi, free, malloc, NULL */
+#include <stdio.h>              /* fclose, fopen, NULL */
+#include <stdlib.h>             /* atoi, free */
 #include <string.h>             /* strstr */
 #include "../../base/report.h"
-#include "../parse.h"
+#include "../../base/xmem.h"    /* xmalloc */
+#include "../parse.h"           /* get_line */
 #include "parser_subsetsum.h"
 /*
     Parser features.
@@ -41,6 +41,17 @@ static const char *TOKEN_SETSIZE = "SETSIZE";
 static const char *TOKEN_SET = "SET";
 
 
+static int
+valid_subsetsum_params(
+        int target,
+        int *set,
+        int set_size
+) {
+    return (set != NULL)
+            && (target >= subsetsum_min_target())
+            && (set_size >= subsetsum_min_set_size());
+}
+
 struct Subsetsum *
 load_subsetsum(
         const char *file_name /* subsetsum instance */
@@ -50,15 +61,11 @@ load_subsetsum(
     int *set;
     int i;
 
-    char *line = malloc(MAX_COLUMNS * sizeof(char));
+    char *line = xmalloc(MAX_COLUMNS * sizeof(char));
     //char *file_name = get_path(instance_name);
-    FILE *file;
-    if (line == NULL) {
-        error("Could not start parsing. Out of memory");
-    }
-    file = fopen(file_name, "r");
+    FILE *file = fopen(file_name, "r");
     if (file == NULL) {
-        error("Could not open configuration file");
+        DARWIN_ERROR("Could not open the subset-sum configuration file");
     }
 
     while (strstr(get_line(line, MAX_COLUMNS, file), TOKEN_COMMENT));
@@ -71,7 +78,7 @@ load_subsetsum(
             set_size = atoi(get_line(line, MAX_COLUMNS, file));
 
         } else if (strstr(line, TOKEN_SET)) {
-            set = malloc(set_size * sizeof(int));
+            set = xmalloc(set_size * sizeof(int));
             for (i = 0; i < set_size; i += 1) {
                 set[i] = atoi(get_line(line, MAX_COLUMNS, file));
             }
@@ -81,5 +88,8 @@ load_subsetsum(
     free(line);
     fclose(file);
 
+    if (!valid_subsetsum_params(target, set, set_size)) {
+        DARWIN_ERROR("Bad subset-sum configuration file");
+    }
     return create_subsetsum(target, set, set_size);
 }

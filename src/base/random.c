@@ -24,7 +24,7 @@
 #include <assert.h>
 #include <float.h>  /* DBL_MIN */
 #include <math.h>   /* abs */
-#include <stdlib.h> /* RAND_MAX */
+#include <stdlib.h> /* NULL, RAND_MAX */
 #include <time.h>   /* clock_gettime, CLOCK_REALTIME, rand, srand, timespec */
 #include "report.h"
 #include "random.h"
@@ -39,7 +39,7 @@ start_random_generator(
     unsigned int seed;
 
     if (clock_gettime(CLOCK_REALTIME, &now) == -1) {
-        error("Could not generate seed correctly");
+        DARWIN_ERROR("Could not generate seed correctly");
     }
     seed = (unsigned int) (now.tv_sec * now.tv_nsec);
     srand(seed);

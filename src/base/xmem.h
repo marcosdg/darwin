@@ -1,4 +1,4 @@
-/*  report.c
+/*  xmem.h
 
     This is part of the darwin program.
 
@@ -10,7 +10,7 @@
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
-    at your option) any later version.
+    (at your option) any later version.
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -19,19 +19,17 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 /*
-    Common error-reporting utility functions.
+    Wrappers for the standard memory manipulation functions.
 */
-#include <assert.h>
-#include <stdio.h>  /* fprintf */
-#include <stdlib.h> /* exit, EXIT_FAILURE */
-#include "report.h"
+#ifndef XMALLOC_H_INCLUDED
+#define XMALLOC_H_INCLUDED
 
-void
-error(
-        char *details
-) {
-    assert(details != NULL);
-
-    fprintf(stderr, "darwin error: %s\n", (details));
-    exit(EXIT_FAILURE);
-}
+extern void *
+xmalloc(
+        size_t size
+);
+extern char *
+xstrdup(
+        const char *s
+);
+#endif /* XMALLOC_H_INCLUDED */

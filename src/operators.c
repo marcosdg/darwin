@@ -25,9 +25,8 @@
 */
 #include <assert.h>
 #include <math.h>       /* exp */
-#include <stdlib.h>     /* malloc */
-#include <string.h>     /* memcpy */
-#include "base/report.h"
+#include <string.h>     /* NULL, memcpy */
+#include "base/xmem.h"  /* xmalloc */
 #include "base/random.h"
 #include "genome.h"
 #include "operators.h"
@@ -90,7 +89,7 @@ tournament_selection(
         int num_rounds
 ) {
     assert(city != NULL);
-    assert(num_rounds >= 1); /* empty tournaments are pointless */
+    assert(num_rounds > 0); /* empty tournaments are pointless */
 
     struct Individual *best = pick_random_individual(city);
     struct Individual *rival;
@@ -119,20 +118,18 @@ single_point_crossover(
     assert(mom != NULL);
     assert(e != NULL);
 
-    struct Individual **offspring = malloc(2 * sizeof(struct Individual *));
+    struct Individual **offspring = xmalloc(2 * sizeof(struct Individual *));
     struct Individual *son = create_individual(e);
     struct Individual *daughter = create_individual(e);
-    if (offspring == NULL || son == NULL || daughter == NULL) {
-        error("Could not create offspring");
-    }
-    /* X point: (locus != 0) to avoid (offspring == parents) */
-
+    /*
+        X point: (locus != 0) to avoid (offspring == parents).
+    */
     long int locus = random_int_inclusive(1, (e->dna_length - 1));
     int fst_half = locus * UNIT_BYTE_SIZE;
     int snd_half = e->dna_byte_size - fst_half;
-
-    /* Transfer genetic material. */
-
+    /*
+        Transfer genetic material.
+    */
     memcpy(son->dna, dad->dna, fst_half);
     memcpy((son->dna + locus), (mom->dna + locus), snd_half);
     memcpy(daughter->dna, mom->dna, fst_half);

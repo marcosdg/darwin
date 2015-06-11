@@ -22,12 +22,12 @@
     The Hamiltonian Path problem (undirected version) (see hampath.h for details)
 */
 #include <assert.h>
-#include <math.h>           /* ceil, exp2, log2 */
-#include <stdio.h>
-#include <stdlib.h>         /* malloc, NULL */
+#include <math.h>           /* ceil, log2 */
+#include <stdio.h>          /* NULL */
+#include <stdlib.h>         /* free */
 #include <string.h>         /* memset */
-#include "../../base/report.h"
-#include "../../base/bits.h"
+#include "../../base/xmem.h"/* xmalloc */
+#include "../../base/bits.h"/* bits2int */
 #include "hampath.h"        /* genome.h */
 
 static struct Graph *graph;
@@ -55,10 +55,7 @@ create_hampath(
     int min_bits = (int) ceil(log2(g->size));
     struct Encoding *e = create_encoding(min_bits /* units_per_gene */,
                                          g->size  /* dna_length */);
-    struct Hampath *instance = malloc(sizeof(struct Hampath));
-    if (instance == NULL) {
-        error("hamiltonian path: Could not create instance");
-    }
+    struct Hampath *instance = xmalloc(sizeof(struct Hampath));
     graph = g;
     instance->e = e;
     instance->decode = decode;
@@ -75,11 +72,8 @@ create_hampath_candidate(
 ) {
     assert(hampath != NULL);
 
-    int *path = malloc(hampath->e->num_genes * sizeof(int));
-    struct Hampath_candidate *candidate = malloc(sizeof(struct Hampath_candidate));
-    if (path == NULL || candidate == NULL) {
-        error("hampath: Could not create candidate");
-    }
+    int *path = xmalloc(hampath->e->num_genes * sizeof(int));
+    struct Hampath_candidate *candidate = xmalloc(sizeof(struct Hampath_candidate));
     candidate->path = path;
 
     return candidate;
@@ -137,12 +131,10 @@ create_visited(
 ) {
     assert(graph != NULL);
 
-    int *visited = malloc(graph->size * sizeof(int));
-
-    if (visited == NULL) {
-        error("hampath: Could not create visited list");
-    }
-    /* Should not be initialized to zero, since zero is a valid node. */
+    int *visited = xmalloc(graph->size * sizeof(int));
+    /*
+        Should not be initialized to zero, since zero is a valid node.
+    */
     memset(visited, -1, graph->size * sizeof(int));
 
     return visited;
@@ -200,7 +192,7 @@ objective(
     assert(candidate != NULL);
     assert(graph != NULL);
     /*
-        num. path edges - penalty / num. path edges
+        num_path_edges - penalty / num_path_edges
     */
     return ((double) ((graph->size - 1) - penalty(candidate)))
             / (double) (graph->size - 1);

@@ -19,14 +19,14 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 /*
-
+    The N-Queens problem configuration file parser.
 */
-#include <assert.h>
-#include <stdio.h>              /* fclose, fgets, fopen */
-#include <stdlib.h>             /* atoi, free, NULL */
+#include <stdio.h>              /* fclose, fopen, NULL */
+#include <stdlib.h>             /* atoi, free */
 #include <string.h>             /* strstr */
 #include "../../base/report.h"
-#include "../parse.h"
+#include "../../base/xmem.h"    /* xmalloc */
+#include "../parse.h"           /* get_line */
 #include "parser_nqueens.h"
 /*
     Parser features.
@@ -39,19 +39,22 @@ static const char *TOKEN_COMMENT = "#";
 static const char *TOKEN_BOARD_SIZE = "BOARD_SIZE";
 
 
+static int
+valid_nqueens_args(
+        int board_size
+) {
+    return board_size >= nqueens_min_board_size();
+}
+
 struct NQueens *
 load_nqueens(
         const char *file_name
 ) {
     int board_size = 0;
-    char *line = malloc(MAX_COLUMNS * sizeof(char));
-    FILE *file;
-    if (line == NULL) {
-        error("Could not start parsing. Out of memory");
-    }
-    file = fopen(file_name, "r");
+    char *line = xmalloc(MAX_COLUMNS * sizeof(char));
+    FILE *file = fopen(file_name, "r");
     if (file == NULL) {
-        error("Could not open configuration file");
+        DARWIN_ERROR("Could not open n-queens configuration file");
     }
 
     while (strstr(get_line(line, MAX_COLUMNS, file), TOKEN_COMMENT));
@@ -65,5 +68,8 @@ load_nqueens(
     free(line);
     fclose(file);
 
+    if (!valid_nqueens_args(board_size)) {
+        DARWIN_ERROR("Bad n-queens configuration file");
+    }
     return create_nqueens(board_size);
 }

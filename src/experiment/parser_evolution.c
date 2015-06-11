@@ -1,4 +1,4 @@
-/*  parser_species.c
+/*  parser_evolution.c
 
     This is part of the darwin program.
 
@@ -19,14 +19,14 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 /*
-
+    The evolution configuration file parser.
 */
-#include <assert.h>
-#include <stdio.h>              /* fclose, fgets, fopen */
-#include <stdlib.h>             /* atoi, free, NULL */
-#include <string.h>             /* strstr */
+#include <stdio.h>          /* fclose, fgets, fopen, NULL */
+#include <stdlib.h>         /* atoi, free */
+#include <string.h>         /* strstr */
 #include "../base/report.h"
-#include "parse.h"
+#include "../base/xmem.h"   /* xmalloc */
+#include "parse.h"          /* get_line */
 #include "parser_evolution.h"
 /*
     Parser features.
@@ -42,20 +42,27 @@ static const char *TOKEN_TOURNAMENT_SIZE = "TOURNAMENT_SIZE";
 static const char *TOKEN_MUTATION_PROBABILITY = "MUTATION_PROBABILITY";
 
 
+static int
+valid_evolution_params(
+        struct Evolution *evol
+) {
+    return (evol->max_generations > 0)
+            && (evol->population_size > 0)
+            && (evol->tournament_size > 0)
+            && ((evol->mutability == -1) /* adaptative mutation */
+                || ((evol->mutability >= 0) && (evol->mutability <= 1)));
+}
+
 struct Evolution *
 load_evolution(
         const char *file_name
 ) {
     struct Evolution *evol = genesis();
     int i;
-    char *line = malloc(MAX_COLUMNS * sizeof(char));
-    FILE *file;
-    if (line == NULL) {
-        error("Could not start parsing. Out of memory");
-    }
-    file = fopen(file_name, "r");
+    char *line = xmalloc(MAX_COLUMNS * sizeof(char));
+    FILE *file = fopen(file_name, "r");
     if (file == NULL) {
-        error("Could not open configuration file");
+        DARWIN_ERROR("Could not open evolution configuration file");
     }
 
     while (strstr(get_line(line, MAX_COLUMNS, file), TOKEN_COMMENT));
@@ -78,5 +85,8 @@ load_evolution(
     free(line);
     fclose(file);
 
+    if (!valid_evolution_params(evol)) {
+        DARWIN_ERROR("Bad evolution configuration file");
+    }
     return evol;
 }

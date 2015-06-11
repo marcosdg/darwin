@@ -30,5 +30,4 @@ extern struct Subsetsum *
 load_subsetsum(
         const char *file_name
 );
-
 #endif /* PARSER_SUBSETSUM_H_INCLUDED */

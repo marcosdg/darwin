@@ -101,7 +101,7 @@ check_version ()
 
 cat <<EOF
 Checking whether you have the necessary tools...
-(Read INSTALL.REPO for more details on building darwin)
+(Read INSTALL for more details on building darwin)
 
 EOF
 

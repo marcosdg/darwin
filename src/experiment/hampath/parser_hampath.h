@@ -30,5 +30,4 @@ extern struct Hampath *
 load_hampath(
         const char *file_name
 );
-
 #endif /* PARSER_HAMPATH_H_INCLUDED */

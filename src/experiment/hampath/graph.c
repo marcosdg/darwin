@@ -23,11 +23,11 @@
     (see hampath.{h, c})
 */
 #include <assert.h>
-#include <stdlib.h>         /* malloc */
-#include "../../base/report.h"
+#include <stdlib.h>         /* NULL */
+#include "../../base/xmem.h"/* xmalloc */
 #include "graph.h"
 
-const int MIN_GRAPH_SIZE = 2; /* a minimum of 2 genes is required for crossover */
+static const int MIN_GRAPH_SIZE = 2; /* crossover requires at least 2 genes */
 
 
 struct Graph *
@@ -38,14 +38,18 @@ create_graph(
     assert(adjacency != NULL);
     assert(size >= MIN_GRAPH_SIZE);
 
-    struct Graph *graph = malloc(sizeof(struct Graph));
-    if (graph == NULL) {
-        error("Could not create graph");
-    }
+    struct Graph *graph = xmalloc(sizeof(struct Graph));
     graph->adjacency = adjacency;
     graph->size = size;
 
     return graph;
+}
+
+int
+hampath_min_graph_size(
+        void
+) {
+    return MIN_GRAPH_SIZE;
 }
 
 int
@@ -60,8 +64,8 @@ is_vertex(
     is_undirected_edge:
 
     It checks if both (v1, v2) and (v2, v1) are edges in the given graph; if one
-    them fails it means that the edge is directed, and if both fail it means that
-    there is no edge. Loops (v1, v1) or (v2, v2) are prohibited.
+    of them fails it means that the edge is directed, and if both fail it means
+    that there is no edge. Loops (v1, v1) or (v2, v2) are prohibited.
 */
 int
 is_undirected_edge(

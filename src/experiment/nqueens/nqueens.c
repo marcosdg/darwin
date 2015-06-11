@@ -30,7 +30,7 @@
 #include "../../base/bits.h"
 #include "nqueens.h" 
 
-const int MIN_BOARD_SIZE = 4; /* No solutions exist for N=2 and N=3 */
+static const int MIN_BOARD_SIZE = 4; /* No solutions exist for N=2 and N=3 */
 
 static struct NQueens_candidate *
 decode(struct Individual *cryptic, struct NQueens *nqueens);
@@ -55,13 +55,13 @@ create_nqueens(
     struct NQueens *instance;
 
     if (board_size < MIN_BOARD_SIZE) {
-        error("nqueens: boad size too small");
+        DARWIN_ERROR("nqueens: boad size too small");
     }
     min_bits = (int) ceil(log2(board_size));
     e = create_encoding(min_bits, board_size);
     instance = malloc(sizeof(struct NQueens));
     if (instance == NULL) {
-        error("nqueens: out of memory");
+        DARWIN_ERROR("nqueens: out of memory");
     }
     instance->e = e;
     instance->print = print;
@@ -70,6 +70,13 @@ create_nqueens(
     instance->objective = objective;
 
     return instance;
+}
+
+int
+nqueens_min_board_size(
+        void
+) {
+    return MIN_BOARD_SIZE;
 }
 
 static struct NQueens_candidate *
@@ -82,7 +89,7 @@ create_nqueens_candidate(
     struct Queen **queens = malloc(nqueens->e->num_genes * sizeof(struct Queen *));
     struct NQueens_candidate *candidate = malloc(sizeof(struct NQueens_candidate));
     if (junk_alleles == NULL || queens == NULL || candidate == NULL) {
-        error("nqueens: out of memory");
+        DARWIN_ERROR("nqueens: out of memory");
     }
     memset(junk_alleles, 0, nqueens->e->num_genes * sizeof(int));
     candidate->junk_alleles = junk_alleles;

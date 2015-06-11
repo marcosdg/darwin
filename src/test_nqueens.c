@@ -30,7 +30,7 @@ int main(int argc, char **argv)
     start_random_generator();
 
     struct NQueens *nqueens = create_nqueens(5);
-    
+
     printf("==== CONFIGURATION ====\n");
     printf("5-Queens individuals' encoding:\n");
     printf("  min. number of bits: %i\n", nqueens->e->units_per_gene);
@@ -59,7 +59,7 @@ int main(int argc, char **argv)
         printf("%li ", test->dna[locus]);
     }
     printf("\n");
-    
+
     printf("==== DECODE ====\n");
     struct NQueens_candidate *candidate = (*nqueens->decode)(test, nqueens);
     (*nqueens->print)(candidate);

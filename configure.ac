@@ -39,6 +39,14 @@ AC_CONFIG_MACRO_DIR([m4])
 # Enable 'automake' to simplify creating Makefiles. The 'subdir-objects'
 # options allows us to organize source files in subdirectories.
 AM_INIT_AUTOMAKE([1.11 subdir-objects -Wall -Werror])
+
+# Darwin configuration features:
+#   1. Debugging mode
+AC_ARG_ENABLE([darwin-debug-mode],
+              [AS_HELP_STRING([--enable-darwin-debug-mode],
+                              [Enable darwin debug mode. Disabled by default.])],
+              [AC_DEFINE([DARWIN_DEBUG_MODE], [1], [Enabled is 1. Disabled is 0.])],
+              [AC_DEFINE([DARWIN_DEBUG_MODE], [0], [Enabled is 1. Disabled is 0.])])
 ###############################################################################
 # PERL
 ###############################################################################

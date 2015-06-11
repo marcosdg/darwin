@@ -24,8 +24,8 @@
 */
 #include <assert.h>
 #include <math.h>           /* abs */
-#include <stdlib.h>         /* malloc */
-#include "../../base/report.h"
+#include <stdlib.h>         /* NULL */
+#include "../../base/xmem.h"/* xmalloc */
 #include "queen.h"
 
 
@@ -37,10 +37,7 @@ create_queen(
     assert(row >= 0);
     assert(column >= 0);
 
-    struct Queen *queen = malloc(sizeof(struct Queen));
-    if (queen == NULL) {
-        error("Could not create queen");
-    }
+    struct Queen *queen = xmalloc(sizeof(struct Queen));
     queen->row = row;
     queen->column = column;
 

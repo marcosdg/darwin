@@ -19,7 +19,7 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 /*
-
+    The N-Queens problem configuration file parser.
 */
 #ifndef PARSER_NQUEENS_H_INCLUDED
 #define PARSER_NQUEENS_H_INCLUDED

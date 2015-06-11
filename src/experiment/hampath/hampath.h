@@ -101,7 +101,6 @@
 #include "../../genome.h"
 #include "graph.h"
 
-
 struct Hampath_candidate {
     int *path;
 };

@@ -27,7 +27,7 @@ Please, make sure you have installed the following:
 * [GNU Autoconf](https://www.gnu.org/software/autoconf/) (version 2.68 or greater)
 * [GNU Automake](https://www.gnu.org/software/automake/) (version 1.11 or greater)
 
-By default, almost all modern desktop operative systems come with **C compiler** installed, so this should not be a problem. Additionally, it might help to have installed [Perl] (http://www.perl.org/) as darwin comes with various perl scripts (see [data] (https://github.com/marcosdg/darwin/tree/master/data)) to help you make your custom problem tests.
+By default, almost all modern desktop operative systems come with a **C compiler** installed, so this should not be a problem. Additionally, it might help to have installed [Perl] (http://www.perl.org/), as darwin comes with various perl scripts (see [data] (https://github.com/marcosdg/darwin/tree/master/data)) to help you make your custom problem tests.
 
 ## Quick and easy
 
@@ -50,9 +50,9 @@ Darwin allows you to choose during the building process whether the **debugging 
 * `./configure` script options:
     1. `--enable-darwin-debug-mode`
 * `make` options:
-    1. `-DDARWIN_USE_HAMPATH`
-    2. `-DDARWIN_USE_NQUEENS`
-    3. `-DDARWIN_USE_SUBSETSUM`
+    1. `DARWIN_FLAGS="-DDARWIN_USE_HAMPATH"`
+    2. `DARWIN_FLAGS="-DDARWIN_USE_NQUEENS"`
+    3. `DARWIN_FLAGS="-DDARWIN_USE_SUBSETSUM"`
 
 #### The default install
 
@@ -77,7 +77,7 @@ Inside the (unzipped) darwin directory:
 
 1. `./autogen.sh`
 2. `./configure --enable-darwin-debud-mode --prefix=/home/alice/Desktop/test`
-3. `make DARWIN_FLAGS="-DDARWIN_USE_HAMPATH install"`
+3. `make DARWIN_FLAGS="-DDARWIN_USE_HAMPATH" install`
 4. Done
 
 ## Phylosophy

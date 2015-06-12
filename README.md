@@ -3,15 +3,14 @@ darwin
 
 (development)
 
-This academic project aims to offer a comparative view, regarding performance, between two implementations of a simple Genetic Algorithm: one using a self-[adaptative](https://en.wikipedia.org/wiki/Genetic_algorithm#Adaptive_GAs) strategy
-and one which does not. 
+This academic project aims to offer a comparative view, regarding performance, between two implementations of a simple [Genetic Algorithm](http://www.scholarpedia.org/article/Genetic_algorithms): one using a self-[adaptative](https://en.wikipedia.org/wiki/Genetic_algorithm#Adaptive_GAs) strategy and one which does not.
 
-Given the complexity of the role that play [Evolution Strategies](https://en.wikipedia.org/wiki/Evolution_strategy), as one of the subcategories of [Meta-heuristics](http://www.scholarpedia.org/article/Metaheuristic_Optimization), in Genetic Algorithms, the study here presented focuses on answering the following question: 
+Given the complexity of the role that play [Evolution Strategies](https://en.wikipedia.org/wiki/Evolution_strategy), as one of the subcategories of [Meta-heuristics](http://www.scholarpedia.org/article/Metaheuristic_Optimization), in Genetic Algorithms, the study here presented focuses on answering the following question:
 
     how significant is the gain in performance that a Genetic Algorithm can achieve just by
     considering an adaptative mutation operator?
 
-To that end, darwin provides [several instances] (https://github.com/marcosdg/darwin/tree/master/src/experiment) of well known [NP-problems] (http://mathworld.wolfram.com/NP-Problem.html) on which it can be run to evaluate performance.
+To that end, darwin provides [several instances](https://github.com/marcosdg/darwin/tree/master/data) of well known [NP-problems](http://mathworld.wolfram.com/NP-Problem.html) on which it can be run to evaluate performance.
 
 Please, see the [wiki](https://github.com/marcosdg/darwin/wiki) for more information.
 
@@ -27,7 +26,7 @@ Please, make sure you have installed the following:
 * [GNU Autoconf](https://www.gnu.org/software/autoconf/) (version 2.68 or greater)
 * [GNU Automake](https://www.gnu.org/software/automake/) (version 1.11 or greater)
 
-By default, almost all modern desktop operative systems come with a **C compiler** installed, so this should not be a problem. Additionally, it might help to have installed [Perl] (http://www.perl.org/), as darwin comes with various perl scripts (see [data] (https://github.com/marcosdg/darwin/tree/master/data)) to help you make your custom problem tests.
+By default, almost all modern desktop operative systems come with a **C compiler** installed, so this should not be a problem. Additionally, it might help to have installed [Perl](http://www.perl.org/), as darwin comes with various perl scripts (see [data](https://github.com/marcosdg/darwin/tree/master/data)) to help you make your custom problem tests.
 
 ## Quick and easy
 
@@ -82,7 +81,7 @@ Inside the (unzipped) darwin directory:
 
 ## Phylosophy
 
-Here are some of the core values that darwin wants to deliver:
+Here are some of the core values upon which darwin is built:
 
 * Readability
 * Simplicity

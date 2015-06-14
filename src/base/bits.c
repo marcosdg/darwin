@@ -22,7 +22,6 @@
     Common bit-manipulation utility functions.
 */
 #include <assert.h>
-#include <ctype.h>  /* isascii */
 #include <math.h>   /* exp2 */
 #include <stdlib.h> /* NULL */
 #include "bits.h"

@@ -23,10 +23,10 @@
 */
 #include <assert.h>
 #include <math.h>               /* abs, ceil, exp2, log2 */
-#include <stdio.h>
-#include <stdlib.h>             /* malloc, NULL */
+#include <stdio.h>              /* NULL */
 #include <string.h>             /* memset */
 #include "../../base/report.h"
+#include "../../base/xmem.h"    /* xmalloc */
 #include "../../base/bits.h"
 #include "nqueens.h" 
 
@@ -55,14 +55,11 @@ create_nqueens(
     struct NQueens *instance;
 
     if (board_size < MIN_BOARD_SIZE) {
-        DARWIN_ERROR("nqueens: boad size too small");
+        DARWIN_ERROR("nqueens: board size too small");
     }
     min_bits = (int) ceil(log2(board_size));
     e = create_encoding(min_bits, board_size);
-    instance = malloc(sizeof(struct NQueens));
-    if (instance == NULL) {
-        DARWIN_ERROR("nqueens: out of memory");
-    }
+    instance = xmalloc(sizeof(struct NQueens));
     instance->e = e;
     instance->print = print;
     instance->decode = decode;
@@ -85,12 +82,10 @@ create_nqueens_candidate(
 ) {
     assert(nqueens != NULL);
 
-    int *junk_alleles = malloc(nqueens->e->num_genes * sizeof(int));
-    struct Queen **queens = malloc(nqueens->e->num_genes * sizeof(struct Queen *));
-    struct NQueens_candidate *candidate = malloc(sizeof(struct NQueens_candidate));
-    if (junk_alleles == NULL || queens == NULL || candidate == NULL) {
-        DARWIN_ERROR("nqueens: out of memory");
-    }
+    int *junk_alleles = xmalloc(nqueens->e->num_genes * sizeof(int));
+    struct Queen **queens = xmalloc(nqueens->e->num_genes * sizeof(struct Queen *));
+    struct NQueens_candidate *candidate = xmalloc(sizeof(struct NQueens_candidate));
+
     memset(junk_alleles, 0, nqueens->e->num_genes * sizeof(int));
     candidate->junk_alleles = junk_alleles;
     candidate->queens = queens;

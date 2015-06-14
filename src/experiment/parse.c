@@ -22,7 +22,6 @@
     Common parse utility functions.
 */
 #include <stdio.h>          /* fgets, NULL */
-#include <stdlib.h>         /* atoi */
 #include <string.h>         /* strcat, strlen, strsep */
 #include "../base/xmem.h"   /* xmalloc, xstrdup */
 #include "parse.h"

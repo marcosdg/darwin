@@ -50,16 +50,12 @@ struct NQueens *
 create_nqueens(
         int board_size
 ) {
-    int min_bits;
-    struct Encoding *e;
-    struct NQueens *instance;
+    assert(board_size >= MIN_BOARD_SIZE);
 
-    if (board_size < MIN_BOARD_SIZE) {
-        DARWIN_ERROR("nqueens: board size too small");
-    }
-    min_bits = (int) ceil(log2(board_size));
-    e = create_encoding(min_bits, board_size);
-    instance = xmalloc(sizeof(struct NQueens));
+    int min_bits = (int) ceil(log2(board_size));
+    struct Encoding *e = create_encoding(min_bits, board_size);
+    struct NQueens *instance = xmalloc(sizeof(struct NQueens));
+
     instance->e = e;
     instance->print = print;
     instance->decode = decode;

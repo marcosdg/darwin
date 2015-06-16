@@ -44,7 +44,7 @@ After downloading darwin (.zip) or cloning it (`git clone https://github.com/mar
 
 #### Darwin build options
 
-Darwin allows you to choose during the building process whether the **debugging mode** is enabled or disabled, and which **problem set** is supposed to run. The following is the list of all the current available options:
+Darwin allows you to choose among several options during the building process:
 
 * `./configure` script options:
     1. `--enable-darwin-debug-mode`
@@ -89,3 +89,5 @@ Here are some of the core values upon which darwin is built:
 * Usability
 * Extensibility
 * Maintainability
+
+Have fun :smile:

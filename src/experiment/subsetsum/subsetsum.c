@@ -21,13 +21,23 @@
 /*
     The Subset-Sum problem (see subset_sum.h for details)
 */
+/*
+    #includes
+
+    <math.h> abs
+    <stdio.h> NULL, printf
+    <stdlib.h> free
+    <string.h> memset
+    "../../base/xmem.h" xmalloc
+    "subsetsum.h" "genome.h"
+*/
 #include <assert.h>
-#include <math.h>           /* abs */
-#include <stdio.h>          /* NULL */
-#include <stdlib.h>         /* free */
-#include <string.h>         /* memset */
-#include "../../base/xmem.h"/* xmalloc */
-#include "subsetsum.h"      /* genome.h */
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "../../base/xmem.h"
+#include "subsetsum.h"
 
 static const int MIN_TARGET = 0;
 static const int MIN_SET_SIZE = 2; /* crossover requires at least 2 genes */
@@ -78,7 +88,6 @@ destroy_subsetsum(
     int destroyed = 0;
     if (subsetsum != NULL) {
         free(set);
-        free(subsetsum->e);
         free(subsetsum);
         destroyed = 1;
     }
@@ -120,6 +129,18 @@ create_subsetsum_candidate(
     candidate->subset_size = subset_size;
 
     return candidate;
+}
+int
+destroy_subsetsum_candidate(
+        struct Subsetsum_candidate *candidate
+) {
+    int destroyed = 0;
+    if (candidate != NULL) {
+        free(candidate->subset);
+        free(candidate);
+        destroyed = 1;
+    }
+    return destroyed;
 }
 
 static struct Subsetsum_candidate *

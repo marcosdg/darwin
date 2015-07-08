@@ -21,13 +21,22 @@
 /*
     The Hamiltonian Path problem (undirected version) configuration file parser.
 */
-#include <stdio.h>              /* fclose, fopen, NULL */
-#include <stdlib.h>             /* atoi, free */
-#include <string.h>             /* strstr */
+/*
+    #includes
+
+    <stdio.h> fclose, fopen, NULL
+    <stdlib.h> atoi, free
+    <string.h> strstr
+    "../../base/report.h" <stdio.h>, <stdlib>
+    "../../base/xmem.h" xmalloc
+    "../../base/bits.h" digit_to_int
+    "../parse.h" get_line, str_chop
+*/
+#include <string.h>
 #include "../../base/report.h"
-#include "../../base/xmem.h"    /* xmalloc */
-#include "../../base/bits.h"    /* digit_to_int */
-#include "../parse.h"           /* get_line, strchop */
+#include "../../base/xmem.h"
+#include "../../base/bits.h"
+#include "../parse.h"
 #include "parser_hampath.h"
 
 static const int MAX_COLUMNS = 1024;
@@ -49,17 +58,16 @@ valid_hampath_params(
 
 struct Hampath *
 load_hampath(
-       const char *file_name /* hampath instance */
+       const char *file_name
 ) {
-    int *row;
     int col;
-    int dimension = 0;
+    int *row;
     int **adjacency;
+    int dimension = 0;
     int i = 0;
 
     char *chunks;
     char *line = xmalloc(MAX_COLUMNS * sizeof(char));
-    // char *file_name = get_path(instance_name);
     FILE *file = fopen(file_name, "r");
     if (file == NULL) {
         DARWIN_ERROR("Could not open hamiltonian-path configuration file");
@@ -79,6 +87,7 @@ load_hampath(
                 for (col = 0; col < dimension; col += 1) {
                     row[col] = digit_to_int(chunks[col]);
                 }
+                free(chunks);
                 adjacency[i] = row;
                 i += 1;
             }

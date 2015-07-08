@@ -19,7 +19,7 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 /*
-
+    The evolution configuration file parser.
 */
 #ifndef PARSER_EVOLUTION_H_INCLUDED
 #define PARSER_EVOLUTION_H_INCLUDED

@@ -21,12 +21,20 @@
 /*
     The Subset Sum problem configuration file parser.
 */
-#include <stdio.h>              /* fclose, fopen, NULL */
-#include <stdlib.h>             /* atoi, free */
-#include <string.h>             /* strstr */
+/*
+    #includes
+    
+    <stdio.h> fclose, fopen, NULL
+    <stdlib.h> atoi, free
+    <string.h> strstr
+    "../../base/report.h" <stdlio.h>, <stdlib.h>
+    "../../base/xmem.h" xmalloc
+    "../parse.h" get_line
+*/
+#include <string.h>
 #include "../../base/report.h"
-#include "../../base/xmem.h"    /* xmalloc */
-#include "../parse.h"           /* get_line */
+#include "../../base/xmem.h"
+#include "../parse.h"
 #include "parser_subsetsum.h"
 /*
     Parser features.
@@ -54,7 +62,7 @@ valid_subsetsum_params(
 
 struct Subsetsum *
 load_subsetsum(
-        const char *file_name /* subsetsum instance */
+        const char *file_name
 ) {
     int target = 0;
     int set_size = 0;
@@ -62,7 +70,6 @@ load_subsetsum(
     int i;
 
     char *line = xmalloc(MAX_COLUMNS * sizeof(char));
-    //char *file_name = get_path(instance_name);
     FILE *file = fopen(file_name, "r");
     if (file == NULL) {
         DARWIN_ERROR("Could not open the subset-sum configuration file");

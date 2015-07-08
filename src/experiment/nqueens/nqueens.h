@@ -114,6 +114,11 @@ struct NQueens_candidate {
     int *junk_alleles;
 };
 
+extern int
+destroy_nqueens_candidate(
+        struct NQueens_candidate *candidate
+);
+
 struct NQueens {
     struct Encoding *e;
 
@@ -134,10 +139,13 @@ extern struct NQueens *
 create_nqueens(
         int board_size
 );
+extern int
+destroy_nqueens(
+        struct NQueens *nqueens
+);
 
 extern int
 nqueens_min_board_size(
         void
 );
-
 #endif /* NQUEENS_H_INCLUDED */

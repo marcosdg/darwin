@@ -21,15 +21,21 @@
 /*
     Common error-reporting utility functions.
 */
+/*
+    #includes
+
+    <stdio.h> fflush, fprintf
+    <stdlib.h> exit, EXIT_FAILURE
+    "../../config.h" DARWIN_DEBUG_MODE
+*/
 #ifndef REPORT_H_INCLUDED
 #define REPORT_H_INCLUDED
 
 #ifdef HAVE_CONFIG_H
 #include "../../config.h"
 #endif /* HAVE_CONFIG_H */
-
-#include <stdio.h>  /* fflush, fprintf */
-#include <stdlib.h> /* exit, EXIT_FAILURE */
+#include <stdio.h>
+#include <stdlib.h>
 /*
     For compatibility with older versions of GCC (__FUNCTION__ is not
     standardized).
@@ -38,7 +44,7 @@
 #   if __GNUC__ >= 2
 #       define __func__ __FUNCTION__
 #   else
-#       define __func__ "<unknown>"
+#       define __func__ "<unknown function>"
 #   endif
 #endif
 

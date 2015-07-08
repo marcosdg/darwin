@@ -35,6 +35,10 @@ create_queen(
         int row,
         int column
 );
+extern int
+destroy_queen(
+        struct Queen *queen
+);
 
 extern int
 attack(

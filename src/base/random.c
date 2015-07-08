@@ -21,11 +21,19 @@
 /*
     Common random numbers utility functions.
 */
+/*
+    #includes
+
+    <float.h> DBL_MIN
+    <math.h> abs
+    <stdlib.h> NULL, RAND_MAX
+    <time.h> clock_gettime, CLOCK_REALTIME, rand, srand, timespec
+    "report.h" <stdio.h>, <stdlib.h>
+*/
 #include <assert.h>
-#include <float.h>  /* DBL_MIN */
-#include <math.h>   /* abs */
-#include <stdlib.h> /* NULL, RAND_MAX */
-#include <time.h>   /* clock_gettime, CLOCK_REALTIME, rand, srand, timespec */
+#include <float.h>
+#include <math.h>
+#include <time.h>
 #include "report.h"
 #include "random.h"
 

@@ -22,11 +22,20 @@
     This is darwin's first level of abstraction, in which the fundamentals of the
     genetic algorithm that it implements are specified (see genome.h for details)
 */
+/*
+    #includes
+
+    <math.h> abs
+    <stdlib.h> free, NULL
+    <string.h> memset
+    "base/xmem.h" xmalloc
+    "base/random.h" randomize_ints, random_int_inclusive
+*/
 #include <assert.h>
-#include <math.h>       /* abs */
-#include <stdlib.h>     /* free, NULL */
-#include <string.h>     /* memset */
-#include "base/xmem.h"  /* xmalloc */
+#include <math.h>
+#include <stdlib.h>
+#include <string.h>
+#include "base/xmem.h"
 #include "base/random.h"
 #include "genome.h"
 /*
@@ -78,16 +87,17 @@ create_random_individual(
 
     return one;
 }
-void
-kill(
-        struct Individual *it,
-        struct Encoding *e
+int
+destroy_individual(
+        struct Individual *it
 ) {
-    assert(e != NULL);
-    assert(it != NULL);
-
-    free(it->dna);
-    free(it);
+    int destroyed = 0;
+    if (it != NULL) {
+        free(it->dna);
+        free(it);
+        destroyed = 1;
+    }
+    return destroyed;
 }
 
 void
@@ -114,12 +124,11 @@ create_empty_population(
     assert(max_size > 0);
 
     struct Population *city = xmalloc(sizeof(struct Population));
-    struct Individual **people = xmalloc(max_size * sizeof(struct Individual));
+    struct Individual **people = xmalloc(max_size * sizeof(struct Individual *));
 
     city->e = e;
     city->people = people;
     city->next_free_spot = 0;
-    city->generation = 0;
     city->current_size = 0;
     city->max_size = max_size;
 
@@ -143,19 +152,22 @@ create_random_population(
 
     return city;
 }
-void
-exterminate(
+int
+destroy_population(
         struct Population *city
 ) {
-    assert(city != NULL);
-
+    int destroyed = 0;
     int at;
-
-    for (at = 0; at < city->current_size; at += 1) {
-        kill(city->people[at], city->e);
+    if (city != NULL) {
+        for (at = 0; at < city->current_size; at += 1) {
+            destroy_individual(city->people[at]);
+        }
+        free(city->people);
+        free(city->e);
+        free(city);
+        destroyed = 1;
     }
-    free(city->people);
-    free(city);
+    return destroyed;
 }
 
 void

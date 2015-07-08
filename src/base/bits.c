@@ -21,9 +21,14 @@
 /*
     Common bit-manipulation utility functions.
 */
+/*  #includes
+
+    <math.h> exp2
+    <stdlib.h> NULL
+*/
 #include <assert.h>
-#include <math.h>   /* exp2 */
-#include <stdlib.h> /* NULL */
+#include <math.h>
+#include <stdlib.h>
 #include "bits.h"
 /*
     bits2int:
@@ -52,7 +57,6 @@ bits2int(
     }
     return result;
 }
-
 /*
     digit_to_int:
 

@@ -24,12 +24,6 @@
 #ifndef PARSE_H_INCLUDED
 #define PARSE_H_INCLUDED
 
-/*
-extern char *
-get_path(
-        const char *instance_name
-);
-*/
 extern char *
 get_line(
         char *buffer,

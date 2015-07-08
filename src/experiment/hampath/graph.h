@@ -45,6 +45,10 @@ create_graph(
         int **adjacency,
         int size
 );
+extern int
+destroy_graph(
+        struct Graph *graph
+);
 
 extern int
 hampath_min_graph_size(

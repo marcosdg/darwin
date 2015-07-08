@@ -21,28 +21,19 @@
 /*
     Common parse utility functions.
 */
-#include <stdio.h>          /* fgets, NULL */
-#include <string.h>         /* strcat, strlen, strsep */
-#include "../base/xmem.h"   /* xmalloc, xstrdup */
-#include "parse.h"
-
 /*
-char *
-get_path(
-        const char *instance_name
-) {
+    #includes
 
-    // DATADIR '/' instance_name '\0'
-
-    size_t length = (strlen(DATADIR) + 1 + strlen(instance_name)) + 1;
-    char *path = (char *) malloc(length * sizeof(char));
-    strcat(path, DATADIR);
-    strcat(path, "/");
-    strcat(path, instance_name);
-
-    return path;
-}
+    <stdio.h> fgets, NULL
+    <stdlib.h> free
+    <string.h> strlen, strsep
+    "../base/xmem.h" xmalloc, xstrdup
 */
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "../base/xmem.h"
+#include "parse.h"
 
 char *
 get_line(
@@ -75,14 +66,19 @@ str_chop(
 ) {
     size_t length = strlen(str) + 1; /* Count the '\0'. */
     char *chunks = xmalloc(length * sizeof(char));
-    char *copy = xstrdup(str); /* strdup modifies the original. Be safe and copy. */
+    /*
+        strsep alters its first string argument; we need a copy of 'str' and the
+        pointer to its first address, since otherwise we would be freeing a
+        different address of the malloc'ed one.
+    */
+    char *copy = xstrdup(str);
+    char *fresh_copy = copy;
     int i = 0;
-    if (copy == NULL || chunks == NULL) {
-        return NULL;
-    }
+
     while (*copy) {
         chunks[i] = *(strsep(&copy, delim));
         i += 1;
     }
+    free(fresh_copy);
     return chunks;
 }

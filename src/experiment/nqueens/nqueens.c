@@ -21,12 +21,22 @@
 /*
     The N-Queens problem (see nqueens.h for details)
 */
+/*
+    #includes
+
+    <math.h> abs, ceil, exp2, log2
+    <stdio.h> NULL, printf
+    <stdlib> free
+    <string.h> memset
+    "../../base/xmem.h" xmalloc
+    "../../base/bits.h" bits2int
+*/
 #include <assert.h>
-#include <math.h>               /* abs, ceil, exp2, log2 */
-#include <stdio.h>              /* NULL */
-#include <string.h>             /* memset */
-#include "../../base/report.h"
-#include "../../base/xmem.h"    /* xmalloc */
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "../../base/xmem.h"
 #include "../../base/bits.h"
 #include "nqueens.h" 
 
@@ -64,6 +74,17 @@ create_nqueens(
 
     return instance;
 }
+int
+destroy_nqueens(
+        struct NQueens *nqueens
+) {
+    int destroyed = 0;
+    if (nqueens != NULL) {
+        free(nqueens);
+        destroyed = 1;
+    }
+    return destroyed;
+}
 
 int
 nqueens_min_board_size(
@@ -89,6 +110,23 @@ create_nqueens_candidate(
 
     return candidate;
 }
+int
+destroy_nqueens_candidate(
+        struct NQueens_candidate *candidate
+) {
+    int destroyed = 0;
+    int i;
+    if (candidate != NULL) {
+        for (i = 0; i < candidate->num_queens; i += 1) {
+            destroy_queen(candidate->queens[i]);
+        }
+        free(candidate->queens);
+        free(candidate->junk_alleles);
+        free(candidate);
+        destroyed = 1;
+    }
+    return destroyed;
+}
 
 static int
 is_junk_allele(
@@ -108,9 +146,9 @@ decode(
     assert(nqueens != NULL);
 
     int locus;
+    int column;
     int gene = 0;
     int row = 0;
-    int column;
     int i = 0;
     struct NQueens_candidate *candidate = create_nqueens_candidate(nqueens);
     /*
@@ -126,9 +164,9 @@ decode(
         */
         candidate->queens[i] = create_queen(row, column);
         candidate->junk_alleles[i] = is_junk_allele(column, nqueens);
-        i += 1;
-        row += 1;
         gene += 1;
+        row += 1;
+        i += 1;
     } while (gene < nqueens->e->num_genes);
 
     return candidate;

@@ -96,6 +96,11 @@ struct Subsetsum_candidate {
     int subset_size;
 };
 
+extern int
+destroy_subsetsum_candidate(
+        struct Subsetsum_candidate *candidate
+);
+
 struct Subsetsum {
     struct Encoding *e;
 

@@ -21,13 +21,22 @@
 /*
     The evolution configuration file parser.
 */
-#include <stdio.h>          /* fclose, fgets, fopen, NULL */
-#include <stdlib.h>         /* atoi, free */
-#include <string.h>         /* strstr */
+/*
+    #includes
+
+    <stdio.h> fclose, fopen, NULL
+    <stdlib.h> atoi, atof, free
+    <string.h> strstr
+    "../base/report" <stdio.h>, <stdlib.h>
+    "../base/xmem.h" xmalloc
+    "parse.h" get_line
+*/
+#include <string.h>
 #include "../base/report.h"
-#include "../base/xmem.h"   /* xmalloc */
-#include "parse.h"          /* get_line */
+#include "../base/xmem.h"
+#include "parse.h"
 #include "parser_evolution.h"
+
 /*
     Parser features.
 */
@@ -49,16 +58,15 @@ valid_evolution_params(
     return (evol->max_generations > 0)
             && (evol->population_size > 0)
             && (evol->tournament_size > 0)
-            && ((evol->mutability == -1) /* adaptative mutation */
-                || ((evol->mutability >= 0) && (evol->mutability <= 1)));
+            && ((evol->mutability == -1.0) /* adaptative mutation */
+                || ((evol->mutability >= 0.0) && (evol->mutability <= 1.0)));
 }
 
 struct Evolution *
 load_evolution(
         const char *file_name
 ) {
-    struct Evolution *evol = genesis();
-    int i;
+    struct Evolution *evol = create_evolution();
     char *line = xmalloc(MAX_COLUMNS * sizeof(char));
     FILE *file = fopen(file_name, "r");
     if (file == NULL) {
@@ -78,7 +86,7 @@ load_evolution(
             evol->tournament_size = atoi(get_line(line, MAX_COLUMNS, file));
 
         } else if (strstr(line, TOKEN_MUTATION_PROBABILITY)) {
-            evol->mutability = atoi(get_line(line, MAX_COLUMNS, file));
+            evol->mutability = atof(get_line(line, MAX_COLUMNS, file));
         }
     } while (get_line(line, MAX_COLUMNS, file) != NULL);
 

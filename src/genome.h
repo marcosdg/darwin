@@ -85,10 +85,9 @@ extern struct Individual *
 create_random_individual(
         struct Encoding *e
 );
-extern void
-kill(
-        struct Individual *it,
-        struct Encoding *e
+extern int
+destroy_individual(
+        struct Individual *it
 );
 
 extern void
@@ -104,7 +103,6 @@ struct Population {
     struct Encoding *e;
     struct Individual **people;
     int next_free_spot;     /* helpful to add individuals */
-    int generation;
     int current_size;
     int max_size;
 };
@@ -119,8 +117,8 @@ create_random_population(
         int size,
         struct Encoding *e
 );
-extern void
-exterminate(
+extern int
+destroy_population(
         struct Population *city
 );
 

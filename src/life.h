@@ -28,28 +28,62 @@
     invocation, for the functions' prototypes, according to which problem the
     user chose.
 */
+/*
+    #includes
+
+    "genome.h" struct Individual, struct Population
+    "experiment/hampath/hampath.h" struct Hampath, "../../genome.h"
+    "experiment/nqueens/nqueens.h" struct NQueens
+    "experiment/subsetsum/subsetsum.h" struct Subsetsum
+*/
 #ifndef LIFE_H_INCLUDED
 #define LIFE_H_INCLUDED
+
+#include "experiment/hampath/hampath.h"
+#include "experiment/nqueens/nqueens.h"
+#include "experiment/subsetsum/subsetsum.h"
+
+
+struct Evolution_state {
+    int generation;
+    double best_fitness;
+    double avg_fitness;
+    double worst_fitness;
+};
 
 struct Evolution {
     int max_generations;
     int population_size;
     int tournament_size;
-    int mutability;
+    double mutability;
 };
 
 extern struct Evolution *
-genesis(
+create_evolution(
         void
 );
+extern void
+apocalypse(
+        struct Evolution *evol,
+        struct Population *omega
+);
 
+#define DARWIN_DECLARE_FUNC_EVALUATE(T, problem)\
+void                                            \
+evaluate(                                       \
+        struct Individual *child,               \
+        struct Individual *dad,                 \
+        struct Individual *mom,                 \
+        struct T *problem                       \
+);
 #define DARWIN_DECLARE_FUNC_LIVE(T, problem)\
-void                                        \
+struct Population *                         \
 live(                                       \
         struct Evolution *evol,             \
-        char * problem##_file_name          \
+        char *problem##_file_name           \
 );
 #include "life-generic-protos.h"
+#undef DARWIN_DECLARE_FUNC_EVALUATE
 #undef DARWIN_DECLARE_FUNC_LIVE
 
 #endif /* LIFE_H_INCLUDED */

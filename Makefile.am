@@ -46,6 +46,8 @@ test_parser_generic_SOURCES = \
 	./src/base/random.c \
 	./src/genome.h \
 	./src/genome.c \
+	./src/operators.h \
+	./src/operators.c \
 	./src/life.h \
 	./src/life.c \
 	./src/experiment/parse.h \

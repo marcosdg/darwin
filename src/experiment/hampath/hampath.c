@@ -21,14 +21,25 @@
 /*
     The Hamiltonian Path problem (undirected version) (see hampath.h for details)
 */
+/*
+    #includes
+
+    <math.h> ceil, log2
+    <stdio.h> NULL, printf
+    <stdlib.h> free
+    <string.h> memset
+    "../../base/xmem.h" xmalloc
+    "../../base/bits.h" bits2int
+    "hampath.h" genome.h
+*/
 #include <assert.h>
-#include <math.h>           /* ceil, log2 */
-#include <stdio.h>          /* NULL */
-#include <stdlib.h>         /* free */
-#include <string.h>         /* memset */
-#include "../../base/xmem.h"/* xmalloc */
-#include "../../base/bits.h"/* bits2int */
-#include "hampath.h"        /* genome.h */
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "../../base/xmem.h"
+#include "../../base/bits.h"
+#include "hampath.h"
 
 static struct Graph *graph;
 
@@ -65,6 +76,18 @@ create_hampath(
 
     return instance;
 }
+int
+destroy_hampath(
+        struct Hampath *hampath
+) {
+    int destroyed = 0;
+    if (hampath != NULL) {
+        destroy_graph(graph);
+        free(hampath);
+        destroyed = 1;
+    }
+    return destroyed;
+}
 
 static struct Hampath_candidate *
 create_hampath_candidate(
@@ -77,6 +100,18 @@ create_hampath_candidate(
     candidate->path = path;
 
     return candidate;
+}
+int
+destroy_hampath_candidate(
+        struct Hampath_candidate *candidate
+) {
+    int destroyed = 0;
+    if (candidate != NULL) {
+        free(candidate->path);
+        free(candidate);
+        destroyed = 1;
+    }
+    return destroyed;
 }
 
 static struct Hampath_candidate *

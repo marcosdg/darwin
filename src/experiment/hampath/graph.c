@@ -22,9 +22,15 @@
     The Hamiltonian Path submodule: basic structures and functions.
     (see hampath.{h, c})
 */
+/*
+    #includes
+
+    <stdlib.h> free, NULL
+    "../../base/xmem.h" xmalloc
+*/
 #include <assert.h>
-#include <stdlib.h>         /* NULL */
-#include "../../base/xmem.h"/* xmalloc */
+#include <stdlib.h>
+#include "../../base/xmem.h"
 #include "graph.h"
 
 static const int MIN_GRAPH_SIZE = 2; /* crossover requires at least 2 genes */
@@ -43,6 +49,23 @@ create_graph(
     graph->size = size;
 
     return graph;
+}
+int
+destroy_graph(
+        struct Graph *graph
+) {
+    int destroyed = 0;
+    int row;
+
+    if (graph != NULL) {
+        for (row = 0; row < graph->size; row += 1) {
+            free(graph->adjacency[row]);
+        }
+        free(graph->adjacency);
+        free(graph);
+        destroyed = 1;
+    }
+    return destroyed;
 }
 
 int

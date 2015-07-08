@@ -22,10 +22,17 @@
     The N-Queens submodule: basic structures and functions.
     (see nqueens.{h, c})
 */
+/*
+    #includes
+
+    <math.h> abs
+    <stdlib.h> free, NULL
+    "../../base/xmem.h" xmalloc
+*/
 #include <assert.h>
-#include <math.h>           /* abs */
-#include <stdlib.h>         /* NULL */
-#include "../../base/xmem.h"/* xmalloc */
+#include <math.h>
+#include <stdlib.h>
+#include "../../base/xmem.h"
 #include "queen.h"
 
 
@@ -42,6 +49,17 @@ create_queen(
     queen->column = column;
 
     return queen;
+}
+int
+destroy_queen(
+        struct Queen *queen
+) {
+    int destroyed = 0;
+    if (queen != NULL) {
+        free(queen);
+        destroyed = 1;
+    }
+    return destroyed;
 }
 /*
     attack:

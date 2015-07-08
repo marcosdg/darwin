@@ -34,13 +34,17 @@
 #define LIFE_GENERIC_PROTOS_H_INCLUDED
 
 #if defined(DARWIN_USE_HAMPATH)
+    DARWIN_DECLARE_FUNC_EVALUATE(Hampath, hampath)
     DARWIN_DECLARE_FUNC_LIVE(Hampath, hampath)
 #elif defined(DARWIN_USE_NQUEENS)
+    DARWIN_DECLARE_FUNC_EVALUATE(NQueens, nqueens)
     DARWIN_DECLARE_FUNC_LIVE(NQueens, nqueens)
 #elif defined(DARWIN_USE_SUBSETSUM)
+    DARWIN_DECLARE_FUNC_EVALUATE(Subsetsum, subsetsum)
     DARWIN_DECLARE_FUNC_LIVE(Subsetsum, subsetsum)
 
 #else /* default */
+    DARWIN_DECLARE_FUNC_EVALUATE(Subsetsum, subsetsum)
     DARWIN_DECLARE_FUNC_LIVE(Subsetsum, subsetsum)
 #endif
 

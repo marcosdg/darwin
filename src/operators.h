@@ -55,6 +55,10 @@ extern double
 constant_mutation_risk(
        struct Individual *victim
 );
+extern void
+set_constant_mutation_risk(
+        double risk
+);
 extern double
 adaptative_mutation_risk(
         struct Individual *victim

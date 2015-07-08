@@ -29,8 +29,14 @@
     succeed or fail, as darwin will only output relevant data to the user at the
     end of its execution.
 */
-#include <string.h> /* strdup */
-#include "report.h" /* stdio, stdlib */
+/*
+    #includes
+
+    <string.h> strdup
+    "report.h" <stdio.h>, <stdlib.h>
+*/
+#include <string.h>
+#include "report.h"
 #include "xmem.h"
 
 void *

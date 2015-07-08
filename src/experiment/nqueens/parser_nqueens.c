@@ -21,12 +21,20 @@
 /*
     The N-Queens problem configuration file parser.
 */
-#include <stdio.h>              /* fclose, fopen, NULL */
-#include <stdlib.h>             /* atoi, free */
-#include <string.h>             /* strstr */
+/*
+    #includes
+
+    <stdio.h> fclose, fopen, NULL
+    <stdlib.h> atoi, free
+    <string.h> strstr
+    "../../base/report.h" <stdio.h>, <stdlib.h>
+    "../../base/xmem.h" xmalloc
+    "../parse.h" get_line
+*/
+#include <string.h>
 #include "../../base/report.h"
-#include "../../base/xmem.h"    /* xmalloc */
-#include "../parse.h"           /* get_line */
+#include "../../base/xmem.h"
+#include "../parse.h"
 #include "parser_nqueens.h"
 /*
     Parser features.

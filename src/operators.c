@@ -23,6 +23,17 @@
     evolutional operations of Genetic Algorithms are defined (see operators.h for
     details).
 */
+/*
+    #includes
+
+    <math.h> exp
+    <string.h> memcpy, NULL
+    "base/xmem.h" xmalloc
+    "base/random.h" random_double_inclusive, random_int_inclusive
+    "genome.h" struct Encoding, struct Individual, struct Population,
+                create_random_individual, destroy_individual, invert,
+                pick_random_individual
+*/
 #include <assert.h>
 #include <math.h>       /* exp */
 #include <string.h>     /* NULL, memcpy */
@@ -165,6 +176,14 @@ constant_mutation_risk(
 ) {
     return default_mutation_risk;
 }
+void
+set_constant_mutation_risk(
+        double risk
+) {
+    if ((risk >= 0.0) && (risk <= 1.0)) {
+        default_mutation_risk = risk;
+    }
+}
 /*
     adaptative_mutation_risk:
 
@@ -243,8 +262,11 @@ replace_worst(
         }
     }
     if (incomer->fitness > city->people[worst]->fitness) {
+        destroy_individual(city->people[worst]);
         city->people[worst] = incomer;
         replaced = 1;
+    } else if (incomer->fitness <= city->people[worst]->fitness) {
+        destroy_individual(incomer);
     }
     return replaced;
 }

@@ -105,6 +105,11 @@ struct Hampath_candidate {
     int *path;
 };
 
+extern int
+destroy_hampath_candidate(
+        struct Hampath_candidate *candidate
+);
+
 struct Hampath {
     struct Encoding *e;
 
@@ -125,4 +130,9 @@ extern struct Hampath *
 create_hampath(
         struct Graph *graph
 );
+extern int
+destroy_hampath(
+        struct Hampath *hampath
+);
+
 #endif /* HAMPATH_H_INCLUDED */

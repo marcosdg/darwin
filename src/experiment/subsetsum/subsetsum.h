@@ -107,8 +107,8 @@ struct Subsetsum {
     struct Subsetsum_candidate *
     (*decode)(struct Individual *cryptic, struct Subsetsum *subsetsum);
 
-    void
-    (*print)(struct Subsetsum_candidate *candidate);
+    char *
+    (*candidate_to_string)(struct Subsetsum_candidate *candidate);
 
     int
     (*penalty)(struct Subsetsum_candidate *candidate);

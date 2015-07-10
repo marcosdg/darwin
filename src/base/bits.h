@@ -25,12 +25,17 @@
 #define BITS_H_INCLUDED
 
 extern int
-bits2int(
+bits_to_int(
         long int *bits,
         int length
 );
 extern int
 digit_to_int(
         char digit
+);
+
+extern char *
+itods(
+        int i
 );
 #endif /* BITS_H_INCLUDED */

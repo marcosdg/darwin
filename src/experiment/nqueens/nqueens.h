@@ -125,8 +125,8 @@ struct NQueens {
     struct NQueens_candidate *
     (*decode)(struct Individual *cryptic, struct NQueens *nqueens);
 
-    void
-    (*print)(struct NQueens_candidate *candidate);
+    char *
+    (*candidate_to_string)(struct NQueens_candidate *candidate);
 
     int
     (*penalty)(struct NQueens_candidate *candidate);

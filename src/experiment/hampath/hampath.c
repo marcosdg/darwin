@@ -25,16 +25,14 @@
     #includes
 
     <math.h> ceil, log2
-    <stdio.h> NULL, printf
-    <stdlib.h> free
-    <string.h> memset
+    <stdlib.h> free, NULL
+    <string.h> memset, strcat, strlen
     "../../base/xmem.h" xmalloc
-    "../../base/bits.h" bits2int
+    "../../base/bits.h" bits_to_int, itods
     "hampath.h" genome.h
 */
 #include <assert.h>
 #include <math.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "../../base/xmem.h"
@@ -46,8 +44,8 @@ static struct Graph *graph;
 static struct Hampath_candidate *
 decode(struct Individual *cryptic, struct Hampath *hampath);
 
-static void
-print(struct Hampath_candidate *candidate);
+static char *
+candidate_to_string(struct Hampath_candidate *candidate);
 
 static int
 penalty(struct Hampath_candidate *candidate);
@@ -70,7 +68,7 @@ create_hampath(
     graph = g;
     instance->e = e;
     instance->decode = decode;
-    instance->print = print;
+    instance->candidate_to_string = candidate_to_string;
     instance->penalty = penalty;
     instance->objective = objective;
 
@@ -134,7 +132,7 @@ decode(
             from Genotype (extract genetic info from allele)
         */
         locus = gene * hampath->e->units_per_gene;
-        vertex = bits2int(cryptic->dna + locus, hampath->e->units_per_gene);
+        vertex = bits_to_int(cryptic->dna + locus, hampath->e->units_per_gene);
         /*
             to Phenotype
         */
@@ -144,20 +142,33 @@ decode(
     } while (gene < hampath->e->num_genes);
     return candidate;
 }
-static void
-print(
+
+static char *
+candidate_to_string(
         struct Hampath_candidate *candidate
 ) {
-    assert(candidate != NULL);
-    assert(graph != NULL);
-
+    char *str;
+    char *node_str;
+    int tags_bytes;
+    int path_bytes;
     int i;
 
-    printf("start> ");
-    for (i = 0; i < graph->size; i += 1) {
-        printf("%i ", candidate->path[i]);
+    if ((candidate == NULL) || (graph == NULL)) {
+        return "";
     }
-    printf("<end\n");
+    tags_bytes = strlen("start> ") + strlen("<end");
+    path_bytes = ((sizeof(int)) + 1) * graph->size; /* int + separator 'n' times */
+    str = xmalloc((tags_bytes + path_bytes) * sizeof(char));
+
+    strcpy(str, "start> ");
+    for (i = 0; i < graph->size ; i += 1) {
+        node_str = itods(candidate->path[i]);
+        strcat(str, node_str);
+        strcat(str, " ");
+        free(node_str);
+    }
+    strcat(str, "<end");
+    return str;
 }
 
 static int *

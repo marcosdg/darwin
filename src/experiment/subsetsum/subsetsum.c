@@ -25,18 +25,18 @@
     #includes
 
     <math.h> abs
-    <stdio.h> NULL, printf
-    <stdlib.h> free
+    <stdlib.h> free, NULL
     <string.h> memset
     "../../base/xmem.h" xmalloc
+    "../../base/bits.h" itods
     "subsetsum.h" "genome.h"
 */
 #include <assert.h>
 #include <math.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "../../base/xmem.h"
+#include "../../base/bits.h"
 #include "subsetsum.h"
 
 static const int MIN_TARGET = 0;
@@ -48,8 +48,8 @@ static int *set;
 static struct Subsetsum_candidate *
 decode(struct Individual *cryptic, struct Subsetsum *subsetsum);
 
-static void
-print(struct Subsetsum_candidate *candidate);
+static char *
+candidate_to_string(struct Subsetsum_candidate *candidate);
 
 static int
 penalty(struct Subsetsum_candidate *candidate);
@@ -75,7 +75,7 @@ create_subsetsum(
     set = s;
     instance->e = e;
     instance->decode = decode;
-    instance->print = print;
+    instance->candidate_to_string = candidate_to_string;
     instance->penalty = penalty;
     instance->objective = objective;
 
@@ -173,19 +173,31 @@ decode(
     }
     return candidate;
 }
-static void
-print(
+static char *
+candidate_to_string(
         struct Subsetsum_candidate *candidate
 ) {
-    assert(candidate != NULL);
-
+    char *str;
+    char *num_str;
+    int braces = 3; /* '{' <space> '}' */
+    int str_bytes;
     int i;
 
-    printf("{ ");
-    for (i = 0; i < candidate->subset_size; i += 1) {
-        printf("%i ", candidate->subset[i]);
+    if (candidate == NULL) {
+        return "";
     }
-    printf("}\n");
+    str_bytes = ((candidate->subset_size + 1) * sizeof(int)) + braces;
+    str = xmalloc(str_bytes * sizeof(char)) ;
+
+    strcpy(str, "{ ");
+    for (i = 0; i < candidate->subset_size ; i += 1) {
+        num_str = itods(candidate->subset[i]);
+        strcat(str, num_str);
+        strcat(str, " ");
+        free(num_str);
+    }
+    strcat(str, "}");
+    return str;
 }
 
 static int

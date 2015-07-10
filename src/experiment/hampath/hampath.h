@@ -116,8 +116,8 @@ struct Hampath {
     struct Hampath_candidate *
     (*decode)(struct Individual *cryptic, struct Hampath *hampath);
 
-    void
-    (*print)(struct Hampath_candidate *candidate);
+    char *
+    (*candidate_to_string)(struct Hampath_candidate *candidate);
 
     int
     (*penalty)(struct Hampath_candidate *candidate);

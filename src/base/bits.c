@@ -24,12 +24,15 @@
 /*  #includes
 
     <math.h> exp2
-    <stdlib.h> NULL
+    <stdio.h> NULL, sprintf
+    "xmem.h" xmalloc
 */
 #include <assert.h>
 #include <math.h>
-#include <stdlib.h>
+#include <stdio.h>
+#include "xmem.h"
 #include "bits.h"
+
 /*
     bits2int:
 
@@ -38,7 +41,7 @@
         2. Elements in 'bits' are greater than INT_MAX (see TODO in genome.h)
 */
 int
-bits2int(
+bits_to_int(
         long int *bits,
         int length
 ) {
@@ -68,4 +71,26 @@ digit_to_int(
         char digit
 ) {
     return digit - '0';
+}
+/*
+    itods:
+
+    Converts an integer number to its string representation in decimal base.
+*/
+char *
+itods(
+        int i
+) {
+    char *ds;
+    int p = (i < 0) ? -i : i;
+    int magnitude = 0;
+
+    do {
+        p /= 10;
+        magnitude += 1;
+    } while (p > 0);
+    ds = xmalloc((magnitude + 1) * sizeof(char)); /* +1 counts '\0' */
+    sprintf(ds, "%d", i);
+
+    return ds;
 }

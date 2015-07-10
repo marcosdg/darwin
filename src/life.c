@@ -144,7 +144,7 @@ evaluate(                                                                   \
     struct T##_candidate *candidate = (*problem->decode)(child, problem);   \
     child->fitness = (*problem->objective)(candidate);                      \
     if (dad != NULL && mom != NULL) {                                       \
-        child->evolvability = (dad->fitness + mom->fitness) / 2;            \
+        child->evolvability = (dad->fitness + mom->fitness) / 2.0;          \
     }                                                                       \
     destroy_##problem##_candidate(candidate);                               \
 }
@@ -164,7 +164,9 @@ live(                                                                       \
     int half_city_size;                                                     \
                                                                             \
     genesis(problem##_file_name, &problem, &evol, &city);                   \
-    half_city_size = city->current_size / 2;                                \
+    half_city_size = (city->current_size % 2) == 0                          \
+                        ? (city->current_size / 2)                          \
+                        : (city->current_size / 2) + 1;                     \
     /*                                                                      \
         The life's cycle                                                    \
     */                                                                      \

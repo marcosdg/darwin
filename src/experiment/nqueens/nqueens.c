@@ -25,15 +25,13 @@
     #includes
 
     <math.h> abs, ceil, exp2, log2
-    <stdio.h> NULL, printf
-    <stdlib> free
-    <string.h> memset
+    <stdlib> free, NULL
+    <string.h> memset, strcat, strlen
     "../../base/xmem.h" xmalloc
-    "../../base/bits.h" bits2int
+    "../../base/bits.h" bits_to_int, itods
 */
 #include <assert.h>
 #include <math.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "../../base/xmem.h"
@@ -45,8 +43,8 @@ static const int MIN_BOARD_SIZE = 4; /* No solutions exist for N=2 and N=3 */
 static struct NQueens_candidate *
 decode(struct Individual *cryptic, struct NQueens *nqueens);
 
-static void
-print(struct NQueens_candidate *candidate);
+static char *
+candidate_to_string(struct NQueens_candidate *candidate);
 
 static int
 penalty(struct NQueens_candidate *candidate);
@@ -67,7 +65,7 @@ create_nqueens(
     struct NQueens *instance = xmalloc(sizeof(struct NQueens));
 
     instance->e = e;
-    instance->print = print;
+    instance->candidate_to_string = candidate_to_string;
     instance->decode = decode;
     instance->penalty = penalty;
     instance->objective = objective;
@@ -158,7 +156,7 @@ decode(
             from Genotype (extract genetic info from allele)
         */
         locus = gene * nqueens->e->units_per_gene;
-        column = bits2int(cryptic->dna + locus, nqueens->e->units_per_gene);
+        column = bits_to_int(cryptic->dna + locus, nqueens->e->units_per_gene);
         /*
             to Phenotype
         */
@@ -171,17 +169,50 @@ decode(
 
     return candidate;
 }
-static void
-print(
+/*
+    candidate_to_string:
+
+    format: {(row r{0}, column c{0}) ... (r{i}, c{i}) ... (r{n-1}, c{n-1})}
+    where
+        0 <= i <= n - 1
+        'n' Natural number: num queens == num rows == num columns
+*/
+static char *
+candidate_to_string(
         struct NQueens_candidate *candidate
 ) {
-    assert(candidate != NULL);
-
+    char *str;
+    char *r_str;
+    char *c_str;
+    int arity = 2;
+    int braces = 3; /* '{' <space> '}' */
+    int num_delims = 4; /* '(' ',' ')' <space> */
+    int str_bytes;
     int i;
-    for (i = 0; i < candidate->num_queens; i += 1) {
-        printf("Queen %i row %i column %i \n", i, candidate->queens[i]->row,
-                candidate->queens[i]->column);
+
+    if (candidate == NULL) {
+        return "";
     }
+    str_bytes = (((arity * sizeof(int)) + num_delims) * candidate->num_queens) + braces;
+    str = xmalloc(str_bytes * sizeof(char));
+
+    strcpy(str, "{ ");
+    for (i = 0; i < candidate->num_queens ; i += 1) {
+        strcat(str, "(");
+        r_str = itods(candidate->queens[i]->row);
+        strcat(str, r_str);
+        strcat(str, ",");
+
+        c_str = itods(candidate->queens[i]->column);
+        strcat(str, c_str);
+        strcat(str, ")");
+
+        strcat(str, " ");
+        free(r_str);
+        free(c_str);
+    }
+    strcat(str, "}");
+    return str;
 }
 
 static int

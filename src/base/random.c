@@ -22,7 +22,7 @@
     Common random numbers utility functions.
 */
 /*
-    #includes
+    #included
 
     <float.h> DBL_MIN
     <math.h> abs
@@ -30,7 +30,6 @@
     <time.h> clock_gettime, CLOCK_REALTIME, rand, srand, timespec
     "report.h" <stdio.h>, <stdlib.h>
 */
-#include <assert.h>
 #include <float.h>
 #include <math.h>
 #include <time.h>
@@ -60,10 +59,11 @@ random_int_exclusive(
         long int lower,
         long int upper
 ) {
-    assert(sequence_started == 1);
-    assert(lower <= upper);
-
-    long int width = abs(upper - lower);
+    long int width;
+    if (!sequence_started || (lower > upper)) {
+        return 0;
+    }
+    width = abs(upper - lower);
 
     return lower + ((rand() * width) / RAND_MAX);
 }
@@ -72,10 +72,11 @@ random_double_exclusive(
         double lower,
         double upper
 ) {
-    assert(sequence_started == 1);
-    assert(lower <= upper);
-
-    double width = upper - lower;
+    double width;
+    if (!sequence_started || (lower > upper)) {
+        return 0.0;
+    }
+    width = upper - lower;
 
     return lower + ((rand() * width) / RAND_MAX);
 }
@@ -91,26 +92,7 @@ random_double_inclusive(
         double lower,
         double upper
 ) {
-    assert(sequence_started == 1);
-    assert(lower <= upper);
-
     return random_double_exclusive(lower, upper + DBL_MIN);
-}
-
-long int
-random_excluding(
-        long int lower,
-        long int banned,
-        long int upper
-) {
-    assert((lower <= banned) && (banned <= upper));
-
-    long int r;
-    do {
-        r = random_int_inclusive(lower, upper);
-    } while (r == banned);
-
-    return r;
 }
 
 void
@@ -120,11 +102,11 @@ randomize_ints(
         long int lower,
         long int upper
 ) {
-    assert(ints != NULL);
-    assert(length > 0);
-
     int i;
-    for (i = 0; i < length; i += 1) {
-        ints[i] = random_int_inclusive(lower, upper);
+    if ((ints != NULL) && (length > 0)) {
+
+        for (i = 0; i < length; i += 1) {
+            ints[i] = random_int_inclusive(lower, upper);
+        }
     }
 }

@@ -21,13 +21,12 @@
 /*
     Common bit-manipulation utility functions.
 */
-/*  #includes
+/*  #included
 
     <math.h> exp2
     <stdio.h> NULL, sprintf
     "xmem.h" xmalloc
 */
-#include <assert.h>
 #include <math.h>
 #include <stdio.h>
 #include "xmem.h"
@@ -45,12 +44,13 @@ bits_to_int(
         long int *bits,
         int length
 ) {
-    assert(bits != NULL);
-    assert(length > 0);
-
     int result = 0;
     double place = 0.0;
     int at;
+
+    if ((bits == NULL) || (length <= 0)) {
+        return result;
+    }
     /*
         result = (b{length-1} * 2^(length-1)) +...+ (b{1} * 2^1) + (b{0} * 2^0)
     */

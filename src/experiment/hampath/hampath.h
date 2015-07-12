@@ -93,7 +93,6 @@
                                     / path_length
         where
             path_length === num. of edges in the path === num. of vertices - 1
-*
 */
 #ifndef HAMPATH_H_INCLUDED
 #define HAMPATH_H_INCLUDED

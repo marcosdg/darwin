@@ -22,7 +22,7 @@
     The Hamiltonian Path problem (undirected version) (see hampath.h for details)
 */
 /*
-    #includes
+    #included
 
     <math.h> ceil, log2
     <stdlib.h> free, NULL

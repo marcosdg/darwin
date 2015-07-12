@@ -22,7 +22,7 @@
     The evolution configuration file parser.
 */
 /*
-    #includes
+    #included
 
     <stdio.h> fclose, fopen, NULL
     <stdlib.h> atoi, atof, free
@@ -30,6 +30,7 @@
     "../base/report" <stdio.h>, <stdlib.h>
     "../base/xmem.h" xmalloc
     "parse.h" get_line
+    "parser_evolution.h" "life.h"
 */
 #include <string.h>
 #include "../base/report.h"

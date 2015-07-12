@@ -22,14 +22,14 @@
     The Subset-Sum problem (see subset_sum.h for details)
 */
 /*
-    #includes
+    #included
 
     <math.h> abs
     <stdlib.h> free, NULL
     <string.h> memset
     "../../base/xmem.h" xmalloc
     "../../base/bits.h" itods
-    "subsetsum.h" "genome.h"
+    "subsetsum.h" "../../genome.h"
 */
 #include <assert.h>
 #include <math.h>

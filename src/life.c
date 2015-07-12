@@ -28,22 +28,26 @@
     for the functions defined here, according to which problem the user chose.
 */
 /*
-    #includes
+    #included
 
     <stdlib.h> free, NULL
+    <float.h> DBL_MAX
     "base/xmem.h" xmalloc
     "hampath.h" "../../genome.h"
     "experiment/hampath/parser_hampath.h" "hampath.h"
     "experiment/nqueens/parser_nqueens.h" "nqueens.h"
     "experiment/subsetsum/parser_subsetsum.h" "subsetsum.h"
     "experiment/parser_evolution.h" "../life.h"
+    "out/stats.h"
 */
 #include <stdlib.h>
+#include <float.h>
 #include "base/xmem.h"
 #include "experiment/hampath/parser_hampath.h"
 #include "experiment/nqueens/parser_nqueens.h"
 #include "experiment/subsetsum/parser_subsetsum.h"
 #include "experiment/parser_evolution.h"
+#include "out/stats.h"
 #include "operators.h"
 
 static struct Evolution_state *evol_state;
@@ -55,9 +59,11 @@ start_evolution_state(
 ) {
     evol_state = xmalloc(sizeof(struct Evolution_state));
     evol_state->generation = 0;
-    evol_state->best_fitness = 0.0;
+    evol_state->best_fitness_generation = 0;
+    evol_state->worst_fitness_generation = 0;
     evol_state->avg_fitness = 0.0;
-    evol_state->worst_fitness = 0.0;
+    evol_state->best_fitness_ever = 0.0;
+    evol_state->worst_fitness_ever = DBL_MAX;
 }
 static int
 destroy_evolution_state(
@@ -71,10 +77,30 @@ destroy_evolution_state(
     return destroyed;
 }
 
-void
-update_evol_state(
+struct Evolution_state *
+get_evol_state(
         void
 ) {
+    return (evol_state == NULL) ? NULL : evol_state;
+}
+
+static void
+update_evol_state(
+        struct Population *city
+) {
+    double avg_fit = stats_avg_fitness(city);
+    double best_fit = stats_best_fitness(city);
+    double worst_fit = stats_worst_fitness(city);
+
+    evol_state->avg_fitness = (evol_state->avg_fitness + avg_fit) / 2.0;
+    if (best_fit > evol_state->best_fitness_ever) {
+        evol_state->best_fitness_ever = best_fit;
+        evol_state->best_fitness_generation = evol_state->generation;
+    }
+    if (worst_fit < evol_state->worst_fitness_ever) {
+        evol_state->worst_fitness_ever = worst_fit;
+        evol_state->worst_fitness_generation = evol_state->generation;
+    }
     evol_state->generation += 1;
 }
 
@@ -188,7 +214,7 @@ live(                                                                       \
             replace_worst(offspring[1], city);                              \
             free(offspring);                                                \
         }                                                                   \
-        update_evol_state();                                                \
+        update_evol_state(city);                                            \
     }                                                                       \
     destroy_##problem(problem);                                             \
                                                                             \

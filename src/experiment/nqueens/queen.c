@@ -23,7 +23,7 @@
     (see nqueens.{h, c})
 */
 /*
-    #includes
+    #included
 
     <math.h> abs
     <stdlib.h> free, NULL

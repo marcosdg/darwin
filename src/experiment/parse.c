@@ -22,7 +22,7 @@
     Common parse utility functions.
 */
 /*
-    #includes
+    #included
 
     <stdio.h> fgets, NULL
     <stdlib.h> free

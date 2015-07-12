@@ -34,9 +34,15 @@ AM_CPPFLAGS = $(DARWIN_FLAGS)
 ###############################################################################
 # Targets
 ###############################################################################
-bin_PROGRAMS = test_parser_generic
+bin_PROGRAMS = test_darwin
 
-test_parser_generic_SOURCES = \
+test_darwin_SOURCES = \
+	./src/genome.h \
+	./src/genome.c \
+	./src/operators.h \
+	./src/operators.c \
+	./src/life.h \
+	./src/life.c \
 	./src/base/report.h \
 	./src/base/xmem.h \
 	./src/base/xmem.c \
@@ -44,12 +50,6 @@ test_parser_generic_SOURCES = \
 	./src/base/bits.c \
 	./src/base/random.h \
 	./src/base/random.c \
-	./src/genome.h \
-	./src/genome.c \
-	./src/operators.h \
-	./src/operators.c \
-	./src/life.h \
-	./src/life.c \
 	./src/experiment/parse.h \
 	./src/experiment/parse.c \
 	./src/experiment/nqueens/queen.h \
@@ -69,7 +69,9 @@ test_parser_generic_SOURCES = \
 	./src/experiment/subsetsum/parser_subsetsum.c \
 	./src/experiment/parser_evolution.h \
 	./src/experiment/parser_evolution.c \
-	./src/test_parser_generic.c
+	./src/out/stats.h \
+	./src/out/stats.c \
+	./src/test_darwin.c
 ###############################################################################
 # Darwin data files and scripts
 ###############################################################################

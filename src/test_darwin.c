@@ -21,17 +21,23 @@
 /*
     Just to play around.
 */
+#include <stdio.h>
 #include "experiment/parser_evolution.h"
 
 int main(int argc, char **argv)
 {
     struct Evolution *evol = load_evolution(argv[1]);
     struct Population *city = live(evol, argv[2]);
+    struct Evolution_state *evol_state = get_evol_state();
+
+    printf("generations: %i\n", evol_state->generation);
+    printf("avg fitness: %lf\n", evol_state->avg_fitness);
+    printf("best fitness: %lf, at generation: %i\n",
+            evol_state->best_fitness_ever, evol_state->best_fitness_generation);
+    printf("worst fitness: %lf, at generation: %i\n",
+            evol_state->worst_fitness_ever, evol_state->worst_fitness_generation);
 
     apocalypse(evol, city);
-/*
-    destroy_evolution_state();
-    destroy_population(city);
-*/
+
     return 0;
 }

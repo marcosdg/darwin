@@ -30,7 +30,7 @@
     end of its execution.
 */
 /*
-    #includes
+    #included
 
     <string.h> strdup
     "report.h" <stdio.h>, <stdlib.h>

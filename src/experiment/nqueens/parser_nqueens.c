@@ -22,7 +22,7 @@
     The N-Queens problem configuration file parser.
 */
 /*
-    #includes
+    #included
 
     <stdio.h> fclose, fopen, NULL
     <stdlib.h> atoi, free
@@ -30,6 +30,7 @@
     "../../base/report.h" <stdio.h>, <stdlib.h>
     "../../base/xmem.h" xmalloc
     "../parse.h" get_line
+    "parser_nqueens.h" "nqueens.h"
 */
 #include <string.h>
 #include "../../base/report.h"

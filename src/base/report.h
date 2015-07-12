@@ -22,7 +22,7 @@
     Common error-reporting utility functions.
 */
 /*
-    #includes
+    #included
 
     <stdio.h> fflush, fprintf
     <stdlib.h> exit, EXIT_FAILURE

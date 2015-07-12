@@ -24,7 +24,7 @@
     details).
 */
 /*
-    #includes
+    #included
 
     <math.h> exp
     <string.h> memcpy, NULL
@@ -33,13 +33,13 @@
     "genome.h" struct Encoding, struct Individual, struct Population,
                 create_random_individual, destroy_individual, invert,
                 pick_random_individual
+    "operators.h" "genome.h"
 */
 #include <assert.h>
 #include <math.h>       /* exp */
 #include <string.h>     /* NULL, memcpy */
 #include "base/xmem.h"  /* xmalloc */
 #include "base/random.h"
-#include "genome.h"
 #include "operators.h"
 /*
     Individual's default mutation probability. It may be later redefined by the

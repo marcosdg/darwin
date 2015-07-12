@@ -29,7 +29,7 @@
     user chose.
 */
 /*
-    #includes
+    #included
 
     "genome.h" struct Individual, struct Population
     "experiment/hampath/hampath.h" struct Hampath, "../../genome.h"
@@ -46,10 +46,17 @@
 
 struct Evolution_state {
     int generation;
-    double best_fitness;
+    int best_fitness_generation;
+    int worst_fitness_generation;
     double avg_fitness;
-    double worst_fitness;
+    double best_fitness_ever;
+    double worst_fitness_ever;
 };
+
+extern struct Evolution_state *
+get_evol_state(
+        void
+);
 
 struct Evolution {
     int max_generations;

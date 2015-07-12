@@ -22,13 +22,14 @@
     The N-Queens problem (see nqueens.h for details)
 */
 /*
-    #includes
+    #included
 
     <math.h> abs, ceil, exp2, log2
     <stdlib> free, NULL
     <string.h> memset, strcat, strlen
     "../../base/xmem.h" xmalloc
     "../../base/bits.h" bits_to_int, itods
+    "nqueens.h" "../../genome.h"
 */
 #include <assert.h>
 #include <math.h>

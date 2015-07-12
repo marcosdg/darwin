@@ -22,7 +22,7 @@
     The Subset Sum problem configuration file parser.
 */
 /*
-    #includes
+    #included
     
     <stdio.h> fclose, fopen, NULL
     <stdlib.h> atoi, free
@@ -30,6 +30,7 @@
     "../../base/report.h" <stdlio.h>, <stdlib.h>
     "../../base/xmem.h" xmalloc
     "../parse.h" get_line
+    "parser_subsetsum.h" "subsetsum.h"
 */
 #include <string.h>
 #include "../../base/report.h"

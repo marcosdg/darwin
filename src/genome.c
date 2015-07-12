@@ -23,7 +23,7 @@
     genetic algorithm that it implements are specified (see genome.h for details)
 */
 /*
-    #includes
+    #included
 
     <math.h> abs
     <stdlib.h> free, NULL

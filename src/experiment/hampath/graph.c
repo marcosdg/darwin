@@ -23,7 +23,7 @@
     (see hampath.{h, c})
 */
 /*
-    #includes
+    #included
 
     <stdlib.h> free, NULL
     "../../base/xmem.h" xmalloc

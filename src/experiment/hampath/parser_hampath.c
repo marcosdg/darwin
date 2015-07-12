@@ -22,7 +22,7 @@
     The Hamiltonian Path problem (undirected version) configuration file parser.
 */
 /*
-    #includes
+    #included
 
     <stdio.h> fclose, fopen, NULL
     <stdlib.h> atoi, free
@@ -31,6 +31,7 @@
     "../../base/xmem.h" xmalloc
     "../../base/bits.h" digit_to_int
     "../parse.h" get_line, str_chop
+    "parser_hampath.h" "hampath.h"
 */
 #include <string.h>
 #include "../../base/report.h"

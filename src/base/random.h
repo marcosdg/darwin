@@ -25,7 +25,7 @@
 #define RANDOM_H_INCLUDED
 
 extern void
-start_random_generator(
+init_random_generator(
         void
 );
 

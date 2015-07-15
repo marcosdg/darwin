@@ -27,6 +27,7 @@
     <stddef.h> NULL
     "stats.h" "../genome.h"
 */
+#include <assert.h>
 #include <stddef.h>
 #include "stats.h"
 
@@ -34,12 +35,11 @@ double
 stats_best_fitness(
         struct Population *city
 ) {
+    assert(city != NULL);
+
     double best = 0.0;
     int next;
 
-    if (city == NULL) {
-        return best;
-    }
     best = city->people[0]->fitness;
     for (next = 1; next < city->current_size; next += 1) {
         if (city->people[next]->fitness > best) {
@@ -53,12 +53,11 @@ double
 stats_worst_fitness(
         struct Population *city
 ) {
+    assert(city != NULL);
+
     double worst = 0.0;
     int next;
 
-    if (city == NULL) {
-        return worst;
-    }
     worst = city->people[0]->fitness;
     for (next = 1; next < city->current_size; next += 1) {
         if (city->people[next]->fitness < worst) {
@@ -72,12 +71,11 @@ double
 stats_avg_fitness(
         struct Population *city
 ) {
+    assert(city != NULL);
+
     double sum = 0.0;
     int i;
 
-    if (city == NULL) {
-        return sum;
-    }
     for (i = 0; i < city->current_size; i += 1) {
         sum += city->people[i]->fitness;
     }

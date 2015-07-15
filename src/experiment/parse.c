@@ -29,6 +29,7 @@
     <string.h> strlen, strsep
     "../base/xmem.h" xmalloc, xstrdup
 */
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -64,6 +65,9 @@ str_chop(
         const char *str,
         const char *delim
 ) {
+    assert(str != NULL);
+    assert(delim != NULL);
+
     size_t length = strlen(str) + 1; /* Count the '\0'. */
     char *chunks = xmalloc(length * sizeof(char));
     /*

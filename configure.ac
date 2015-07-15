@@ -23,7 +23,7 @@
 ###############################################################################
 # Force autoconf to be, at least, this version number.
 AC_PREREQ([2.68])
-AC_INIT([darwin], [0.0.0], [marcos.diez.garcia@gmail.com])
+AC_INIT([darwin], [0.0.1], [marcos.diez.garcia@gmail.com])
 AC_COPYRIGHT([Copyright (C) 2015 Marcos Díez García])
 
 # Safety check: list a source file that would not be in other directories.
@@ -67,7 +67,7 @@ AC_CHECK_LIB([m], [exp])
 AC_CHECK_LIB([rt], [clock_gettime])
 
 # Header files.
-AC_CHECK_HEADERS([float.h limits.h stdlib.h string.h])
+AC_CHECK_HEADERS([float.h limits.h stddef.h stdlib.h string.h])
 
 # Typedefs, structures, and compiler characteristics.
 AC_TYPE_SIZE_T

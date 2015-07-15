@@ -33,28 +33,31 @@
     <stdlib.h> free, NULL
     <float.h> DBL_MAX
     "base/xmem.h" xmalloc
+    "base/random.h" init_random_generator
+    "genome.h" create_random_population
     "hampath.h" "../../genome.h"
-    "experiment/hampath/parser_hampath.h" "hampath.h"
-    "experiment/nqueens/parser_nqueens.h" "nqueens.h"
-    "experiment/subsetsum/parser_subsetsum.h" "subsetsum.h"
-    "experiment/parser_evolution.h" "../life.h"
-    "out/stats.h"
+    "out/stats.h" stats_avg_fitness, stats_best_fitness, stats_worst_fitness
+    "operators.h" adaptative_mutation_risk, constant_mutation_risk, mutagen,
+                    replace_worst, set_constant_mutation_risk,
+                    single_point_crossover, tournament_selection
+    "life.h" "experiment/hampath/hampath.h", "experiment/nqueens/nqueens.h",
+                "experiment/subsetsum/subsetsum.h"
+
 */
+#include <assert.h>
 #include <stdlib.h>
 #include <float.h>
 #include "base/xmem.h"
-#include "experiment/hampath/parser_hampath.h"
-#include "experiment/nqueens/parser_nqueens.h"
-#include "experiment/subsetsum/parser_subsetsum.h"
-#include "experiment/parser_evolution.h"
+#include "base/random.h"
 #include "out/stats.h"
 #include "operators.h"
+#include "life.h"
 
 static struct Evolution_state *evol_state;
 
 
 static void
-start_evolution_state(
+init_evolution_state(
         void
 ) {
     evol_state = xmalloc(sizeof(struct Evolution_state));
@@ -81,7 +84,8 @@ struct Evolution_state *
 get_evol_state(
         void
 ) {
-    return (evol_state == NULL) ? NULL : evol_state;
+    assert(evol_state != NULL);
+    return evol_state;
 }
 
 static void
@@ -131,19 +135,17 @@ destroy_evolution(
 #define DARWIN_DEFINE_FUNC_GENESIS(T, problem)                                  \
 static void                                                                     \
 genesis(                                                                        \
-        char *problem##_file_name,                                              \
         struct T **problem,                                                     \
         struct Evolution **evol,                                                \
         struct Population **alpha                                               \
 ) {                                                                             \
     int i;                                                                      \
                                                                                 \
-    start_random_generator();                                                   \
-    start_evolution_state();                                                    \
+    init_random_generator();                                                    \
+    init_evolution_state();                                                     \
     if ((*evol)->mutability != -1.0) {                                          \
         set_constant_mutation_risk((*evol)->mutability);                        \
     }                                                                           \
-    *problem = load_##problem(problem##_file_name);                             \
     *alpha = create_random_population((*evol)->population_size, (*problem)->e); \
     for (i = 0; i < (*alpha)->current_size; i += 1) {                           \
         evaluate((*alpha)->people[i], NULL, NULL, *problem); /* no parents */   \
@@ -179,9 +181,8 @@ evaluate(                                                                   \
 struct Population *                                                         \
 live(                                                                       \
         struct Evolution *evol,                                             \
-        char *problem##_file_name                                           \
+        struct T *problem                                                   \
 ) {                                                                         \
-    struct T *problem;                                                      \
     struct Population *city;                                                \
     struct Individual *dad;                                                 \
     struct Individual *mom;                                                 \
@@ -189,7 +190,7 @@ live(                                                                       \
     int couples;                                                            \
     int half_city_size;                                                     \
                                                                             \
-    genesis(problem##_file_name, &problem, &evol, &city);                   \
+    genesis(&problem, &evol, &city);                                        \
     half_city_size = (city->current_size % 2) == 0                          \
                         ? (city->current_size / 2)                          \
                         : (city->current_size / 2) + 1;                     \
@@ -216,10 +217,9 @@ live(                                                                       \
         }                                                                   \
         update_evol_state(city);                                            \
     }                                                                       \
-    destroy_##problem(problem);                                             \
-                                                                            \
     return city;                                                            \
 }
+
 #include "life-generic-defs.h"
 #undef DARWIN_DEFINE_FUNC_GENESIS
 #undef DARWIN_DEFINE_FUNC_EVALUATE

@@ -29,6 +29,7 @@ bits_to_int(
         long int *bits,
         int length
 );
+
 extern int
 digit_to_int(
         char digit

@@ -83,11 +83,12 @@ evaluate(                                       \
         struct Individual *mom,                 \
         struct T *problem                       \
 );
+
 #define DARWIN_DECLARE_FUNC_LIVE(T, problem)\
 struct Population *                         \
 live(                                       \
         struct Evolution *evol,             \
-        char *problem##_file_name           \
+        struct T *problem                   \
 );
 #include "life-generic-protos.h"
 #undef DARWIN_DECLARE_FUNC_EVALUATE

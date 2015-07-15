@@ -28,6 +28,7 @@ extern void *
 xmalloc(
         size_t size
 );
+
 extern char *
 xstrdup(
         const char *s

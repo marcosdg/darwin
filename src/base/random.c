@@ -30,6 +30,7 @@
     <time.h> clock_gettime, CLOCK_REALTIME, rand, srand, timespec
     "report.h" <stdio.h>, <stdlib.h>
 */
+#include <assert.h>
 #include <float.h>
 #include <math.h>
 #include <time.h>
@@ -39,7 +40,7 @@
 static int sequence_started = 0;
 
 void
-start_random_generator(
+init_random_generator(
         void
 ) {
     struct timespec now;
@@ -59,11 +60,10 @@ random_int_exclusive(
         long int lower,
         long int upper
 ) {
-    long int width;
-    if (!sequence_started || (lower > upper)) {
-        return 0;
-    }
-    width = abs(upper - lower);
+    assert(lower <= upper);
+    assert(sequence_started);
+
+    long int width = abs(upper - lower);
 
     return lower + ((rand() * width) / RAND_MAX);
 }
@@ -72,11 +72,10 @@ random_double_exclusive(
         double lower,
         double upper
 ) {
-    double width;
-    if (!sequence_started || (lower > upper)) {
-        return 0.0;
-    }
-    width = upper - lower;
+    assert(lower <= upper);
+    assert(sequence_started);
+
+    double width = upper - lower;
 
     return lower + ((rand() * width) / RAND_MAX);
 }
@@ -102,11 +101,11 @@ randomize_ints(
         long int lower,
         long int upper
 ) {
-    int i;
-    if ((ints != NULL) && (length > 0)) {
+    assert(ints != NULL);
+    assert(length > 0);
 
-        for (i = 0; i < length; i += 1) {
-            ints[i] = random_int_inclusive(lower, upper);
-        }
+    int i;
+    for (i = 0; i < length; i += 1) {
+        ints[i] = random_int_inclusive(lower, upper);
     }
 }

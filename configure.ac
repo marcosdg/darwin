@@ -5,7 +5,7 @@
 # darwin. A simple genetic algorithm implementation with a self-adaptative
 # strategy.
 #
-# Copyright (C) 2015 Marcos Díez García <marcos.diez.garcia@gmail.com>
+# Copyright (C) 2015 Marcos Diez García <marcos.diez.garcia@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
 # Force autoconf to be, at least, this version number.
 AC_PREREQ([2.68])
 AC_INIT([darwin], [0.0.1], [marcos.diez.garcia@gmail.com])
-AC_COPYRIGHT([Copyright (C) 2015 Marcos Díez García])
+AC_COPYRIGHT([Copyright (C) 2015 Marcos Diez García])
 
 # Safety check: list a source file that would not be in other directories.
 AC_CONFIG_SRCDIR([src/genome.h])

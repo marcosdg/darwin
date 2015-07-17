@@ -1,7 +1,7 @@
 #!/bin/sh
 ### autogen.sh - tool to help build darwin from a repository checkout
 
-## Copyright (C) 2015 Marcos Díez García <marcos.diez.garcia@gmail.com>
+## Copyright (C) 2015 Marcos Diez García <marcos.diez.garcia@gmail.com>
 
 ## This file is part of the darwin program.
 

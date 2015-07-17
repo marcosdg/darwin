@@ -5,7 +5,7 @@
 # darwin. A simple genetic algorithm implementation with a self-adaptative
 # strategy.
 #
-# Copyright (C) 2015 Marcos Díez García <marcos.diez.garcia@gmail.com>
+# Copyright (C) 2015 Marcos Diez García <marcos.diez.garcia@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

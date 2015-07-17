@@ -24,8 +24,7 @@
 /*
     #included
 
-    <math.h> abs
-    <stdlib.h> free, NULL
+    <stdlib.h> abs, free, NULL
     <string.h> memset
     "../../base/xmem.h" xmalloc
     "../../base/bits.h" itods

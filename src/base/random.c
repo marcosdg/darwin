@@ -25,14 +25,12 @@
     #included
 
     <float.h> DBL_MIN
-    <math.h> abs
     <stdlib.h> NULL, RAND_MAX
     <time.h> clock_gettime, CLOCK_REALTIME, rand, srand, timespec
     "report.h" <stdio.h>, <stdlib.h>
 */
 #include <assert.h>
 #include <float.h>
-#include <math.h>
 #include <time.h>
 #include "report.h"
 #include "random.h"
@@ -63,7 +61,7 @@ random_int_exclusive(
     assert(lower <= upper);
     assert(sequence_started);
 
-    long int width = abs(upper - lower);
+    long int width = upper - lower;
 
     return lower + ((rand() * width) / RAND_MAX);
 }

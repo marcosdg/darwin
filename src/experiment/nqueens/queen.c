@@ -25,12 +25,10 @@
 /*
     #included
 
-    <math.h> abs
-    <stdlib.h> free, NULL
+    <stdlib.h> abs, free, NULL
     "../../base/xmem.h" xmalloc
 */
 #include <assert.h>
-#include <math.h>
 #include <stdlib.h>
 #include "../../base/xmem.h"
 #include "queen.h"

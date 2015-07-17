@@ -25,14 +25,12 @@
 /*
     #included
 
-    <math.h> abs
-    <stdlib.h> free, NULL
+    <stdlib.h> labs, free, NULL
     <string.h> memset
     "base/xmem.h" xmalloc
     "base/random.h" randomize_ints, random_int_inclusive
 */
 #include <assert.h>
-#include <math.h>
 #include <stdlib.h>
 #include <string.h>
 #include "base/xmem.h"
@@ -110,7 +108,7 @@ invert(
     assert(e != NULL);
     assert((locus >= 0) && (locus < e->dna_length));
 
-    one->dna[locus] = abs(1 - (one->dna[locus]));
+    one->dna[locus] = labs(1 - (one->dna[locus]));
 }
 /*
     Population.

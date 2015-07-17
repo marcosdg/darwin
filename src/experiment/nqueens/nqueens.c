@@ -24,7 +24,7 @@
 /*
     #included
 
-    <math.h> abs, ceil, exp2, log2
+    <math.h> ceil, log2
     <stdlib> free, NULL
     <string.h> memset, strcat, strlen
     "../../base/xmem.h" xmalloc

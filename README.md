@@ -16,7 +16,7 @@ Please, see the [wiki](https://github.com/marcosdg/darwin/wiki) for more informa
 
 ## Disclaimer
 
-* Currently, darwin is not fully portable. It is not guaranteed to work in systems other than GNU/Linux.
+* Currently, darwin is not fully portable. It is not guaranteed to work in systems other than GNU/Linux or Mac OS X.
 * Currently, darwin is not optimized for peak performance regarding both memory consumption and computing time.
 
 ## Requirements
@@ -90,4 +90,4 @@ Here are some of the core values upon which darwin is built:
 * Extensibility
 * Maintainability
 
-Have fun :smile:
+Have fun ! :smile:

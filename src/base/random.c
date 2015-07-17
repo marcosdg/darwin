@@ -29,9 +29,17 @@
     <time.h> clock_gettime, CLOCK_REALTIME, rand, srand, timespec
     "report.h" <stdio.h>, <stdlib.h>
 */
+#ifdef HAVE_CONFIG_H
+    #include "../../config.h"
+#endif /* HAVE_CONFIG_H */
+
 #include <assert.h>
 #include <float.h>
-#include <time.h>
+#if defined HAVE_CLOCK_GETTIME
+    #include <time.h>
+#else
+    #include <sys/time.h>
+#endif
 #include "report.h"
 #include "random.h"
 
@@ -41,17 +49,26 @@ void
 init_random_generator(
         void
 ) {
-    struct timespec now;
     unsigned int seed;
-
-    if (clock_gettime(CLOCK_REALTIME, &now) == -1) {
+    int failure = 0;
+#if defined HAVE_CLOCK_GETTIME
+    struct timespec then;
+    failure = clock_gettime(CLOCK_REALTIME, &then);
+#else
+    struct timeval now;
+    failure = gettimeofday(&now, NULL);
+#endif
+    if (failure) {
         DARWIN_ERROR("Could not generate seed correctly");
     }
-    seed = (unsigned int) (now.tv_sec * now.tv_nsec);
+#if defined HAVE_CLOCK_GETTIME
+    seed = (unsigned int) (then.tv_sec * then.tv_nsec);
+#else
+    seed = (unsigned int) (now.tv_sec * now.tv_usec);
+#endif
     srand(seed);
     sequence_started = 1;
 }
-
 
 long int
 random_int_exclusive(

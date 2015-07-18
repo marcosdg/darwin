@@ -23,8 +23,14 @@
 ###############################################################################
 # Force autoconf to be, at least, this version number.
 AC_PREREQ([2.68])
-AC_INIT([darwin], [0.0.1], [marcos.diez.garcia@gmail.com])
+# Package info.
+AC_INIT([darwin], [0.0.1], [marcos.diez.garcia@gmail.com],[darwin],
+        [https://github.com/marcosdg/darwin])
 AC_COPYRIGHT([Copyright (C) 2015 Marcos Diez García])
+copyright="Copyright (C) 2015 Marcos Diez García."
+AC_DEFINE_UNQUOTED(COPYRIGHT, ["$copyright"],
+                   [Short copyright string for this version of darwin])
+AC_SUBST(copyright)
 
 # Safety check: list a source file that would not be in other directories.
 AC_CONFIG_SRCDIR([src/genome.h])

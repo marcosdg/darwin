@@ -24,7 +24,7 @@
 # Force autoconf to be, at least, this version number.
 AC_PREREQ([2.68])
 # Package info.
-AC_INIT([darwin], [0.0.1], [marcos.diez.garcia@gmail.com],[darwin],
+AC_INIT([darwin], [1.0.0], [marcos.diez.garcia@gmail.com],[darwin],
         [https://github.com/marcosdg/darwin])
 AC_COPYRIGHT([Copyright (C) 2015 Marcos Diez García])
 copyright="Copyright (C) 2015 Marcos Diez García."

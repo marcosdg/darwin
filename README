@@ -33,10 +33,9 @@ There are several other subdirectories:
 'src'       holds the C language code for darwin
 
 'data'      holds darwin input data and some auxiliary script files to
-            facilitate and automate its generation; it is also where darwin will
-            output the result of its execution. The data represents different
-            instances of well-known NP problems that helps us testing the
-            performance of darwin.
+            facilitate and automate its generation. The data represents
+            different instances of well-known NP problems that helps us testing
+            the performance of darwin.
 
 You may encounter bugs in this release. If you do, please report them; your bug
 reports are valuable contributions to make darwin a better tool. Please, send

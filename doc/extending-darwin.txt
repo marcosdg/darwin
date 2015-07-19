@@ -1,0 +1,102 @@
+darwin Extension Guide
+
+Copyright (C) 2015 Marcos Diez García <marcos.diez.garcia@gmail.com>
+See the end of the file for license conditions.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.  This file is offered as-is,
+without warranty of any kind.
+
+
+If you are considering extending darwin, please it would be of great value to
+know about your contributions so more people can benefit and hopefully join.
+Any bug reports, would also be appreciated. Please, consider using email address
+aforementioned, the GitHub 'Issues', or the GitHub 'Pull Requests' systems to
+communicate.
+
+
+Contents
+========
+
+    0. Target audience
+    1. Where do I start?
+    2. What can be extended?
+
+0. Target audience
+==================
+
+This guide is especially designed for those who:
+
+1. Are very familiar with the C programming language.
+
+2. Are familiar with the GNU Autotools. You should understand at least the very
+   basic concepts:
+
+        * What are the so called GNU Autotools? What purpose they serve?
+        * What autoconf does?
+        * What automake does?
+        * What are basic things/parts of Makefile.am and configure.ac?
+        * What is the overall flow of information when using the autotools?
+
+3. Are familiar with debugging tools like GNU's gdb
+   (https://www.gnu.org/software/gdb/) or memory analyzer like Valgrind
+   (http://valgrind.org/)
+
+4. Have a strong background in Mathematical Optimization methods and
+   Evolutionary Computing, especially Genetic Algorithms. This is the
+   fundamental basis to understand all the logic underneath darwin. You should
+   have took some courses on Artificial Intelligence to reach at least the bare
+   minimum.
+
+From there on, it is basically up to your experience, knowledge, dexterity or
+imagination. This guide expects, as mentioned above, a certain level of
+understanding, that is why here you WILL NOT find a 'complete course' in A.I.
+or the related fields. Instead, it will tell you the 'big picture', that is, it
+will point out what steps you should take to extend darwin.
+
+1. Where do I start?
+====================
+
+First of all, I would recommend you to enable 'assertions' in the C code. Just
+go to '../Makefile.am' and comment out the line that says:
+
+    AM_CPPFLAGS = -DNDEBUG
+
+You should already know why assertions help during development and why they are
+turned off in code to be distributed.
+Besides, remember to enable the configure feature '--enable-darwin-debug-mode',
+as if something goes wrong during execution the error messages will be more
+detailed.
+
+2. What can be extended?
+========================
+
+The initial motivation and goal in darwin is to know more about one of the
+genetic operators: the mutation. However, this does not impede that you want to
+use it as a basis to build your custom version. The following are some of the
+things you might be interested in:
+
+    * More problem sets or instances of them.
+    * More genetic operators implementations
+    * More options in the 'data/evolution.config' file
+    * ...
+
+
+[UNFINISHED]
+
+
+
+This file is part of the darwin program.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <http://www.gnu.org/licenses/>.

@@ -64,8 +64,8 @@ Part II of this guide beforehand.
 1. Requirements
 ===============
 
-Please, before proceeding to installation make sure you installed the following in
-your system:
+Please, before proceeding to installation make sure you have previously
+installed the following in your system:
 
 *   GNU Autoconf (version 2.68 or greater) (https://www.gnu.org/software/autoconf)
 *   GNU Automake (version 1.11 or greater) (https://www.gnu.org/software/automake)
@@ -82,9 +82,8 @@ facilitate the generation of input data.
 
     Darwin comes with several problems sets (the input data) to test the
     performance of the genetic algorithm that it implements. These building
-    options allow you to compile darwin for a particular problem
-    (for more details about the reason behind this see... ), and also switch
-    between execution modes.
+    options allow you to compile darwin for a particular problem set and also
+    switch between execution modes.
 
     * 'configure' script:
 

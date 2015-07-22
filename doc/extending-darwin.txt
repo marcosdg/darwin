@@ -32,7 +32,7 @@ Contents
 0. Target audience
 ==================
 
-This guide is especially designed for those who:
+This guide is specially designed for those who:
 
 1. Are very familiar with the C programming language.
 
@@ -40,8 +40,8 @@ This guide is especially designed for those who:
    concepts:
 
         * What are the so called GNU Autotools? What purpose they serve?
-        * What autoconf does?
-        * What automake does?
+        * What does autoconf do?
+        * What does automake do?
         * What are basic things/parts of Makefile.am and configure.ac?
         * What is the overall flow of information when using the autotools?
 
@@ -71,17 +71,16 @@ go to '../Makefile.am' and comment out the line that says:
 
 You should already know why assertions help during development and why they are
 turned off in code to be distributed.
-Besides, remember to enable the configure feature '--enable-darwin-debug-mode',
-as if something goes wrong during execution the error messages will be more
+Besides, remember to enable the configure feature '--enable-darwin-debug-mode';
+thus, if something goes wrong during execution, the error messages will be more
 detailed.
 
 2. What options do I have?
 ==========================
 
-Darwin's initial motivation and goal is to study one of the genetic operators:
-the mutation. However, this does not impede that you want to use it as a basis
-to build your custom version. The following are some of the things you might be
-interested in:
+Darwin's main goal is to study one of the genetic operators: the mutation.
+However, this does not impede that you want to use it as a basis to build your
+custom version. The following are some of the things you might be interested in:
 
     * More problem sets or instances of them
     * More genetic operators implementations
@@ -95,8 +94,8 @@ This would be the easiest and quickest extension that we may want to add, as it
 only requires adding a new '.config' file to the '/data' subdirectory.
 
 Let us say we want to add a new instance for the 'Hamiltonian Path' (undirected
-version) problem set. A new instance in this case is just an undirected graph.
-Darwin defines it as:
+version) problem set. A new instance in this case is just an undirected graph;
+darwin defines it as:
 
     * The size of the graph (the number of vertices).
     * The adjacency matrix, which tells us the edges or connections among the
@@ -227,6 +226,7 @@ iv.
 This and the following extensions will require more research than the previous
 ones. Again, this up to you, but it is mentioned here for the sake of
 completeness.
+
 In this case, you would go to 'src/operators.*', where all genetic operators are
 defined. Then you would call it from the top-level function 'live' in
 'src/darwin.c', where the genetic algorithm is defined.

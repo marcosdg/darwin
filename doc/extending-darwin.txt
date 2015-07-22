@@ -196,7 +196,7 @@ ii.
         cost (distance) that visits every city (node) only once and returns to
         the origin city. One possible definition for the objective function
         might be to take the minimum of the sum of the distances plus some
-        penalty (e.g. visiting more than once a city). This could be also our
+        penalty (e.g. visiting a city more than once). This could be also our
         fitness function, however, we might define it differently. For example,
         we could add some 'heuristic' (e.g. a special mathematical property of
         the graph) that guides the search towards better quality solutions.
@@ -213,7 +213,7 @@ iii.
 iv.
     Once we have the problem and parsers ready, we have to integrate them into
     darwin. This part is one of 'trickiest' of all, due to a particular advanced
-    C programming technique to simulate polymorphism, or in plain words,
+    C programming technique to simulate polymorphism or, in plain words,
     'generic' programming. It is the so called 'X-Macro' technique.
         Basically, it takes advantage of the C preprocessor and the '#define'
     directives to use C macros to emulate 'templates' (as in C++ or Java) in a
@@ -225,7 +225,7 @@ iv.
 ===============================
 
 This and the following extensions will require more research than the previous
-ones. Again, this up to you, but it is mentioned here so for the sake of
+ones. Again, this up to you, but it is mentioned here for the sake of
 completeness.
 In this case, you would go to 'src/operators.*', where all genetic operators are
 defined. Then you would call it from the top-level function 'live' in

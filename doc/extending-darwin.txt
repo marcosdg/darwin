@@ -20,7 +20,7 @@ Contents
 ========
 
     0. Target audience
-    1. Before start
+    1. Before starting
     2. What options do I have?
     3. Adding new problem instances
     4. Addind new problem sets
@@ -61,8 +61,8 @@ understanding, that is why here you WILL NOT find a 'complete course' in A.I.
 or the related fields. Instead, it will show you the 'big picture', that is, it
 will point out the main steps you should take to extend darwin.
 
-1. Before start
-===============
+1. Before starting
+==================
 
 First of all, I would recommend you to enable 'assertions' in the C code. Just
 go to '../Makefile.am' and comment out the line that says:
@@ -105,7 +105,7 @@ All we need is to create a new file, give it a name (it does not matter which
 one), and edit it following the same format as the other instances for the
 Hamiltonian Path problem.
 
-We would do the analogous for intances of other problem sets.
+We would do the analogous for instances of other problem sets.
 
 4. Addind new problem sets
 ==========================
@@ -177,7 +177,7 @@ ii.
     (d) The penalty or cost function
 
         Essentially, what this function does is help separate the 'good'
-        solutions from the 'bad' ones by penalizing the latter ones, that is,
+        solutions from the 'bad' ones by penalizing the latter, that is,
         decreasing their fitness. Not every problem will require it, but is
         important enough to take it into account when modeling the problem, as
         it may be part of the objective's function definition.
@@ -224,11 +224,11 @@ iv.
 ===============================
 
 This and the following extensions will require more research than the previous
-ones. Again, this up to you, but it is mentioned here for the sake of
+ones. Again, this is up to you, but it is mentioned here for the sake of
 completeness.
 
-In this case, you would go to 'src/operators.*', where all genetic operators are
-defined. Then you would call it from the top-level function 'live' in
+In this case, you would add it to 'src/operators.*', where all genetic operators
+are defined. Then you would call it from the top-level function 'live' in
 'src/darwin.c', where the genetic algorithm is defined.
 
 6. Adding new evolutionary parameters
@@ -237,9 +237,9 @@ defined. Then you would call it from the top-level function 'live' in
 Say you want to add a parameter to control the cross-over probability. You would
 start by looking at: 'data/evolution.config', 'src/experiment/parse.*', and
 'src/experiment/parser_evolution.*'. These are the files that translate data
-from an input format to an internal representation in C. Additionally, you would
-also need to modify some code relevant to your task. In this case, you would
-need to modify the cross-over genetic operator.
+from an input format to an internal representation in C. Additionally, you may
+need to modify some code to accomodate the new parameters. In this case, you
+would need to modify the cross-over genetic operator.
 
 7. Adding new stopping criterias
 ================================
@@ -254,6 +254,10 @@ the candidate solutions, and so forth.
 These were some of the options you may want to consider when extending darwin.
 You can use this as a prompt or starting point from where you can build up your
 own modifications.
+
+You might also have a look at the file 'doc/darwin-includes-tree' where you can
+see a tree structure representing which header file is included in which file.
+This can be of great help when developing extensions.
 
 
 

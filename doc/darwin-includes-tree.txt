@@ -1,0 +1,134 @@
+darwin Includes Tree
+
+Copyright (C) 2015 Marcos Diez García <marcos.diez.garcia@gmail.com>
+See the end of the file for license conditions.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.  This file is offered as-is,
+without warranty of any kind.
+
+
+
+The tree structure below tells us for each node (.c or .h) in which other
+files is #included. For instance, we can see that 'genome.h' is #included in
+'genome.c'.
+
+darwin/
+    config.h________
+                    |===> src/base/report.h
+                    |===> src/darwin.c
+    src/
+        darwin.c
+        genome.h____
+                    |
+                    |===> genome.c
+			        |===> operators.h
+			        |===> src/experiment/hampath/hampath.h
+			        |===> src/experiment/nqueens/nqueens.h
+			        |===> src/experiment/subsetsum/subsetsum.h
+			        |===> src/out/stats.h
+        life.h______
+                    |===> life.c
+                    |===> src/experiment/parser_evolution.h
+                    |===> src/out/result.h
+        operators.h_
+                    |===> life.c
+                    |===> operators.c
+        base/
+        |___bits.h__
+        |           |===> bits.c
+        |           |===> src/experiment/hampath/hampath.c
+        |           |===> src/experiment/hampath/parser_hampath.c
+        |           |===> src/experiment/nqueens/nqueens.c
+        |           |===> src/experiment/subsetsum/subsetsum.c
+        |___random.h_
+        |           |===> random.c
+        |           |===> src/genome.c
+        |           |===> src/life.c
+        |           |===> src/operators.c
+        |___report.h_
+        |           |===> random.c
+        |           |===> src/experiment/hampath/parser_hampath.c
+        |           |===> src/experiment/nqueens/parser_nqueens.c
+        |           |===> src/experiment/parse_evolution.c
+        |           |===> src/experiment/subsetsum/parser_subsetsum.c
+        |           |===> src/out/result.c
+        |           |===> xmem.c
+        |___xmem.h__
+                    |===> bits.c
+                    |===> src/experiment/hampath/graph.c
+                    |===> src/experiment/hampath/hampath.c
+                    |===> src/experiment/hampath/parser_hampath.c
+                    |===> src/experiment/nqueens/nqueens.c
+                    |===> src/experiment/nqueens/parser_nqueens.c
+                    |===> src/experiment/nqueens/queen.c
+                    |===> src/experiment/parse.c
+                    |===> src/experiment/parser_evolution.c
+                    |===> src/experiment/subsetsum/parser_subsetsum.c
+                    |===> src/experiment/subsetsum/subsetsum.c
+                    |===> src/genome.c
+                    |===> src/life.c
+                    |===> src/operators.c
+                    |===> src/out/result.c
+                    |===> xmem.c
+        experiment/
+        |_______hampath/
+        |       |___graph.h_________
+        |       |                   |===> graph.c
+        |       |                   |===> hampath.c
+        |       |___hampath.h_______
+        |       |                   |===> hampath.c
+        |       |                   |===> parser_hampath.c
+        |       |___parser_hampath.h_
+        |                           |===> parser_hampath.c
+        |                           |===> src/darwin.c
+        |_______nqueens/
+        |       |___nqueens.h_______
+        |       |                   |===> nqueens.c
+        |       |                   |===> parser_nqueens.h
+        |       |___parser_nqueens.h_
+        |       |                   |===> parser_nqueens.c
+        |       |                   |===> src/darwin.c
+        |       |___queen.h_________
+        |                           |===> nqueens.h
+        |                           |===> queen.c
+        |_______parse.h_____________
+        |                           |===> parse.c
+        |                           |===> src/experiment/hampath/parser_hampath.c
+        |                           |===> src/experiment/nqueens/parser_nqueens.c
+        |                           |===> src/experiment/parser_evolution.c
+        |                           |===> src/experiment/subsetsum/parser_subsetsum.c
+        |_______parser_evolution.h__
+        |                           |===> parser_evolution.c
+        |                           |===> src/darwin.c
+        |_______subsetsum/
+                |___parser_subsetsum.h__
+                |                       |===> parser_subsetsum.c
+                |                       |===> src/darwin.c
+                |___subsetsum.h_________
+                                        |===> parser_subsetsum.c
+                                        |===> subsetsum.c
+        out/
+        |___________stats.h_
+        |                   |===> stats.c
+        |                   |===> src/darwin.c
+        |___________result.h_
+                            |===> result.c
+                            |===> src/darwin.c
+
+
+
+This file is part of the darwin program.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <http://www.gnu.org/licenses/>.

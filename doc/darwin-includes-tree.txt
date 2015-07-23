@@ -21,13 +21,12 @@ darwin/
     src/
         darwin.c
         genome.h____
-                    |
                     |===> genome.c
-			        |===> operators.h
-			        |===> src/experiment/hampath/hampath.h
-			        |===> src/experiment/nqueens/nqueens.h
-			        |===> src/experiment/subsetsum/subsetsum.h
-			        |===> src/out/stats.h
+                    |===> operators.h
+                    |===> src/experiment/hampath/hampath.h
+                    |===> src/experiment/nqueens/nqueens.h
+                    |===> src/experiment/subsetsum/subsetsum.h
+                    |===> src/out/stats.h
         life.h______
                     |===> life.c
                     |===> src/experiment/parser_evolution.h

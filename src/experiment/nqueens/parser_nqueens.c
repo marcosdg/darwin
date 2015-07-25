@@ -63,7 +63,7 @@ load_nqueens(
     char *line = xmalloc(MAX_COLUMNS * sizeof(char));
     FILE *file = fopen(file_name, "r");
     if (file == NULL) {
-        DARWIN_ERROR("Could not open n-queens configuration file");
+        DARWIN_ERROR("Could not open such n-queens input file");
     }
 
     while (strstr(get_line(line, MAX_COLUMNS, file), TOKEN_COMMENT));
@@ -78,7 +78,8 @@ load_nqueens(
     fclose(file);
 
     if (!valid_nqueens_args(board_size)) {
-        DARWIN_ERROR("Bad n-queens configuration file");
+        DARWIN_ERROR("Bad n-queens input file: parameters exceeded allowed"
+                        " boundaries");
     }
     return create_nqueens(board_size);
 }

@@ -71,7 +71,7 @@ load_hampath(
     char *line = xmalloc(MAX_COLUMNS * sizeof(char));
     FILE *file = fopen(file_name, "r");
     if (file == NULL) {
-        DARWIN_ERROR("Could not open hamiltonian-path configuration file");
+        DARWIN_ERROR("Could not open such hamiltonian-path input file");
     }
 
     while (strstr(get_line(line, MAX_COLUMNS, file), TOKEN_COMMENT));
@@ -99,7 +99,8 @@ load_hampath(
     fclose(file);
 
     if (!valid_hampath_params(adjacency, dimension)) {
-        DARWIN_ERROR("Bad hamiltonian-path configuration file");
+        DARWIN_ERROR("Bad hamiltonian-path input file: parameters exceeded"
+                        " allowed boundaries");
     }
     return create_hampath(create_graph(adjacency, dimension));
 }

@@ -92,7 +92,7 @@ load_subsetsum(
                 set[i] = atoi(get_line(line, MAX_COLUMNS, file));
                 if (set[i] > subsetsum_max_int()) {
                     DARWIN_ERROR("Bad subset-sum input file: some number(s)"
-                                    "is(are) greater than INT");
+                                    " is(are) greater than INT");
                 }
             }
         }
@@ -103,7 +103,7 @@ load_subsetsum(
 
     if (!valid_subsetsum_params(target, set, set_size)) {
         DARWIN_ERROR("Bad subset-sum input file: parameters exceeded allowed"
-                        "boundaries");
+                        " boundaries");
     }
     return create_subsetsum(target, set, set_size);
 }

@@ -24,6 +24,7 @@
 /*
     #included
 
+    <limits.h> INT_MAX
     <stdlib.h> abs, free, NULL
     <string.h> memset
     "../../base/xmem.h" xmalloc
@@ -31,6 +32,7 @@
     "subsetsum.h" "../../genome.h"
 */
 #include <assert.h>
+#include <limits.h>
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
@@ -39,8 +41,17 @@
 #include "subsetsum.h"
 
 static const int MIN_TARGET = 0;
-static const int MIN_SET_SIZE = 2; /* crossover requires at least 2 genes */
+/*
+    MIN_SET_SIZE:
+    Cross-over requires at least 2 genes.
+*/
+static const int MIN_SET_SIZE = 2;
 static const int MIN_SUBSET_SIZE = 0;
+/*
+    MAX_INT:
+    Darwin will not accept larger numbers for the Subset-Sum problem.
+*/
+static const int MAX_INT = INT_MAX;
 static int target;
 static int *set;
 
@@ -64,12 +75,14 @@ create_subsetsum(
         int s_size
 ) {
     assert(t >= MIN_TARGET);
+    assert(t <= MAX_INT);
     assert(s_size >= MIN_SET_SIZE);
     assert(s != NULL);
 
     struct Encoding *e = create_encoding(1      /* units_per_gene */,
                                          s_size /* dna_length */);
     struct Subsetsum *instance = xmalloc(sizeof(struct Subsetsum));
+    char *max_int_str;
     target = t;
     set = s;
     instance->e = e;
@@ -105,7 +118,12 @@ subsetsum_min_set_size(
 ) {
     return MIN_SET_SIZE;
 }
-
+int
+subsetsum_max_int(
+        void
+) {
+    return MAX_INT;
+}
 /*
     create_subsetsum_candidate:
 
@@ -122,7 +140,7 @@ create_subsetsum_candidate(
 
     int *subset = xmalloc(subset_size * sizeof(int));
     struct Subsetsum_candidate *candidate = xmalloc(sizeof(struct Subsetsum_candidate));
-    
+
     memset(subset, 0, subset_size * sizeof(int));
     candidate->subset = subset;
     candidate->subset_size = subset_size;
@@ -172,20 +190,29 @@ decode(
     }
     return candidate;
 }
+
 static char *
 candidate_to_string(
         struct Subsetsum_candidate *candidate
 ) {
     char *str;
     char *num_str;
-    int braces = 3; /* '{' <space> '}' */
+    char *max_int_str;
+    int braces = 3 * sizeof(char); /* '{' <space> '}' */
     int str_bytes;
     int i;
 
     if (candidate == NULL) {
         return "";
     }
-    str_bytes = ((candidate->subset_size + 1) * sizeof(int)) + braces;
+    /*
+        Use MAX_INT to allocate in advance enough bytes to hold any int inside
+        'str'.
+    */
+    max_int_str = itods(MAX_INT);
+    str_bytes = ((strlen(max_int_str) + sizeof(char)) * candidate->subset_size)
+                + braces;
+    free(max_int_str);
     str = xmalloc(str_bytes * sizeof(char)) ;
 
     strcpy(str, "{ ");

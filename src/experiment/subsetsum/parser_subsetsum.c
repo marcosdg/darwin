@@ -58,6 +58,7 @@ valid_subsetsum_params(
 ) {
     return (set != NULL)
             && (target >= subsetsum_min_target())
+            && (target <= subsetsum_max_int())
             && (set_size >= subsetsum_min_set_size());
 }
 
@@ -73,7 +74,7 @@ load_subsetsum(
     char *line = xmalloc(MAX_COLUMNS * sizeof(char));
     FILE *file = fopen(file_name, "r");
     if (file == NULL) {
-        DARWIN_ERROR("Could not open the subset-sum configuration file");
+        DARWIN_ERROR("Could not open such subset-sum input file");
     }
 
     while (strstr(get_line(line, MAX_COLUMNS, file), TOKEN_COMMENT));
@@ -89,6 +90,10 @@ load_subsetsum(
             set = xmalloc(set_size * sizeof(int));
             for (i = 0; i < set_size; i += 1) {
                 set[i] = atoi(get_line(line, MAX_COLUMNS, file));
+                if (set[i] > subsetsum_max_int()) {
+                    DARWIN_ERROR("Bad subset-sum input file: some number(s)"
+                                    "is(are) greater than INT");
+                }
             }
         }
     } while (get_line(line, MAX_COLUMNS, file) != NULL);
@@ -97,7 +102,8 @@ load_subsetsum(
     fclose(file);
 
     if (!valid_subsetsum_params(target, set, set_size)) {
-        DARWIN_ERROR("Bad subset-sum configuration file");
+        DARWIN_ERROR("Bad subset-sum input file: parameters exceeded allowed"
+                        "boundaries");
     }
     return create_subsetsum(target, set, set_size);
 }

@@ -24,20 +24,20 @@
 /*
     #included
 
-    <limits.h> INT_MAX
     <stdlib.h> abs, free, NULL
     <string.h> memset
     "../../base/xmem.h" xmalloc
     "../../base/bits.h" itods
+    "../../base/darwin_limits.h" MAX_INT32_STRLEN
     "subsetsum.h" "../../genome.h"
 */
 #include <assert.h>
-#include <limits.h>
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
 #include "../../base/xmem.h"
 #include "../../base/bits.h"
+#include "../../base/darwin_limits.h"
 #include "subsetsum.h"
 
 static const int MIN_TARGET = 0;
@@ -47,11 +47,6 @@ static const int MIN_TARGET = 0;
 */
 static const int MIN_SET_SIZE = 2;
 static const int MIN_SUBSET_SIZE = 0;
-/*
-    MAX_INT:
-    Darwin will not accept larger numbers for the Subset-Sum problem.
-*/
-static const int MAX_INT = INT_MAX;
 static int target;
 static int *set;
 
@@ -117,12 +112,6 @@ subsetsum_min_set_size(
         void
 ) {
     return MIN_SET_SIZE;
-}
-int
-subsetsum_max_int(
-        void
-) {
-    return MAX_INT;
 }
 /*
     create_subsetsum_candidate:
@@ -198,7 +187,8 @@ candidate_to_string(
     char *str;
     char *num_str;
     char *max_int_str;
-    int braces = 3 * sizeof(char); /* '{' <space> '}' */
+    int braces = 2 * sizeof(char); /* {} */
+    int space = sizeof(char);
     int str_bytes;
     int i;
 
@@ -206,13 +196,11 @@ candidate_to_string(
         return "";
     }
     /*
-        Use MAX_INT to allocate in advance enough bytes to hold any int inside
+        Allocate enough bytes to hold the largest possible 32 bits int inside
         'str'.
     */
-    max_int_str = itods(MAX_INT);
-    str_bytes = ((strlen(max_int_str) + sizeof(char)) * candidate->subset_size)
-                + braces;
-    free(max_int_str);
+    str_bytes = braces + space
+                + ((MAX_INT32_STRLEN + space) * candidate->subset_size);
     str = xmalloc(str_bytes * sizeof(char)) ;
 
     strcpy(str, "{ ");

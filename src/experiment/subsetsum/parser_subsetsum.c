@@ -29,12 +29,14 @@
     <string.h> strstr
     "../../base/report.h" <stdlio.h>, <stdlib.h>
     "../../base/xmem.h" xmalloc
+    "../../base/darwin_limits.h" MAX_INT32
     "../parse.h" get_line
     "parser_subsetsum.h" "subsetsum.h"
 */
 #include <string.h>
 #include "../../base/report.h"
 #include "../../base/xmem.h"
+#include "../../base/darwin_limits.h"
 #include "../parse.h"
 #include "parser_subsetsum.h"
 /*
@@ -56,10 +58,11 @@ valid_subsetsum_params(
         int *set,
         int set_size
 ) {
-    return (set != NULL)
+    return  (set != NULL)
             && (target >= subsetsum_min_target())
-            && (target <= subsetsum_max_int())
-            && (set_size >= subsetsum_min_set_size());
+            && (target <= MAX_INT32)
+            && (set_size >= subsetsum_min_set_size())
+            && (set_size <= MAX_INT32);
 }
 
 struct Subsetsum *
@@ -90,9 +93,9 @@ load_subsetsum(
             set = xmalloc(set_size * sizeof(int));
             for (i = 0; i < set_size; i += 1) {
                 set[i] = atoi(get_line(line, MAX_COLUMNS, file));
-                if (set[i] > subsetsum_max_int()) {
-                    DARWIN_ERROR("Bad subset-sum input file: some number(s)"
-                                    " is(are) greater than INT");
+                if (set[i] > MAX_INT32) {
+                    DARWIN_ERROR("Bad subset-sum input file: SET contains"
+                                    " numbers greater than INT (32 bits)");
                 }
             }
         }
@@ -102,7 +105,7 @@ load_subsetsum(
     fclose(file);
 
     if (!valid_subsetsum_params(target, set, set_size)) {
-        DARWIN_ERROR("Bad subset-sum input file: parameters exceeded allowed"
+        DARWIN_ERROR("Bad subset-sum input file: parameters out of allowed"
                         " boundaries");
     }
     return create_subsetsum(target, set, set_size);

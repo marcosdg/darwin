@@ -30,6 +30,7 @@
     "../../base/report.h" <stdio.h>, <stdlib>
     "../../base/xmem.h" xmalloc
     "../../base/bits.h" digit_to_int
+    "../../base/darwin_limits.h" MAX_INT32
     "../parse.h" get_line, str_chop
     "parser_hampath.h" "hampath.h"
 */
@@ -37,6 +38,7 @@
 #include "../../base/report.h"
 #include "../../base/xmem.h"
 #include "../../base/bits.h"
+#include "../../base/darwin_limits.h"
 #include "../parse.h"
 #include "parser_hampath.h"
 
@@ -54,7 +56,9 @@ valid_hampath_params(
         int **adjacency,
         int dimension
 ) {
-    return (adjacency != NULL) && (dimension >= hampath_min_graph_size());
+    return  (adjacency != NULL)
+            && (dimension >= hampath_min_graph_size())
+            && (dimension <= MAX_INT32);
 }
 
 struct Hampath *
@@ -99,7 +103,7 @@ load_hampath(
     fclose(file);
 
     if (!valid_hampath_params(adjacency, dimension)) {
-        DARWIN_ERROR("Bad hamiltonian-path input file: parameters exceeded"
+        DARWIN_ERROR("Bad hamiltonian-path input file: parameters out of"
                         " allowed boundaries");
     }
     return create_hampath(create_graph(adjacency, dimension));

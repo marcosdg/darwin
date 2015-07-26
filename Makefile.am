@@ -40,6 +40,7 @@ darwin_SOURCES = \
 	./src/life.h \
 	./src/life.c \
 	./src/base/report.h \
+	./src/base/darwin_limits.h \
 	./src/base/xmem.h \
 	./src/base/xmem.c \
 	./src/base/bits.h \

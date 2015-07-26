@@ -136,8 +136,4 @@ extern int
 subsetsum_min_set_size(
         void
 );
-extern int
-subsetsum_max_int(
-        void
-);
 #endif /* SUBSETSUM_H_INCLUDED */

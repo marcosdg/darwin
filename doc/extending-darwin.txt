@@ -58,8 +58,9 @@ This guide is specially designed for those who:
 From there on, it is basically up to your experience, knowledge, dexterity or
 imagination. This guide expects, as mentioned above, a certain level of
 understanding, that is why here you WILL NOT find a 'complete course' in A.I.
-or the related fields. Instead, it will show you the 'big picture', that is, it
-will point out the main steps you should take to extend darwin.
+or the related fields. Instead, it will provide you with some prompts from where
+you can start extending darwin, it also tells you the main steps to follow for
+some of them.
 
 1. Before starting
 ==================
@@ -235,11 +236,11 @@ are defined. Then you would call it from the top-level function 'live' in
 =====================================
 
 Say you want to add a parameter to control the cross-over probability. You would
-start by looking at: 'data/evolution.config', 'src/experiment/parse.*', and
-'src/experiment/parser_evolution.*'. These are the files that translate data
-from an input format to an internal representation in C. Additionally, you may
-need to modify some code to accomodate the new parameters. In this case, you
-would need to modify the cross-over genetic operator.
+start by looking at: 'data/evolution.config', and 'src/experiment/parser_evolution.*'.
+These are the files that translate data from an input format to an internal
+representation in C. Additionally, you may need to modify some code to
+accomodate the new parameters. In this case, you would need to modify the
+cross-over genetic operator.
 
 7. Adding new stopping criterias
 ================================
@@ -251,13 +252,9 @@ elapsed. There are numerous alternatives: error tolerance, genetic diversity of
 the candidate solutions, and so forth.
 
 
-These were some of the options you may want to consider when extending darwin.
-You can use this as a prompt or starting point from where you can build up your
-own modifications.
-
-You might also have a look at the file 'doc/darwin-includes-tree' where you can
-see a tree structure representing which header file is included in which file.
-This can be of great help when developing extensions.
+Finally, you might have a look at the file 'doc/darwin-includes-tree' where you
+can see a tree structure representing which header file is included in which
+file. This can be of great help when developing extensions.
 
 
 

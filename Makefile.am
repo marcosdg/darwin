@@ -2,7 +2,7 @@
 #
 # This is part of the darwin program.
 #
-# darwin. A simple genetic algorithm implementation with a self-adaptative
+# darwin. A simple genetic algorithm implementation with an adaptative
 # strategy.
 #
 # Copyright (C) 2015 Marcos Diez García <marcos.diez.garcia@gmail.com>

@@ -80,8 +80,8 @@ detailed.
 ==========================
 
 Darwin's main goal is to study one of the genetic operators: the mutation.
-However, this does not impede that you want to use it as a basis to build your
-custom version. The following are some of the things you might be interested in:
+However, this does not impede you to use it as a basis to build your custom
+version. The following are some of the things you might be interested in:
 
     * More problem sets or instances of them
     * More genetic operators implementations
@@ -91,12 +91,12 @@ custom version. The following are some of the things you might be interested in:
 3. Adding new problem instances
 ===============================
 
-This would be the easiest and quickest extension that we may want to add, as it
-only requires adding a new '.config' file to the '/data' subdirectory.
+This would be the easiest and quickest extension of all, as it only requires
+adding a new '.config' file to the '/data' subdirectory.
 
-Let us say we want to add a new instance for the 'Hamiltonian Path' (undirected
-version) problem set. A new instance in this case is just an undirected graph;
-darwin defines it as:
+Let us say we want to include a new instance for the 'Hamiltonian Path'
+(undirected version) problem set. A new instance in this case is just an
+undirected graph; darwin defines it as:
 
     * The size of the graph (the number of vertices).
     * The adjacency matrix, which tells us the edges or connections among the
@@ -153,7 +153,7 @@ ii.
 
         This is also known as the 'Solutions Space', in other words, the
         representation we use for the original problem, the one we see or
-        perceive. For instance, in the Hamiltonian Path problem, this would be
+        perceive. For instance, in the Hamiltonian Path problem, it would be
         the sequence of vertices.
 
     (b) The genotype representation
@@ -162,7 +162,7 @@ ii.
         internally by the algorithm. Or equivalently, the way we encode the
         phenotype.
             This is the first critical step that we should pay attention to. The
-        reason why is that the internal representation, or encoding, partly
+        reason being that the internal representation, or encoding, partly
         dictates the performance of everything else. Things like the number of
         alleles per gene, the number of genes, or what problem's feature the
         alleles represent should be clearly and carefully defined.
@@ -215,18 +215,20 @@ iv.
     darwin. This part is one of 'trickiest' of all, due to a particular advanced
     C programming technique to simulate polymorphism or, in plain words,
     'generic' programming. It is the so called 'X-Macro' technique.
-        Basically, it takes advantage of the C preprocessor and the '#define'
-    directives to use C macros to emulate 'templates' (as in C++ or Java) in a
-    very primitive manner. This combined with special .h files, where all
-    possible macro invocations are written, gives us a system that allows us to
-    isolate the generic parts of the program from the non-generic ones.
+        It takes advantage of the C preprocessor and the '#define' directives to
+    use C macros to emulate 'templates' (as in C++ or Java) in a very primitive
+    manner. This combined with special .h files, where all possible macro
+    invocations are written, gives us a system that allows us to isolate the
+    generic parts of the program from the non-generic ones.
+
+
+The following extensions probably will require more research than the previous
+ones. Again, this is up to you, but it is mentioned here for the sake of
+completeness.
+
 
 5. Adding new genetic operators
 ===============================
-
-This and the following extensions will require more research than the previous
-ones. Again, this is up to you, but it is mentioned here for the sake of
-completeness.
 
 In this case, you would add it to 'src/operators.*', where all genetic operators
 are defined. Then you would call it from the top-level function 'live' in

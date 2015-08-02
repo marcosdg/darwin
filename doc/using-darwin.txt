@@ -54,6 +54,9 @@ easy to use. The following instructions are the typical end-user use case:
     evolution and problem configuration files we saw previously, and the path to
     the directory where you want to output the result.
 
+        $ ./darwin  file/path/to/evolution.config
+                    file/path/to/problem-instance.config
+                    path/to/the/directory/where/you/want/the/results
 
 
 This file is part of the darwin program.

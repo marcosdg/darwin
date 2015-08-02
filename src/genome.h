@@ -72,9 +72,9 @@ create_encoding(
     Individual.
 */
 struct Individual {
-    double fitness;         /* solution's goodness */
-    double evolvability;    /* parent's average fitness */
-    long int *dna;          /* genotypical solution representation */
+    double fitness;             /* solution's goodness */
+    double fitness_inheritance; /* parent's average fitness */
+    long int *dna;              /* genotypical solution representation */
 };
 
 extern struct Individual *

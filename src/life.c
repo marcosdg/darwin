@@ -172,7 +172,7 @@ evaluate(                                                                   \
     struct T##_candidate *candidate = (*problem->decode)(child, problem);   \
     child->fitness = (*problem->objective)(candidate);                      \
     if (dad != NULL && mom != NULL) {                                       \
-        child->evolvability = (dad->fitness + mom->fitness) / 2.0;          \
+        child->fitness_inheritance = (dad->fitness + mom->fitness) / 2.0;   \
     }                                                                       \
     destroy_##problem##_candidate(candidate);                               \
 }
@@ -202,6 +202,12 @@ live(                                                                       \
             dad = tournament_selection(city, evol->tournament_size);        \
             mom = tournament_selection(city, evol->tournament_size);        \
             offspring = single_point_crossover(dad, mom, problem->e);       \
+            /*                                                              \
+                adaptative_mutation_risk needs the offspring to be evaluated\
+                before, as it relies on their fitness.                      \
+            */                                                              \
+            evaluate(offspring[0], dad, mom, problem);                      \
+            evaluate(offspring[1], dad, mom, problem);                      \
             if (evol->mutability == -1.0) {                                 \
                 mutagen(adaptative_mutation_risk, offspring[0], problem->e);\
                 mutagen(adaptative_mutation_risk, offspring[1], problem->e);\

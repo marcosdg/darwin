@@ -70,7 +70,7 @@ create_individual(
     memset(dna, 0, e->dna_byte_size);
     one->dna = dna;
     one->fitness = 0.0;
-    one->evolvability = 0.0;
+    one->fitness_inheritance = 0.0;
 
     return one;
 }

@@ -37,6 +37,9 @@ There are several other subdirectories:
             different instances of well-known NP problems that helps us testing
             the performance of darwin.
 
+You may also want to have a look at the project's wiki for additional resources:
+<https://github.com/marcosdg/darwin/wiki>
+
 You may encounter bugs in this release. If you do, please report them; your bug
 reports are valuable contributions to make darwin a better tool. Please, send
 them to the following email address: marcos.diez.garcia@gmail.com. If you have a

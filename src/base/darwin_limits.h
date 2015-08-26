@@ -1,11 +1,11 @@
-/*  parser_subsetsum.h
+/*  darwin_limits.h
 
     This is part of the darwin program.
 
     darwin. A simple genetic algorithm implementation with an adaptative
     strategy.
 
-    Copyright (C) 2015 Marcos Díez García <marcos.diez.garcia@gmail.com>
+    Copyright (C) 2015 Marcos Diez García <marcos.diez.garcia@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,15 +19,12 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 /*
-    The Subset Sum problem configuration file parser.
+    Darwin specific <limits.h> header file.
 */
-#ifndef PARSER_SUBSETSUM_H_INCLUDED
-#define PARSER_SUBSETSUM_H_INCLUDED
+#ifndef DARWIN_LIMITS_H_INCLUDED
+#define DARWIN_LIMITS_H_INCLUDED
 
-#include "subsetsum.h"
+#define MAX_INT32 2147483647    /* (2^31) - 1 */
+#define MAX_INT32_STRLEN 10     /* "2147483647" length */
 
-extern struct Subsetsum *
-load_subsetsum(
-        const char *file_name
-);
-#endif /* PARSER_SUBSETSUM_H_INCLUDED */
+#endif /* DARWIN_LIMITS_H_INCLUDED */

@@ -2,7 +2,7 @@
 
     This is part of the darwin program.
 
-    darwin. A simple genetic algorithm implementation with a self-adaptative
+    darwin. A simple genetic algorithm implementation with an adaptative
     strategy.
 
     Copyright (C) 2015 Marcos Díez García <marcos.diez.garcia@gmail.com>
@@ -72,9 +72,9 @@ create_encoding(
     Individual.
 */
 struct Individual {
-    double fitness;         /* solution's goodness */
-    double evolvability;    /* parent's average fitness */
-    long int *dna;          /* genotypical solution representation */
+    double fitness;             /* solution's goodness */
+    double fitness_inheritance; /* parent's average fitness */
+    long int *dna;              /* genotypical solution representation */
 };
 
 extern struct Individual *

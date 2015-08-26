@@ -1,3 +1,4 @@
-darwin
+darwin -- A simple genetic algorithm implementation with a self-adaptative
+          strategy.
 
 written and maintained by Marcos Diez García.

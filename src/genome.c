@@ -2,7 +2,7 @@
 
     This is part of the darwin program.
 
-    darwin. A simple genetic algorithm implementation with a self-adaptative
+    darwin. A simple genetic algorithm implementation with an adaptative
     strategy.
 
     Copyright (C) 2015 Marcos Díez García <marcos.diez.garcia@gmail.com>
@@ -70,7 +70,7 @@ create_individual(
     memset(dna, 0, e->dna_byte_size);
     one->dna = dna;
     one->fitness = 0.0;
-    one->evolvability = 0.0;
+    one->fitness_inheritance = 0.0;
 
     return one;
 }

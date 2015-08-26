@@ -2,7 +2,7 @@
 
     This is part of the darwin program.
 
-    darwin. A simple genetic algorithm implementation with a self-adaptative
+    darwin. A simple genetic algorithm implementation with an adaptative
     strategy.
 
     Copyright (C) 2015 Marcos Díez García <marcos.diez.garcia@gmail.com>
@@ -29,6 +29,7 @@
     <string.h> memset, strcat, strlen
     "../../base/xmem.h" xmalloc
     "../../base/bits.h" bits_to_int, itods
+    "../../base/darwin_limits.h" MAX_INT32_STRLEN
     "nqueens.h" "../../genome.h"
 */
 #include <assert.h>
@@ -37,6 +38,7 @@
 #include <string.h>
 #include "../../base/xmem.h"
 #include "../../base/bits.h"
+#include "../../base/darwin_limits.h"
 #include "nqueens.h" 
 
 static const int MIN_BOARD_SIZE = 4; /* No solutions exist for N=2 and N=3 */
@@ -186,15 +188,17 @@ candidate_to_string(
     char *r_str;
     char *c_str;
     int arity = 2;
-    int braces = 3; /* '{' <space> '}' */
-    int num_delims = 4; /* '(' ',' ')' <space> */
+    int braces = 2 * sizeof(char);  /* {} */
+    int delims = 4 * sizeof(char);  /* (,)<space> */
+    int space = sizeof(char);
     int str_bytes;
     int i;
 
     if (candidate == NULL) {
         return "";
     }
-    str_bytes = (((arity * sizeof(int)) + num_delims) * candidate->num_queens) + braces;
+    str_bytes = braces + space
+                + (((arity * MAX_INT32_STRLEN) + delims) * candidate->num_queens);
     str = xmalloc(str_bytes * sizeof(char));
 
     strcpy(str, "{ ");

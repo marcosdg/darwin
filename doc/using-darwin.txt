@@ -1,0 +1,74 @@
+darwin Usage Guide
+
+Copyright (C) 2015 Marcos Diez García <marcos.diez.garcia@gmail.com>
+See the end of the file for license conditions.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.  This file is offered as-is,
+without warranty of any kind.
+
+
+
+At the moment, darwin does not have a lot of features which makes it simple and
+easy to use. The following instructions are the typical end-user use case:
+
+1.  Generally, you would start by generating the input data that will be fed
+    into darwin. The input data is just different instances of well-known NP
+    problems. Darwin already provides you with some defaults, but you can modify
+    them at your will as long as you maintain the format and semantics of the
+    files. Additionally, there are various Perl scripts to help you generate the
+    files, as it can be very tedious to do it by hand.
+
+    The format and semantics of each of the files are very straightforward to
+    understand and follow, so you should not have any issues during the first
+    and second step.
+
+2.  You would continue by tuning or setting the 'evolutionary parameters'
+    of the genetic algorithm by means of the file '../data/evolution.config'.
+    Again, the format and semantics are pretty similar to those of the files
+    in step 1.
+
+    These parameters are key in guiding the execution of the algorithm, since
+    different configurations will lead to different ways of exploring the space
+    of solutions for the problem that we will later select.
+
+    It is also important to mention that, during the adjustments, you should
+    bear in mind what problem you want to test and what are its characteristics,
+    as these will ultimately decide which parameters' values are more
+    appropriate regarding execution performance. For instance, there may be
+    certain problems for which having a high probability of mutation could
+    contribute more than a low one to finding high quality solutions.
+
+3.  Once you have configured the evolution and the problem, now you would
+    proceed to compile or install darwin. Although, you do not need to do these
+    first three steps in order, it is recommended. The reason behind is that one
+    of the steps during compilation/installation involves passing specific
+    compiler flags that will cause darwin to be compiled for a particular
+    problem set.
+
+    For detailed instructions about installation see '../INSTALL'.
+
+4.  You should already have the binary image 'darwin'. Now, you just have to
+    invoke darwin with the appropriate commandline arguments: the paths for the
+    evolution and problem configuration files we saw previously, and the path to
+    the directory where you want to output the result.
+
+        $ ./darwin  file/path/to/evolution.config
+                    file/path/to/problem-instance.config
+                    path/to/the/directory/where/you/want/the/results
+
+
+This file is part of the darwin program.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <http://www.gnu.org/licenses/>.

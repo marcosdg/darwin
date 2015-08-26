@@ -2,7 +2,7 @@
 
     This is part of the darwin program.
 
-    darwin. A simple genetic algorithm implementation with a self-adaptative
+    darwin. A simple genetic algorithm implementation with an adaptative
     strategy.
 
     Copyright (C) 2015 Marcos Díez García <marcos.diez.garcia@gmail.com>
@@ -36,9 +36,9 @@
     "operators.h" "genome.h"
 */
 #include <assert.h>
-#include <math.h>       /* exp */
-#include <string.h>     /* NULL, memcpy */
-#include "base/xmem.h"  /* xmalloc */
+#include <math.h>
+#include <string.h>
+#include "base/xmem.h"
 #include "base/random.h"
 #include "operators.h"
 /*
@@ -187,10 +187,10 @@ set_constant_mutation_risk(
 /*
     adaptative_mutation_risk:
 
-    The mutation probability varies according to victim's fitness and evolvability
-    (parents' average fitness):
-        · Better fitness or evolvability, decreases risk.
-        · Worse fitness or evolvability, increases risk.
+    The mutation probability varies according to the victim's fitness and its
+    fitness_inheritance (parents' average fitness):
+        · Better fitness or fitness_inheritance, decreases risk.
+        · Worse fitness or fitness_inheritance, increases risk.
 */
 double
 adaptative_mutation_risk(
@@ -207,15 +207,15 @@ adaptative_mutation_risk(
     if (victim->fitness <= 0.0) {
         risk = 1.0;
     /*
-        Case 3: victim is equal or better than parents.
+        Case 3: victim is better than parents.
     */
-    } else if ((victim->fitness < 1.0) && (victim->evolvability >= 1.0)) {
-        risk = exp(-(victim->evolvability) * (victim->fitness)) * 0.1;
+    } else if (victim->fitness > victim->fitness_inheritance) {
+        risk = exp(-(victim->fitness_inheritance) * victim->fitness) * 0.1;
     /*
-        Case 4: victim is worse.
+        Case 4: victim is equal or worse than parents.
     */
-    } else if ((victim->fitness < 1.0) && (victim->evolvability < 1.0)) {
-        risk = exp(-(victim->evolvability) * (victim->fitness)) * 0.5;
+    } else if (victim->fitness <= victim->fitness_inheritance) {
+        risk = exp(-(victim->fitness_inheritance) * victim->fitness);
     }
     return risk;
 }

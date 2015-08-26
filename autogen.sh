@@ -5,7 +5,7 @@
 
 ## This file is part of the darwin program.
 
-## darwin. A simple genetic algorithm implementation with a self-adaptative
+## darwin. A simple genetic algorithm implementation with an adaptative
 ## strategy.
 
 ## darwin is free software: you can redistribute it and/or modify
@@ -26,7 +26,7 @@
 ## The darwin repository does not include the configure script (and
 ## associated helpers).  The first time you fetch darwin from the repo,
 ## run this script to generate the necessary files.
-## For more details, see the file INSTALL.REPO.
+## For more details, see the file INSTALL.
 
 
 ## Tools we need:

@@ -2,7 +2,7 @@
 
     This is part of the darwin program.
 
-    darwin. A simple genetic algorithm implementation with a self-adaptative
+    darwin. A simple genetic algorithm implementation with an adaptative
     strategy.
 
     Copyright (C) 2015 Marcos Díez García <marcos.diez.garcia@gmail.com>
@@ -29,6 +29,7 @@
     <string.h> memset, strcat, strlen
     "../../base/xmem.h" xmalloc
     "../../base/bits.h" bits_to_int, itods
+    "../../base/darwin_limits.h" MAX_INT32_STRLEN
     "hampath.h" genome.h
 */
 #include <assert.h>
@@ -37,6 +38,7 @@
 #include <string.h>
 #include "../../base/xmem.h"
 #include "../../base/bits.h"
+#include "../../base/darwin_limits.h"
 #include "hampath.h"
 
 static struct Graph *graph;
@@ -149,15 +151,15 @@ candidate_to_string(
 ) {
     char *str;
     char *node_str;
-    int tags_bytes;
+    int tags_bytes = strlen("start> ") + strlen("<end");
+    int space = sizeof(char);
     int path_bytes;
     int i;
 
     if ((candidate == NULL) || (graph == NULL)) {
         return "";
     }
-    tags_bytes = strlen("start> ") + strlen("<end");
-    path_bytes = ((sizeof(int)) + 1) * graph->size; /* int + separator 'n' times */
+    path_bytes = (MAX_INT32_STRLEN + space) * graph->size;
     str = xmalloc((tags_bytes + path_bytes) * sizeof(char));
 
     strcpy(str, "start> ");

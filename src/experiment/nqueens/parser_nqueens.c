@@ -2,7 +2,7 @@
 
     This is part of the darwin program.
 
-    darwin. A simple genetic algorithm implementation with a self-adaptative
+    darwin. A simple genetic algorithm implementation with an adaptative
     strategy.
 
     Copyright (C) 2015 Marcos Díez García <marcos.diez.garcia@gmail.com>
@@ -29,12 +29,14 @@
     <string.h> strstr
     "../../base/report.h" <stdio.h>, <stdlib.h>
     "../../base/xmem.h" xmalloc
+    "../../base/darwin_limits.h" MAX_INT32
     "../parse.h" get_line
     "parser_nqueens.h" "nqueens.h"
 */
 #include <string.h>
 #include "../../base/report.h"
 #include "../../base/xmem.h"
+#include "../../base/darwin_limits.h"
 #include "../parse.h"
 #include "parser_nqueens.h"
 /*
@@ -52,7 +54,8 @@ static int
 valid_nqueens_args(
         int board_size
 ) {
-    return board_size >= nqueens_min_board_size();
+    return  (board_size >= nqueens_min_board_size())
+            && (board_size <= MAX_INT32);
 }
 
 struct NQueens *
@@ -63,7 +66,7 @@ load_nqueens(
     char *line = xmalloc(MAX_COLUMNS * sizeof(char));
     FILE *file = fopen(file_name, "r");
     if (file == NULL) {
-        DARWIN_ERROR("Could not open n-queens configuration file");
+        DARWIN_ERROR("Could not open such n-queens input file");
     }
 
     while (strstr(get_line(line, MAX_COLUMNS, file), TOKEN_COMMENT));
@@ -78,7 +81,8 @@ load_nqueens(
     fclose(file);
 
     if (!valid_nqueens_args(board_size)) {
-        DARWIN_ERROR("Bad n-queens configuration file");
+        DARWIN_ERROR("Bad n-queens input file: parameters out of allowed"
+                        " boundaries");
     }
     return create_nqueens(board_size);
 }

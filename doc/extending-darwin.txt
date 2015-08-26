@@ -1,0 +1,275 @@
+darwin Extension Guide
+
+Copyright (C) 2015 Marcos Diez García <marcos.diez.garcia@gmail.com>
+See the end of the file for license conditions.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.  This file is offered as-is,
+without warranty of any kind.
+
+
+If you are considering extending darwin, please it would be of great value to
+know about your contributions so more people can benefit and hopefully join.
+Any bug reports, would also be appreciated. Please, consider using the email
+address aforementioned, the GitHub 'Issues', or the GitHub 'Pull Requests'
+systems to communicate.
+
+
+Contents
+========
+
+    0. Target audience
+    1. Before starting
+    2. What options do I have?
+    3. Adding new problem instances
+    4. Addind new problem sets
+    5. Adding new genetic operators
+    6. Adding new evolutionary parameters
+    7. Adding new stopping criterias
+
+
+0. Target audience
+==================
+
+This guide is specially designed for those who:
+
+1. Are very familiar with the C programming language.
+
+2. Are familiar with the GNU Autotools. You should understand the very basic
+   concepts:
+
+        * What are the so called GNU Autotools? What purpose they serve?
+        * What does autoconf do?
+        * What does automake do?
+        * What are basic things/parts of Makefile.am and configure.ac?
+        * What is the overall flow of information when using the autotools?
+
+3. Are familiar with debugging tools like GNU's gdb
+   (https://www.gnu.org/software/gdb/) or memory analyzers like Valgrind
+   (http://valgrind.org/)
+
+4. Have a strong background in Mathematical Optimization methods and
+   Evolutionary Computing, especially Genetic Algorithms. This is the
+   fundamental basis to understand all the logic underneath darwin. You should
+   have took some courses on Artificial Intelligence to have, at least, the bare
+   minimum.
+
+From there on, it is basically up to your experience, knowledge, dexterity or
+imagination. This guide expects, as mentioned above, a certain level of
+understanding, that is why here you WILL NOT find a 'complete course' in A.I.
+or the related fields. Instead, it will provide you with some prompts from where
+you can start extending darwin, it also tells you the main steps to follow for
+some of them.
+
+1. Before starting
+==================
+
+First of all, I would recommend you to enable 'assertions' in the C code. Just
+go to '../Makefile.am' and comment out the line that says:
+
+    AM_CPPFLAGS = -DNDEBUG
+
+You should already know why assertions help during development and why they are
+turned off in code to be distributed.
+Besides, remember to enable the configure feature '--enable-darwin-debug-mode';
+thus, if something goes wrong during execution, the error messages will be more
+detailed.
+
+2. What options do I have?
+==========================
+
+Darwin's main goal is to study one of the genetic operators: the mutation.
+However, this does not impede you to use it as a basis to build your custom
+version. The following are some of the things you might be interested in:
+
+    * More problem sets or instances of them
+    * More genetic operators implementations
+    * More evolutionary parameters ('data/evolution.config')
+    * More algorithm stopping criterias
+
+3. Adding new problem instances
+===============================
+
+This would be the easiest and quickest extension of all, as it only requires
+adding a new '.config' file to the '/data' subdirectory.
+
+Let us say we want to include a new instance for the 'Hamiltonian Path'
+(undirected version) problem set. A new instance in this case is just an
+undirected graph; darwin defines it as:
+
+    * The size of the graph (the number of vertices).
+    * The adjacency matrix, which tells us the edges or connections among the
+      vertices.
+
+All we need is to create a new file, give it a name (it does not matter which
+one), and edit it following the same format as the other instances for the
+Hamiltonian Path problem.
+
+We would do the analogous for instances of other problem sets.
+
+4. Addind new problem sets
+==========================
+
+This will require coding and probably some research too. Let us say we want to
+add the 'Travelling Salesman' problem, also known as TSP. Briefly, the steps we
+would take are:
+
+    i. Create a new subdirectory 'tsp' in 'src/experiment', just like 'nqueens'
+       or 'subsetsum'
+
+   ii. Code the correspoding .h and .c files that will implement the
+       functionality for the TSP, namely 'tsp.h' and 'tsp.c'
+
+  iii. Code the corresponding .h and .c files that will implement the parsers
+       for the TSP, namely 'parser-tsp.h' and 'parser-tsp.c'
+
+   iv. Add to all files named as '*-generic-defs.h' and '*-generic-protos.h'
+       the corresponding X-Macro, namely:
+
+            DARWIN_DECLARE_FUNC_<name of the function>(TSP, tsp)
+            DARWIN_DEFINE_FUNC_<name of the function>(TSP, tsp)
+
+Now, we will describe in more detail each of these steps.
+
+i.
+    Darwin was designed to make as easy as possible adding new problem sets. For
+    every problem set we will find a 'module' or subdirectory in
+    'src/experiment', so that we can easily identify what problem sets we have
+    and where are all their associated files. By doing this, we contribute to
+    make darwin modular, which also helps in making it easier to extend.
+
+ii.
+    This step is where our research might take place. When modeling a problem
+    using a genetic representation, there are 5 essential elements that we must
+    define:
+        (a) The phenotype representation
+        (b) The genotype representation
+        (c) The decoding function
+        (d) The penalty or cost function
+        (e) The objective function
+
+    (a) The phenotype representation
+
+        This is also known as the 'Solutions Space', in other words, the
+        representation we use for the original problem, the one we see or
+        perceive. For instance, in the Hamiltonian Path problem, it would be
+        the sequence of vertices.
+
+    (b) The genotype representation
+
+        This is known as the 'Search Space', that is, the representation used
+        internally by the algorithm. Or equivalently, the way we encode the
+        phenotype.
+            This is the first critical step that we should pay attention to. The
+        reason being that the internal representation, or encoding, partly
+        dictates the performance of everything else. Things like the number of
+        alleles per gene, the number of genes, or what problem's feature the
+        alleles represent should be clearly and carefully defined.
+
+    (c) The decoding function
+
+        Basically, it is the one that maps or 'translates' from genotype to
+        phenotype. We need this function in order to evaluate how 'good' or
+        'fitted' are the candidate solutions; given that, normally, the
+        evaluation or 'fitness' function is defined in the Solution Space
+        context.
+
+    (d) The penalty or cost function
+
+        Essentially, what this function does is help separate the 'good'
+        solutions from the 'bad' ones by penalizing the latter, that is,
+        decreasing their fitness. Not every problem will require it, but is
+        important enough to take it into account when modeling the problem, as
+        it may be part of the objective's function definition.
+
+    (e) The objective function
+
+        The objective function is the one that we want to minimize or maximize,
+        depending on the problem at hand; and reflects the nature of the
+        problem. It should not be confused with the fitness function, that
+        measures the quality of the solutions in the objective's function
+        domain. It just happens that, for many problem representations,
+        both coincide.
+
+        Consider the TSP problem for a moment. We want to find a path of minimum
+        cost (distance) that visits every city (node) only once and returns to
+        the origin city. One possible definition for the objective function
+        might be to take the minimum of the sum of the distances plus some
+        penalty (e.g. visiting a city more than once). This could be also our
+        fitness function, however, we might define it differently. For example,
+        we could add some 'heuristic' (e.g. a special mathematical property of
+        the graph) that guides the search towards better quality solutions.
+
+    Having defined these elements, we are almost done with the integration of a
+    new problem set.
+
+iii.
+    Now, it is time that we choose a representation for the data files of the
+    new problem set. This step will practically follow from step ii, so it will
+    be less cumbersome to code. You can use, as a source of inspiration, the
+    ones that darwin already comes with.
+
+iv.
+    Once we have the problem and parsers ready, we have to integrate them into
+    darwin. This part is one of 'trickiest' of all, due to a particular advanced
+    C programming technique to simulate polymorphism or, in plain words,
+    'generic' programming. It is the so called 'X-Macro' technique.
+        It takes advantage of the C preprocessor and the '#define' directives to
+    use C macros to emulate 'templates' (as in C++ or Java) in a very primitive
+    manner. This combined with special .h files, where all possible macro
+    invocations are written, gives us a system that allows us to isolate the
+    generic parts of the program from the non-generic ones.
+
+
+The following extensions probably will require more research than the previous
+ones. Again, this is up to you, but it is mentioned here for the sake of
+completeness.
+
+
+5. Adding new genetic operators
+===============================
+
+In this case, you would add it to 'src/operators.*', where all genetic operators
+are defined. Then you would call it from the top-level function 'live' in
+'src/darwin.c', where the genetic algorithm is defined.
+
+6. Adding new evolutionary parameters
+=====================================
+
+Say you want to add a parameter to control the cross-over probability. You would
+start by looking at: 'data/evolution.config', and 'src/experiment/parser_evolution.*'.
+These are the files that translate data from an input format to an internal
+representation in C. Additionally, you may need to modify some code to
+accomodate the new parameters. In this case, you would need to modify the
+cross-over genetic operator.
+
+7. Adding new stopping criterias
+================================
+
+The file you need to look at is 'src/life.c', where the genetic algorithm is
+defined. Everything will depend on which kind of stopping criteria you want to
+add. Darwin uses one of the simplest of all: maximum number of generations
+elapsed. There are numerous alternatives: error tolerance, genetic diversity of
+the candidate solutions, and so forth.
+
+
+Finally, you might have a look at the file 'doc/darwin-includes-tree' where you
+can see a tree structure representing which header file is included in which
+file. This can be of great help when developing extensions.
+
+
+
+This file is part of the darwin program.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <http://www.gnu.org/licenses/>.

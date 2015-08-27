@@ -30,8 +30,8 @@ easy to use. The following instructions are the typical end-user use case:
     in step 1.
 
     These parameters are key in guiding the execution of the algorithm, since
-    different configurations will lead to different ways of exploring the space
-    of solutions for the problem that we will later select.
+    different configurations will lead to different ways of exploring the Search
+    Space for the problem that we will later select.
 
     It is also important to mention that, during the adjustments, you should
     bear in mind what problem you want to test and what are its characteristics,
@@ -50,13 +50,13 @@ easy to use. The following instructions are the typical end-user use case:
     For detailed instructions about installation see '../INSTALL'.
 
 4.  You should already have the binary image 'darwin'. Now, you just have to
-    invoke darwin with the appropriate commandline arguments: the paths for the
+    execute darwin with the appropriate commandline arguments: the paths for the
     evolution and problem configuration files we saw previously, and the path to
     the directory where you want to output the result.
 
-        $ ./darwin  file/path/to/evolution.config
-                    file/path/to/problem-instance.config
-                    path/to/the/directory/where/you/want/the/results
+        './darwin  file/path/to/evolution.config
+                   file/path/to/problem-instance.config
+                   path/to/the/directory/where/you/want/the/results/'
 
 
 This file is part of the darwin program.

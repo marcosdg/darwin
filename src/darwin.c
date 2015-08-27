@@ -57,8 +57,9 @@ darwin_print_help(
         void
 ) {
     printf("Usage: %s <evolution configuration file path>\n"
-            "\t\t<problem configuration file path> <results directory name>",
-                   PACKAGE);
+            "\t\t<problem's instance configuration file path>\n"
+            "\t\t<results directory path>",
+            PACKAGE);
     printf("\n\n");
     printf("Options:\n"
             "--help       display this help and exit\n"
@@ -77,7 +78,7 @@ darwin_print_version(
     printf("%s comes with ABSOLUTELY NO WARRATY.\n", PACKAGE_NAME);
     printf("You may redistribute copies of %s\n", PACKAGE_NAME);
     printf("under the terms of the GNU General Public License.\n");
-    printf("For more information about these matters, see the file named COPYING\n");
+    printf("For more information about these matters, see the file named COPYING.\n");
 }
 
 #define DARWIN_DEFINE_FUNC_RUN(T, problem)                                  \

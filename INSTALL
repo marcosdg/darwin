@@ -54,12 +54,15 @@ Part II of this guide beforehand.
 *   Currently, darwin is not optimized for peak performance regarding both memory
     consumption and computing time.
 
-*   Currently, darwin is not intended for comercial or professional use, is
-    intended merely for academic research purposes. Although, I will keep
-    maintaining and taking care of darwin (adding/removing/enhancing its
-    features), PLEASE DO NOT expect continous development.
+*   Currently, darwin is not intended for comercial or professional use,
+    although you may use it for such purposes. Darwin was intended merely for
+    academic or research purposes. Anyways, the terms and conditions of the
+    GNU General Public License apply and must be followed.
 
-*   Use darwin at your own risk.
+*   Do not expect continuous development. After the first version, I only expect
+    to continue this project in the spare time.
+
+*   Be careful and use darwin at your own risk.
 
 1. Requirements
 ===============
@@ -83,30 +86,35 @@ facilitate the generation of input data.
     Darwin comes with several problems sets (the input data) to test the
     performance of the genetic algorithm that it implements. These building
     options allow you to compile darwin for a particular problem set and also
-    switch between execution modes.
+    switch among different execution modes.
 
-    * 'configure' script:
+    * configure:
 
-        [--darwin-enable-debug-mode]                ('[ ]' means it is optional)
+        [--enable-darwin-debug-mode]                ('[ ]' means it is optional)
 
-        Enables more detailed error reporting when something goes wrong during
-        the execution of darwin. This mode is recommended for developers or
-        maintainers.
+        (Default: disabled). It enables more detailed error reporting when
+        something goes wrong during the execution of darwin. This mode is
+        recommended for developers, programmers, maintainers or testers.
 
-    * 'make' script:
+    * make:
 
         [DARWIN_FLAGS="-DDARWIN_USE_<problem set name>"]
 
-        * DARWIN_FLAGS="-DDARWIN_USE_HAMPATH"
-        * DARWIN_FLAGS="-DDARWIN_USE_SUBSETSUM"
-        * DARWIN_FLAGS="-DDARWIN_USE_NQUEENS"
+        <problem set name>:
+            | HAMPATH
+            | SUBSETSUM
+            | NQUEENS
+
+        (Default: SUBSETSUM). It allows to choose which problem set darwin will
+        be compiled for. After compilation/installation, darwin will only accept
+        instances for the problem set chosen.
 
     2.2. Default install
     --------------------
 
     * Install directory: root (/usr/local or similar)
     * Debug mode: disabled
-    * Problem set: Subset-sum
+    * Problem set: Subset Sum
 
     Steps:
         1. Open up a terminal and 'cd' into the darwin toplevel directory

@@ -15,7 +15,6 @@ Any bug reports, would also be appreciated. Please, consider using the email
 address aforementioned, the GitHub 'Issues', or the GitHub 'Pull Requests'
 systems to communicate.
 
-
 Contents
 ========
 
@@ -27,7 +26,6 @@ Contents
     5. Adding new genetic operators
     6. Adding new evolutionary parameters
     7. Adding new stopping criterias
-
 
 0. Target audience
 ==================
@@ -49,11 +47,11 @@ This guide is specially designed for those who:
    (https://www.gnu.org/software/gdb/) or memory analyzers like Valgrind
    (http://valgrind.org/)
 
-4. Have a strong background in Mathematical Optimization methods and
+4. Have a great background in Mathematical Optimization methods and
    Evolutionary Computing, especially Genetic Algorithms. This is the
-   fundamental basis to understand all the logic underneath darwin. You should
-   have took some courses on Artificial Intelligence to have, at least, the bare
-   minimum.
+   fundamental basis to understand all the logic underneath darwin. Any courses
+   that you might have taken on Artificial Intelligence would be of great help
+   to you.
 
 From there on, it is basically up to your experience, knowledge, dexterity or
 imagination. This guide expects, as mentioned above, a certain level of
@@ -165,7 +163,7 @@ ii.
         reason being that the internal representation, or encoding, partly
         dictates the performance of everything else. Things like the number of
         alleles per gene, the number of genes, or what problem's feature the
-        alleles represent should be clearly and carefully defined.
+        alleles represent, should be clearly and carefully defined.
 
     (c) The decoding function
 

@@ -14,11 +14,11 @@ At the moment, darwin does not have a lot of features which makes it simple and
 easy to use. The following instructions are the typical end-user use case:
 
 1.  Generally, you would start by generating the input data that will be fed
-    into darwin. The input data is just different instances of well-known NP
+    into darwin. The input data consists of several instances of well-known NP
     problems. Darwin already provides you with some defaults, but you can modify
     them at your will as long as you maintain the format and semantics of the
-    files. Additionally, there are various Perl scripts to help you generate the
-    files, as it can be very tedious to do it by hand.
+    files. Additionally, there are various Perl scripts to help you generate 
+    such input files.
 
     The format and semantics of each of the files are very straightforward to
     understand and follow, so you should not have any issues during the first
@@ -31,7 +31,7 @@ easy to use. The following instructions are the typical end-user use case:
 
     These parameters are key in guiding the execution of the algorithm, since
     different configurations will lead to different ways of exploring the Search
-    Space for the problem that we will later select.
+    Space for the problem instance that we will later indicate.
 
     It is also important to mention that, during the adjustments, you should
     bear in mind what problem you want to test and what are its characteristics,
@@ -49,14 +49,24 @@ easy to use. The following instructions are the typical end-user use case:
 
     For detailed instructions about installation see '../INSTALL'.
 
+    For further information about why darwin's design requires us to pass such
+    specific flags see './extending-darwin.txt'.
+
 4.  You should already have the binary image 'darwin'. Now, you just have to
     execute darwin with the appropriate commandline arguments: the paths for the
     evolution and problem configuration files we saw previously, and the path to
     the directory where you want to output the result.
 
-        './darwin  file/path/to/evolution.config
-                   file/path/to/problem-instance.config
-                   path/to/the/directory/where/you/want/the/results/'
+        ./darwin <file/path/to/evolution.config>
+                 <file/path/to/problem-instance.config>
+                 <path/to/the/directory/where/you/want/the/results/>
+
+    Example:
+        (Assuming we have just compiled darwin and that we are at darwin's
+        top-level directory)
+
+        ./darwin data/evolution.config data/nqueens-100.config ~/Desktop
+
 
 
 This file is part of the darwin program.

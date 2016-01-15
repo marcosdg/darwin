@@ -11,8 +11,8 @@ various systems, once you unpacked (or git-cloned) the entire darwin file tree.
 
 See the file COPYING for information about how to copy and distribute darwin.
 
-The 'doc' subdirectory contains darwin specific documentation, including how to
-use it and extend it.
+The 'doc' subdirectory contains darwin's specific documentation, including how
+to use it and extend it.
 
 The shell script 'autogen.sh' generates the file 'configure' (see below) and
 other configuration files by executing the GNU build tools autoconf and
@@ -33,17 +33,19 @@ There are several other subdirectories:
 'src'       holds the C language code for darwin
 
 'data'      holds darwin input data and some auxiliary script files to
-            facilitate and automate its generation. The data represents
-            different instances of well-known NP problems that helps us testing
-            the performance of darwin.
+            facilitate and automate its generation. The input data includes
+            several instances of well-known NP problems for performance testing
+            purposes, and the configuration file for the evolutionary parameters
+            of the genetic algorithm.
 
 You may also want to have a look at the project's wiki for additional resources:
 <https://github.com/marcosdg/darwin/wiki>
 
 You may encounter bugs in this release. If you do, please report them; your bug
 reports are valuable contributions to make darwin a better tool. Please, send
-them to the following email address: marcos.diez.garcia@gmail.com. If you have a
-GitHub <http://github.com> account, you may also use the GitHub Issues system.
+them to the following email address: <marcos.diez.garcia@gmail.com>. If you
+have a GitHub (<http://github.com>) account, feel free to use GitHub Issues
+system or submit pull requests.
 
 
 
